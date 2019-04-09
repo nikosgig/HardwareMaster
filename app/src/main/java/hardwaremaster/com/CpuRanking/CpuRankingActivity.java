@@ -1,4 +1,4 @@
-package hardwaremaster.com;
+package hardwaremaster.com.CpuRanking;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,15 +16,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import hardwaremaster.com.R;
+import hardwaremaster.com.data.Cpu;
 
-public class MainActivity extends AppCompatActivity {
+
+public class CpuRankingActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     List list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.list_fragment);
         RecyclerView recList = findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    cpu curcpu = noteDataSnapshot.getValue(cpu.class);
+                    Cpu curcpu = noteDataSnapshot.getValue(Cpu.class);
                     Log.d("hi",curcpu.toString());
                 }
 

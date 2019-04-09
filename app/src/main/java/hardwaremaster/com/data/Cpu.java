@@ -1,6 +1,6 @@
-package hardwaremaster.com;
+package hardwaremaster.com.data;
 
-public class cpu {
+public class Cpu {
 
 
     /**
@@ -19,7 +19,7 @@ public class cpu {
     private String Cine15;
     private String Mark3d;
 
-    public cpu(String model, String quadScore, String singleScore, String multiScore, String cine15, String mark3d) {
+    public Cpu(String model, String quadScore, String singleScore, String multiScore, String cine15, String mark3d) {
         this.Model = model;
         this.QuadScore = quadScore;
         this.SingleScore = singleScore;
@@ -28,7 +28,7 @@ public class cpu {
         this.Mark3d = mark3d;
     }
 
-    public cpu() {
+    public Cpu() {
     }
 
     public String getModel() {
