@@ -19,8 +19,11 @@ import java.util.List;
 import hardwaremaster.com.R;
 import hardwaremaster.com.data.Cpu;
 
+import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
+
 public class CpuRankingFragment extends Fragment implements CpuRankingContract.View {
 
+    private CpuRankingContract.Presenter mPresenter;
     private CpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
 
@@ -60,13 +63,14 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
     /* CpuRankingContract.View callbacks*/
     @Override
-    public void showCpuRanking(List<Cpu> tasks) {
-
+    public void showCpuRanking(List<Cpu> cpus) {
+        mListAdapter.setList(cpus);
+        mListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
-        mPresenter = presenter;
+        mPresenter = checkNotNull(presenter);
     }
 
     public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> {
@@ -96,6 +100,10 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         // Provide a suitable constructor (depends on the kind of dataset)
         public CpuRankingAdapter(List<Cpu> data) {
             this.mCpuList = data;
+        }
+
+        private void setList(List<Cpu> cpuList) {
+            mCpuList = checkNotNull(cpuList);
         }
 
         // Create new views (invoked by the layout manager)

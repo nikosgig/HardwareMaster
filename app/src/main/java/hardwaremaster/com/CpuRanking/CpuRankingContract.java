@@ -15,6 +15,6 @@ public interface CpuRankingContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loadCpuRanking(boolean forceUpdate);
+        void loadCpuRanking();
     }
 }
