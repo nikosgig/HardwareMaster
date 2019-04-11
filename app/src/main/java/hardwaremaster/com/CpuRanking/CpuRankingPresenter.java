@@ -40,8 +40,8 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter{
                 for (DataSnapshot cpuDataSnapshot : dataSnapshot.getChildren()) {
                     cpuList.add(cpuDataSnapshot.getValue(Cpu.class));
                     Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
-                    mCpuRankingsView.showCpuRanking(cpuList);
                 }
+                mCpuRankingsView.showCpuRanking(cpuList);
             }
 
             @Override
