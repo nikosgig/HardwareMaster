@@ -1,16 +1,10 @@
 package hardwaremaster.com.CpuRanking;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import hardwaremaster.com.data.Cpu;
 
@@ -22,24 +16,42 @@ import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
  */
 public class CpuRankingPresenter implements CpuRankingContract.Presenter{
 
-    private DatabaseReference mDatabase;
     private final CpuRankingContract.View mCpuRankingsView;
-    private boolean mFirstLoad = true;
+    private CpuRankingInteractor mCpuRankingInteractor;
+    private CpuRankingSortBy mCurrentOrderBy = CpuRankingSortBy.ALL;
 
 
     public CpuRankingPresenter(@NonNull CpuRankingContract.View cpuRankingView) {
         mCpuRankingsView = checkNotNull(cpuRankingView, "tasksView cannot be null!");
         mCpuRankingsView.setPresenter(this);
-    }
-
-
-    private void loadCpuRankingFirebase() {
-
+        mCpuRankingInteractor = new CpuRankingInteractor(this);
     }
 
     @Override
     public void loadCpuRanking() {
-        loadCpuRankingFirebase();
+        mCpuRankingInteractor.getCpus();
+    }
+
+    @Override
+    public void refreshCpuList(ArrayList<Cpu> cpuRankingList) {
+
+        switch (mCurrentOrderBy) {
+            case ALL:
+                break;
+            case BY_MODEL:
+                Collections.sort(cpuRankingList, new Comparator<Cpu>() {
+                    public int compare(Cpu v1, Cpu v2) {
+                        return v1.getModel().compareTo(v2.getModel());
+                    }
+                });
+            break;
+        }
+        mCpuRankingsView.showCpuRanking(cpuRankingList);
+    }
+
+    @Override
+    public void setOrder(CpuRankingSortBy orderType) {
+        mCurrentOrderBy = orderType;
     }
 
     @Override

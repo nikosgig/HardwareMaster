@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/order_brand"
+        android:title="@string/order_brand"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/order_single"
+        android:title="@string/order_single"
+        app:showAsAction="never" />
+</menu>

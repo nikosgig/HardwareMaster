@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +56,8 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mListAdapter);
 
+        setHasOptionsMenu(true);
+
         return root;
     }
 
@@ -66,6 +72,52 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
     public void showCpuRanking(List<Cpu> cpus) {
         mListAdapter.setList(cpus);
         mListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_order:
+                showOrderByMenu();
+                break;
+/*            case R.id.order_brand:
+                //mPresenter.sortByBrand();
+                mPresenter.loadCpuRanking();
+                break;
+            case R.id.order_single:
+                //mPresenter.sortBySingle();
+                mPresenter.loadCpuRanking();
+                break;*/
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.order_by_fragment, menu);
+    }
+
+    @Override
+    public void showOrderByMenu() {
+        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_order));
+        popup.getMenuInflater().inflate(R.menu.order_by_options, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.order_brand:
+                        //mPresenter.setFiltering(TasksFilterType.ACTIVE_TASKS);
+                        mPresenter.setOrder(CpuRankingSortBy.BY_MODEL);
+                        break;
+                    case R.id.order_single:
+                        //mPresenter.setFiltering(TasksFilterType.COMPLETED_TASKS);
+                        break;
+                }
+                mPresenter.loadCpuRanking();
+                return true;
+            }
+        });
+        popup.show();
     }
 
     @Override
