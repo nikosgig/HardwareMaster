@@ -24,31 +24,17 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter{
 
     private DatabaseReference mDatabase;
     private final CpuRankingContract.View mCpuRankingsView;
+    private boolean mFirstLoad = true;
+
 
     public CpuRankingPresenter(@NonNull CpuRankingContract.View cpuRankingView) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         mCpuRankingsView = checkNotNull(cpuRankingView, "tasksView cannot be null!");
         mCpuRankingsView.setPresenter(this);
     }
 
 
     private void loadCpuRankingFirebase() {
-        final List<Cpu> cpuList = new ArrayList<>();
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot cpuDataSnapshot : dataSnapshot.getChildren()) {
-                    cpuList.add(cpuDataSnapshot.getValue(Cpu.class));
-                    Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
-                }
-                mCpuRankingsView.showCpuRanking(cpuList);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
