@@ -1,12 +1,13 @@
 package hardwaremaster.com.CpuRanking;
 
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import hardwaremaster.com.R;
+import hardwaremaster.com.fragments.BottomDialogFilterFragment;
 import hardwaremaster.com.util.ActivityUtils;
 
 
@@ -21,7 +22,6 @@ public class CpuRankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         setContentView(R.layout.activity_cpuranking);
-
         CpuRankingFragment cpuRankingFragment =
                 (CpuRankingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (cpuRankingFragment == null) {
@@ -30,6 +30,11 @@ public class CpuRankingActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
         }
+
+/*        BottomDialogFilterFragment bottomDialogFilterFragment =
+                BottomDialogFilterFragment.newInstance();
+        bottomDialogFilterFragment.show(getSupportFragmentManager(),
+                "add_photo_dialog_fragment");*/
 
         // Create the presenter
         mCpuRankingPresenter = new CpuRankingPresenter(cpuRankingFragment);

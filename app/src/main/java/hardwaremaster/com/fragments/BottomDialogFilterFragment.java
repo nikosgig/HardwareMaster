@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.annotations.Nullable;
 
 import hardwaremaster.com.R;
-public class BottomDialogFilterFragment extends BottomSheetDialogFragment{
+public class BottomDialogFilterFragment extends BottomSheetDialogFragment {
 
     public static BottomDialogFilterFragment newInstance() {
         return new BottomDialogFilterFragment();

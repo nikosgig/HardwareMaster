@@ -1,11 +1,11 @@
 package hardwaremaster.com.CpuRanking;
 
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import androidx.annotation.NonNull;
 import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
