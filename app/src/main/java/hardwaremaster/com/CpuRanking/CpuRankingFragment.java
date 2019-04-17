@@ -6,12 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -47,7 +52,7 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.list_fragment, container, false);
+        View root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
         //Set up cpu rankings view
         mRecyclerView = root.findViewById(R.id.recycler_view);
@@ -94,7 +99,46 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.order_by_fragment, menu);
+        /* Setup Search View */
+        inflater.inflate(R.menu.menu_options, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+
+        final SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.onActionViewExpanded();
+        searchView.clearFocus();
+
+        // Catch event on [x] button inside search view
+        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+        // Set on click listener
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Manage this event.
+                searchView.setQuery("", false);
+                searchView.clearFocus();
+            }
+        });
+
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mListAdapter.getFilter().filter(newText);
+                if (TextUtils.isEmpty(newText)) {
+                    //Text is cleared, do your thing
+                    searchView.clearFocus();
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -125,8 +169,92 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         mPresenter = checkNotNull(presenter);
     }
 
-    public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> {
+    public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> implements Filterable {
         private List<Cpu> mCpuList;
+        private List<Cpu> mCpuListFull = new ArrayList<>();
+        private Filter listFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Cpu> filteredList = new ArrayList<>();
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(mCpuListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    for (Cpu item : mCpuListFull) {
+                        if (item.getModel().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mCpuList.clear();
+                mCpuList.addAll((List) results.values);
+                mListAdapter.notifyDataSetChanged();
+
+            }
+        };
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public CpuRankingAdapter(List<Cpu> data) {
+            this.mCpuList = data;
+        }
+
+        private void setList(List<Cpu> cpuList) {
+            mCpuList = checkNotNull(cpuList);
+            if (mCpuListFull.isEmpty()) {
+                mCpuListFull.addAll(mCpuList);
+
+            }
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent,
+                                             int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card,
+                    parent, false);
+            CpuRankingAdapter.ViewHolder viewHolder = new CpuRankingAdapter.ViewHolder(view);
+            return viewHolder;
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+
+            holder.textViewModel.setText(mCpuList.get(position).getModel());
+            holder.textViewDescription.setText("");
+            holder.textViewTag1.setText(mCpuList.get(position).getSingleScore());
+            holder.textViewTag2.setText(mCpuList.get(position).getMultiScore());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), "TODO click from presenter with interface.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        @Override
+        public int getItemCount() {
+            return mCpuList.size();
+        }
+
+        /* */
+        @Override
+        public Filter getFilter() {
+            return listFilter;
+        }
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -147,53 +275,6 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
                 this.textViewTag1 = itemView.findViewById(R.id.tag1);
                 this.textViewTag2 = itemView.findViewById(R.id.tag2);
             }
-        }
-
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public CpuRankingAdapter(List<Cpu> data) {
-            this.mCpuList = data;
-        }
-
-        private void setList(List<Cpu> cpuList) {
-            mCpuList = checkNotNull(cpuList);
-        }
-
-        // Create new views (invoked by the layout manager)
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
-            CpuRankingAdapter.ViewHolder viewHolder = new CpuRankingAdapter.ViewHolder(view);
-            return viewHolder;
-        }
-
-        // Replace the contents of a view (invoked by the layout manager)
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-
-            holder.textViewModel.setText(mCpuList.get(position).getModel());
-            holder.textViewDescription.setText("");
-            holder.textViewTag1.setText(mCpuList.get(position).getSingleScore());
-            holder.textViewTag2.setText(mCpuList.get(position).getMultiScore());
-
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Toast.makeText(getActivity(), "TODO click from presenter with interface.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-        // Return the size of your dataset (invoked by the layout manager)
-        @Override
-        public int getItemCount() {
-            return mCpuList.size();
         }
     }
 }

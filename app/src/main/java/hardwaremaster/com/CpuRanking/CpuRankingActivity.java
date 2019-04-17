@@ -20,7 +20,7 @@ public class CpuRankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        setContentView(R.layout.cpuranking_act);
+        setContentView(R.layout.activity_cpuranking);
 
         CpuRankingFragment cpuRankingFragment =
                 (CpuRankingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
