@@ -7,6 +7,8 @@ import java.util.Comparator;
 
 import androidx.annotation.NonNull;
 import hardwaremaster.com.data.Cpu;
+import hardwaremaster.com.data.FilterValues;
+import hardwaremaster.com.data.RangeSeekBarValues;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
@@ -46,7 +48,19 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter{
                 });
             break;
         }
+
         mCpuRankingsView.showCpuRanking(cpuRankingList);
+    }
+
+    @Override
+    public RangeSeekBarValues getFilterMinMaxValues() {
+        RangeSeekBarValues rangeSeekBarValues = mCpuRankingInteractor.getFilterMinMaxValues();
+        return rangeSeekBarValues;
+    }
+
+    @Override
+    public void filterItems(FilterValues filterValues) {
+        mCpuRankingInteractor.filterItems(filterValues);
     }
 
     @Override

@@ -7,9 +7,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import hardwaremaster.com.data.Cpu;
+import hardwaremaster.com.data.FilterValues;
+import hardwaremaster.com.data.RangeSeekBarValues;
+import hardwaremaster.com.widgets.RangeSeekBar;
 
 public class CpuRankingInteractor {
 
@@ -38,6 +44,43 @@ public class CpuRankingInteractor {
 
             }
         });
+    }
+
+    public RangeSeekBarValues getFilterMinMaxValues() {
+        Cpu maxCpu = Collections.max(mObjectList,new Comparator<Cpu>() {
+
+            public int compare(Cpu o1, Cpu o2) {
+                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
+            }
+        });
+
+        Cpu minCpu = Collections.min(mObjectList,new Comparator<Cpu>() {
+
+            public int compare(Cpu o1, Cpu o2) {
+                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
+            }
+        });
+
+        RangeSeekBarValues rangeSeekBarValues = new RangeSeekBarValues();
+        rangeSeekBarValues.setMax(Double.parseDouble(maxCpu.getSingleScore()));
+        rangeSeekBarValues.setMin(Double.parseDouble(minCpu.getSingleScore()));
+
+        return rangeSeekBarValues;
+    }
+
+    public void filterItems(FilterValues filterValues) {
+
+/*            ArrayList<Cpu> filteredCpu = (ArrayList<Cpu>) mObjectList.stream()
+                    .filter(p -> Double.parseDouble(p.getSingleScore()) > filterValues.getSingleScoreLow()).collect(Collectors.toList());
+            mCpuRankingPresenter.refreshCpuList(filteredCpu);*/
+        ArrayList<Cpu> filteredCpu = new ArrayList<>();
+        for (Cpu cpu: mObjectList) {
+            if(Double.parseDouble(cpu.getSingleScore()) > filterValues.getSingleScoreLow() &&
+                    Double.parseDouble(cpu.getSingleScore()) < filterValues.getSingleScoreHigh()) {
+                filteredCpu.add(cpu);
+            }
+        }
+        mCpuRankingPresenter.refreshCpuList(filteredCpu);
     }
 
 }

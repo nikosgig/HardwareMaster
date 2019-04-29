@@ -9,12 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,24 +76,6 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_order:
-                showOrderByMenu();
-                break;
-/*            case R.id.order_brand:
-                //mPresenter.sortByBrand();
-                mPresenter.loadCpuRanking();
-                break;
-            case R.id.order_single:
-                //mPresenter.sortBySingle();
-                mPresenter.loadCpuRanking();
-                break;*/
-        }
-        return true;
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         /* Setup Search View */
         inflater.inflate(R.menu.menu_options, menu);
@@ -141,7 +119,7 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
     }
 
-    @Override
+/*    @Override
     public void showOrderByMenu() {
         PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_order));
         popup.getMenuInflater().inflate(R.menu.order_by_options, popup.getMenu());
@@ -162,119 +140,10 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
             }
         });
         popup.show();
-    }
+    }*/
 
     @Override
     public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
-    }
-
-    public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> implements Filterable {
-        private List<Cpu> mCpuList;
-        private List<Cpu> mCpuListFull = new ArrayList<>();
-        private Filter listFilter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                List<Cpu> filteredList = new ArrayList<>();
-                if (constraint == null || constraint.length() == 0) {
-                    filteredList.addAll(mCpuListFull);
-                } else {
-                    String filterPattern = constraint.toString().toLowerCase().trim();
-                    for (Cpu item : mCpuListFull) {
-                        if (item.getModel().toLowerCase().contains(filterPattern)) {
-                            filteredList.add(item);
-                        }
-                    }
-                }
-                FilterResults results = new FilterResults();
-                results.values = filteredList;
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                mCpuList.clear();
-                mCpuList.addAll((List) results.values);
-                mListAdapter.notifyDataSetChanged();
-
-            }
-        };
-
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public CpuRankingAdapter(List<Cpu> data) {
-            this.mCpuList = data;
-        }
-
-        private void setList(List<Cpu> cpuList) {
-            mCpuList = checkNotNull(cpuList);
-            if (mCpuListFull.isEmpty()) {
-                mCpuListFull.addAll(mCpuList);
-
-            }
-        }
-
-        // Create new views (invoked by the layout manager)
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card,
-                    parent, false);
-            CpuRankingAdapter.ViewHolder viewHolder = new CpuRankingAdapter.ViewHolder(view);
-            return viewHolder;
-        }
-
-        // Replace the contents of a view (invoked by the layout manager)
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-
-            holder.textViewModel.setText(mCpuList.get(position).getModel());
-            holder.textViewDescription.setText("");
-            holder.textViewTag1.setText(mCpuList.get(position).getSingleScore());
-            holder.textViewTag2.setText(mCpuList.get(position).getMultiScore());
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), "TODO click from presenter with interface.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-        // Return the size of your dataset (invoked by the layout manager)
-        @Override
-        public int getItemCount() {
-            return mCpuList.size();
-        }
-
-        /* */
-        @Override
-        public Filter getFilter() {
-            return listFilter;
-        }
-
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
-            public TextView textViewModel;
-            public TextView textViewDescription;
-            public ImageView imageViewImage;
-            public TextView textViewTag1;
-            public TextView textViewTag2;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                this.textViewModel = itemView.findViewById(R.id.model);
-                this.textViewDescription = itemView.findViewById(R.id.description);
-                this.imageViewImage = itemView.findViewById(R.id.image);
-                this.textViewTag1 = itemView.findViewById(R.id.tag1);
-                this.textViewTag2 = itemView.findViewById(R.id.tag2);
-            }
-        }
     }
 }
