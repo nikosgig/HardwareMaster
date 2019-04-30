@@ -5,21 +5,19 @@ package hardwaremaster.com.Base;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.chip.ChipGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import hardwaremaster.com.R;
-import hardwaremaster.com.fragments.BottomDialogFilterFragment;
 
 public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
     AppBarLayout appBarLayout;
-    public BottomDialogFilterFragment bottomDialogFilterFragment;
+    ChipGroup chipGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +26,7 @@ public class BaseActivity extends AppCompatActivity {
         View baseView = inflater.inflate(R.layout.activity_base, null);
         toolbar =  baseView.findViewById(R.id.toolbar);
         appBarLayout =  baseView.findViewById(R.id.appbar);
+        chipGroup = baseView.findViewById(R.id.chip_group);
         setContentView(baseView);
         initInstances();
 
