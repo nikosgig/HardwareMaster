@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import hardwaremaster.com.Base.BaseActivity;
+import hardwaremaster.com.Filter.FilterPresenter;
 import hardwaremaster.com.R;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
@@ -25,6 +26,7 @@ import hardwaremaster.com.widgets.RangeSeekBar;
 public class CpuRankingActivity extends BaseActivity implements FilterFragment.OnBottomDialogFilterFragmentListener{
 
     private CpuRankingPresenter mCpuRankingPresenter;
+    private FilterPresenter mFilterPresenter;
     FilterValues filterValues = new FilterValues();
     RangeSeekBar<Double> seekBarSingleScore;
     public FilterFragment filterFragment;
@@ -54,10 +56,11 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_order:
-                ArrayList<RangeSeekBar<Double>> list = new ArrayList<>();
+                ArrayList<RangeSeekBar> list = new ArrayList<>();
 
                 RangeSeekBarValues rangeSeekBarValues = mCpuRankingPresenter.getFilterMinMaxValues();
                 seekBarSingleScore = new RangeSeekBar<>(this);
+                seekBarSingleScore.setRangeSeekBarType("bwoah");
                 seekBarSingleScore.setRangeValues(rangeSeekBarValues.getMin(), rangeSeekBarValues.getMax());
                 seekBarSingleScore.setTextAboveThumbsColor(R.color.colorPrimary);
                 seekBarSingleScore.setTag("SingleScore");
@@ -65,18 +68,19 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
 
                 RangeSeekBarValues rangeSeekBarValues1 = mCpuRankingPresenter.getFilterMinMaxValues();
                 seekBarSingleScore = new RangeSeekBar<>(this);
+                seekBarSingleScore.setRangeSeekBarType("bwoah2");
                 seekBarSingleScore.setRangeValues(rangeSeekBarValues1.getMin(), rangeSeekBarValues1.getMax());
                 seekBarSingleScore.setTextAboveThumbsColor(R.color.colorAccent);
                 seekBarSingleScore.setTag("SingleScore2");
 
                 list.add(seekBarSingleScore);
 
-                filterFragment =
-                        FilterFragment.newInstance(list);
-
                 // Add to layout
+                filterFragment = FilterFragment.newInstance();
                 filterFragment.show(getSupportFragmentManager(),
                         "add_photo_dialog_fragment");
+                mFilterPresenter = new FilterPresenter(filterFragment);
+                mFilterPresenter.generateRangeSeekBars(list);
 
 
 
@@ -95,11 +99,8 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
 
 
     @Override
-    public void OnBottomDialogFilterFragmentInteraction(ArrayList<RangeSeekBar<Double>> seekBars) {
+    public void OnBottomDialogFilterFragmentInteraction() {
         filterFragment.dismiss();
-        for (RangeSeekBar<Double> seekBar: seekBars) {
-
-        }
         filterValues.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());
         filterValues.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
         mCpuRankingPresenter.filterItems(filterValues);

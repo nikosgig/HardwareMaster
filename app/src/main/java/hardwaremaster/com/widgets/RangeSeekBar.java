@@ -31,7 +31,7 @@ import hardwaremaster.com.util.BitmapUtils;
 import hardwaremaster.com.util.PixelUtils;
 
 
-public class RangeSeekBar<T extends Number> extends AppCompatImageView implements Parcelable{
+public class RangeSeekBar<T extends Number> extends AppCompatImageView {
     /**
      * Default color of a {@link RangeSeekBar}, #FF33B5E5. This is also known as "Ice Cream Sandwich" blue.
      */
@@ -99,6 +99,7 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView implement
     private int activeColor;
     private int defaultColor;
     private int textAboveThumbsColor;
+    private String rangeSeekBarType;
 
     private boolean thumbShadow;
     private int thumbShadowXOffset;
@@ -834,14 +835,12 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView implement
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getRangeSeekBarType() {
+        return rangeSeekBarType;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
+    public void setRangeSeekBarType(String rangeSeekBarType) {
+        this.rangeSeekBarType = rangeSeekBarType;
     }
 
     /**

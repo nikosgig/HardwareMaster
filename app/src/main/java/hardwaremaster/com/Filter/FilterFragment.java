@@ -2,6 +2,7 @@ package hardwaremaster.com.Filter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Range;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,39 +15,32 @@ import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import hardwaremaster.com.R;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
-public class FilterFragment extends BottomSheetDialogFragment {
+import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
+
+public class FilterFragment extends BottomSheetDialogFragment implements FilterContract.View {
 
     private OnBottomDialogFilterFragmentListener mListener;
+    private FilterContract.Presenter mPresenter;
     private Button applyFilterButton;
-    private RelativeLayout seekBarsView;
-    private ArrayList<RangeSeekBar<Double>> rangeSeekBars;
+    private RecyclerView mSeekBarsView;
+    private FilterAdapter mSeekBarListAdapter = new FilterAdapter(new ArrayList<RangeSeekBar>(0));
 
-    public static FilterFragment newInstance(RangeSeekBar<Double> seekBars) {
-
-        FilterFragment f = new FilterFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("seekbar", seekBars);
-        f.setArguments(args);
-
-        return f;
-    }
-
-    public static FilterFragment newInstance(ArrayList<RangeSeekBar<Double>> seekBars) {
-
-        FilterFragment f = new FilterFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("seekbars", seekBars);
-        f.setArguments(args);
-
-        return f;
+    public FilterFragment() {
     }
 
     public static FilterFragment newInstance() {
         return new FilterFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //mSeekBarListAdapter = new FilterAdapter(new ArrayList<RangeSeekBar>(0));
     }
 
     @Nullable
@@ -58,21 +52,15 @@ public class FilterFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.fragment_bottom_sheet_filtering, container,
                 false);
 
-        //seekBarListView = view.findViewById(R.id.seek_bar_list_view);
 
-        seekBarsView = view.findViewById(R.id.seek_bars_view);
+        //Set up seek bars
+        mSeekBarsView = view.findViewById(R.id.seek_bars_view);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        mSeekBarsView.setLayoutManager(layoutManager);
+        mSeekBarsView.setAdapter(mSeekBarListAdapter);
 
-
-        if (getArguments() != null && getArguments().getParcelableArrayList("seekbars") != null) {
-            rangeSeekBars = getArguments().getParcelableArrayList("seekbars");
-            if (rangeSeekBars != null) {
-                for (RangeSeekBar<Double> rangeSeekBar : rangeSeekBars) {
-                    seekBarsView.addView (rangeSeekBar);
-                }
-            }
-        }
-
-
+        //setup apply button
         applyFilterButton = view.findViewById(R.id.apply_filter_button);
         applyFilterButton.setOnClickListener(new View.OnClickListener() {
 
@@ -80,13 +68,16 @@ public class FilterFragment extends BottomSheetDialogFragment {
             public void onClick(View arg0) {
 /*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
                 mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
-                mListener.OnBottomDialogFilterFragmentInteraction(rangeSeekBars);
+                mListener.OnBottomDialogFilterFragmentInteraction();
             }
         });
-        // get the views and attach the listener
-
         return view;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -101,7 +92,19 @@ public class FilterFragment extends BottomSheetDialogFragment {
         }
     }
 
+    /* CpuRankingContract.View callbacks*/
+    @Override
+    public void showRangeSeekBars(ArrayList<RangeSeekBar> rangeSeekBars) {
+        mSeekBarListAdapter.setList(rangeSeekBars);
+        mSeekBarListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setPresenter(FilterContract.Presenter presenter) {
+        mPresenter = checkNotNull(presenter);
+    }
+
     public interface OnBottomDialogFilterFragmentListener {
-        void OnBottomDialogFilterFragmentInteraction(ArrayList<RangeSeekBar<Double>> seekBars);
+        void OnBottomDialogFilterFragmentInteraction();
     }
 }
