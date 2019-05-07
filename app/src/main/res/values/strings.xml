@@ -18,6 +18,9 @@
     <string name="order_single">By Single Score</string>
     <string name="order_multi">By Multi Score</string>
 
+    <string name="seek_bar_title_single">Single-Core Score</string>
+    <string name="seek_bar_title_multi">Multi-Core Score</string>
+    <string name="seek_bar_min_quad">Quad-Core Score</string>
     <string name="seek_bar_min_label">Min</string>
     <string name="seek_bar_max_label">Max</string>
 </resources>

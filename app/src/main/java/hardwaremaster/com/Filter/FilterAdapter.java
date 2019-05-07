@@ -1,6 +1,5 @@
 package hardwaremaster.com.Filter;
 
-import android.util.Range;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import hardwaremaster.com.R;
 import hardwaremaster.com.widgets.RangeSeekBar;
@@ -28,6 +26,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
         mRangeSeekBarList = checkNotNull(rangeSeekBars);
     }
 
+    public ArrayList<RangeSeekBar> getList() {
+        return mRangeSeekBarList;
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -44,7 +46,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.textViewType.setText(mRangeSeekBarList.get(position).getRangeSeekBarType());
+        holder.textViewType.setText(mRangeSeekBarList.get(position).getRangeSeekBarTitle());
         holder.rangeSeekBar.setRangeValues(mRangeSeekBarList.get(position).getAbsoluteMinValue(), mRangeSeekBarList.get(position).getAbsoluteMaxValue());
         holder.rangeSeekBar.setTextAboveThumbsColor(R.color.colorPrimary);
     }

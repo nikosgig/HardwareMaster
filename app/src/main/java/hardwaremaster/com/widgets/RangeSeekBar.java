@@ -14,7 +14,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -99,7 +98,7 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
     private int activeColor;
     private int defaultColor;
     private int textAboveThumbsColor;
-    private String rangeSeekBarType;
+    private int rangeSeekBarTitle;
 
     private boolean thumbShadow;
     private int thumbShadowXOffset;
@@ -835,12 +834,12 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
         }
     }
 
-    public String getRangeSeekBarType() {
-        return rangeSeekBarType;
+    public int getRangeSeekBarTitle() {
+        return rangeSeekBarTitle;
     }
 
-    public void setRangeSeekBarType(String rangeSeekBarType) {
-        this.rangeSeekBarType = rangeSeekBarType;
+    public void setRangeSeekBarTitle(int rangeSeekBarTitle) {
+        this.rangeSeekBarTitle = rangeSeekBarTitle;
     }
 
     /**

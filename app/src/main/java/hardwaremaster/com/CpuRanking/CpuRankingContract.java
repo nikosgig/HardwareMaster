@@ -8,6 +8,7 @@ import hardwaremaster.com.Base.BaseView;
 import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
+import hardwaremaster.com.widgets.RangeSeekBar;
 
 /**
  * This specifies the contract between the view and the presenter.
@@ -21,8 +22,7 @@ public interface CpuRankingContract {
     interface Presenter extends BasePresenter {
         void loadCpuRanking();
         void refreshCpuList(ArrayList<Cpu> arrayList);
-        RangeSeekBarValues getFilterMinMaxValues();
-        void filterItems(FilterValues filterValues);
+        void filterItems(ArrayList<RangeSeekBar> rangeSeekBars);
         void setOrder(CpuRankingSortBy orderType);
 
     }

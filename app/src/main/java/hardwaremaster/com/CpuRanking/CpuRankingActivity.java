@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import hardwaremaster.com.Base.BaseActivity;
-import hardwaremaster.com.Filter.FilterPresenter;
 import hardwaremaster.com.R;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
@@ -26,11 +25,12 @@ import hardwaremaster.com.widgets.RangeSeekBar;
 public class CpuRankingActivity extends BaseActivity implements FilterFragment.OnBottomDialogFilterFragmentListener{
 
     private CpuRankingPresenter mCpuRankingPresenter;
-    private FilterPresenter mFilterPresenter;
+    //private FilterPresenter mFilterPresenter;
     FilterValues filterValues = new FilterValues();
-    RangeSeekBar<Double> seekBarSingleScore;
+    //RangeSeekBar<Double> seekBarSingleScore;
     public FilterFragment filterFragment;
     private DrawerLayout mDrawerLayout;
+    private RangeSeekBar seekBarSingleScore, seekBarMultiScore;
 
 
     @Override
@@ -48,7 +48,8 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
         }
 
         // Create the presenter
-        mCpuRankingPresenter = new CpuRankingPresenter(cpuRankingFragment);
+        filterFragment = FilterFragment.newInstance();
+        mCpuRankingPresenter = new CpuRankingPresenter(cpuRankingFragment, filterFragment);
         mCpuRankingPresenter.loadCpuRanking();
     }
 
@@ -56,34 +57,9 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_order:
-                ArrayList<RangeSeekBar> list = new ArrayList<>();
-
-                RangeSeekBarValues rangeSeekBarValues = mCpuRankingPresenter.getFilterMinMaxValues();
-                seekBarSingleScore = new RangeSeekBar<>(this);
-                seekBarSingleScore.setRangeSeekBarType("bwoah");
-                seekBarSingleScore.setRangeValues(rangeSeekBarValues.getMin(), rangeSeekBarValues.getMax());
-                seekBarSingleScore.setTextAboveThumbsColor(R.color.colorPrimary);
-                seekBarSingleScore.setTag("SingleScore");
-                list.add(seekBarSingleScore);
-
-                RangeSeekBarValues rangeSeekBarValues1 = mCpuRankingPresenter.getFilterMinMaxValues();
-                seekBarSingleScore = new RangeSeekBar<>(this);
-                seekBarSingleScore.setRangeSeekBarType("bwoah2");
-                seekBarSingleScore.setRangeValues(rangeSeekBarValues1.getMin(), rangeSeekBarValues1.getMax());
-                seekBarSingleScore.setTextAboveThumbsColor(R.color.colorAccent);
-                seekBarSingleScore.setTag("SingleScore2");
-
-                list.add(seekBarSingleScore);
-
-                // Add to layout
-                filterFragment = FilterFragment.newInstance();
                 filterFragment.show(getSupportFragmentManager(),
                         "add_photo_dialog_fragment");
-                mFilterPresenter = new FilterPresenter(filterFragment);
-                mFilterPresenter.generateRangeSeekBars(list);
-
-
-
+                generateSeekBars();
                 break;
 /*            case R.id.order_brand:
                 //mPresenter.sortByBrand();
@@ -97,14 +73,45 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
         return true;
     }
 
+    public void generateSeekBars() {
+        RangeSeekBarValues rangeSeekBarValues = mCpuRankingPresenter.getFilterMinMaxValues();
+
+
+        ArrayList<RangeSeekBar> seekBarsToShow = new ArrayList<>();
+
+        seekBarSingleScore = new RangeSeekBar<>(this);
+        seekBarSingleScore.setRangeSeekBarTitle(R.string.seek_bar_title_single);
+        seekBarSingleScore.setRangeValues(rangeSeekBarValues.getSingleScoreMin(), rangeSeekBarValues.getSingleScoreMax());
+        seekBarSingleScore.setTextAboveThumbsColor(R.color.colorPrimary);
+        seekBarSingleScore.setTag("SingleScore");
+        seekBarsToShow.add(seekBarSingleScore);
+
+        seekBarMultiScore = new RangeSeekBar<>(this);
+        seekBarMultiScore.setRangeSeekBarTitle(R.string.seek_bar_title_multi);
+        seekBarMultiScore.setRangeValues(rangeSeekBarValues.getMultiCoreMin(), rangeSeekBarValues.getMultiCoreMax());
+        seekBarMultiScore.setTextAboveThumbsColor(R.color.colorAccent);
+        seekBarSingleScore.setTag("SingleScore2");
+
+        seekBarsToShow.add(seekBarMultiScore);
+
+        mCpuRankingPresenter.generateRangeSeekBars(seekBarsToShow);
+    }
+
+    public FilterValues generateFilterValues() {
+        filterValues = new FilterValues();
+        filterValues.setSingleScoreMin((Double) seekBarSingleScore.getSelectedMinValue());
+        filterValues.setSingleScoreMax((Double) seekBarSingleScore.getSelectedMaxValue());
+        filterValues.setMultiCoreMin((Double) seekBarMultiScore.getSelectedMinValue());
+        filterValues.setMultiCoreMax((Double) seekBarMultiScore.getSelectedMaxValue());
+
+        return filterValues;
+    }
+
 
     @Override
-    public void OnBottomDialogFilterFragmentInteraction() {
+    public void OnBottomDialogFilterFragmentInteraction(ArrayList<RangeSeekBar> rangeSeekBars) {
         filterFragment.dismiss();
-        filterValues.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());
-        filterValues.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
-        mCpuRankingPresenter.filterItems(filterValues);
-
+        mCpuRankingPresenter.filterItems(rangeSeekBars);
         final ChipGroup entryChipGroup = findViewById(R.id.chip_group);
         entryChipGroup.setVisibility(View.VISIBLE);
         final Chip entryChip = getChip(entryChipGroup, "Single Score");

@@ -1,9 +1,12 @@
 package hardwaremaster.com.Filter;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import hardwaremaster.com.Base.BasePresenter;
 import hardwaremaster.com.Base.BaseView;
+import hardwaremaster.com.data.RangeSeekBarValues;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 public interface FilterContract {
@@ -15,5 +18,6 @@ public interface FilterContract {
 
     interface Presenter extends BasePresenter {
         void generateRangeSeekBars(ArrayList<RangeSeekBar> rangeSeekBars);
+        RangeSeekBarValues getFilterMinMaxValues();
     }
 }

@@ -68,7 +68,7 @@ public class FilterFragment extends BottomSheetDialogFragment implements FilterC
             public void onClick(View arg0) {
 /*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
                 mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
-                mListener.OnBottomDialogFilterFragmentInteraction();
+                mListener.OnBottomDialogFilterFragmentInteraction(mSeekBarListAdapter.getList());
             }
         });
         return view;
@@ -105,6 +105,6 @@ public class FilterFragment extends BottomSheetDialogFragment implements FilterC
     }
 
     public interface OnBottomDialogFilterFragmentListener {
-        void OnBottomDialogFilterFragmentInteraction();
+        void OnBottomDialogFilterFragmentInteraction(ArrayList<RangeSeekBar> rangeSeekBars);
     }
 }
