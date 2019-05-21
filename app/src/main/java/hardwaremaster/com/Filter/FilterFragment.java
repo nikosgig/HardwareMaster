@@ -25,7 +25,7 @@ import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class FilterFragment extends BottomSheetDialogFragment implements RangeSeekBar.OnRangeSeekBarChangeListener{
+public class FilterFragment extends BottomSheetDialogFragment {
 
     private OnBottomDialogFilterFragmentListener mListener;
     private ArrayList<RangeSeekBar> rangeSeekBars = new ArrayList<>();
@@ -90,11 +90,6 @@ public class FilterFragment extends BottomSheetDialogFragment implements RangeSe
             throw new RuntimeException(context.toString()
                     + " must implement OnBottomDialogFilterFragmentListener");
         }
-    }
-
-    @Override
-    public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Number minValue, Number maxValue) {
-        Log.d("info", bar + " " + minValue + " " + maxValue);
     }
 
     public interface OnBottomDialogFilterFragmentListener {
