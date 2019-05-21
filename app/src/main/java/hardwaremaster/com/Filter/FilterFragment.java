@@ -2,13 +2,16 @@ package hardwaremaster.com.Filter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Range;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.annotations.Nullable;
@@ -22,13 +25,12 @@ import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class FilterFragment extends BottomSheetDialogFragment implements FilterContract.View {
+public class FilterFragment extends BottomSheetDialogFragment implements RangeSeekBar.OnRangeSeekBarChangeListener{
 
     private OnBottomDialogFilterFragmentListener mListener;
-    private FilterContract.Presenter mPresenter;
+    private ArrayList<RangeSeekBar> rangeSeekBars = new ArrayList<>();
+    private LinearLayout seekBarHolder;
     private Button applyFilterButton;
-    private RecyclerView mSeekBarsView;
-    private FilterAdapter mSeekBarListAdapter = new FilterAdapter(new ArrayList<RangeSeekBar>(0));
 
     public FilterFragment() {
     }
@@ -54,11 +56,15 @@ public class FilterFragment extends BottomSheetDialogFragment implements FilterC
 
 
         //Set up seek bars
-        mSeekBarsView = view.findViewById(R.id.seek_bars_view);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        mSeekBarsView.setLayoutManager(layoutManager);
-        mSeekBarsView.setAdapter(mSeekBarListAdapter);
+        rangeSeekBars = mListener.OnRangeSeekBarInit();
+        seekBarHolder = view.findViewById(R.id.seekbar_placeholder);
+        for(RangeSeekBar rangeSeekBar: rangeSeekBars) {
+            if(rangeSeekBar.getParent() != null) {
+                ((ViewGroup)rangeSeekBar.getParent()).removeView(rangeSeekBar); // <- fix
+            }
+            seekBarHolder.addView(rangeSeekBar);
+
+        }
 
         //setup apply button
         applyFilterButton = view.findViewById(R.id.apply_filter_button);
@@ -68,16 +74,10 @@ public class FilterFragment extends BottomSheetDialogFragment implements FilterC
             public void onClick(View arg0) {
 /*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
                 mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
-                mListener.OnBottomDialogFilterFragmentInteraction(mSeekBarListAdapter.getList());
+                mListener.OnBottomDialogFilterFragmentInteraction();
             }
         });
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override
@@ -92,19 +92,13 @@ public class FilterFragment extends BottomSheetDialogFragment implements FilterC
         }
     }
 
-    /* CpuRankingContract.View callbacks*/
     @Override
-    public void showRangeSeekBars(ArrayList<RangeSeekBar> rangeSeekBars) {
-        mSeekBarListAdapter.setList(rangeSeekBars);
-        mSeekBarListAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setPresenter(FilterContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
+    public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Number minValue, Number maxValue) {
+        Log.d("info", bar + " " + minValue + " " + maxValue);
     }
 
     public interface OnBottomDialogFilterFragmentListener {
-        void OnBottomDialogFilterFragmentInteraction(ArrayList<RangeSeekBar> rangeSeekBars);
+        void OnBottomDialogFilterFragmentInteraction();
+        ArrayList<RangeSeekBar> OnRangeSeekBarInit();
     }
 }

@@ -22,7 +22,8 @@ public interface CpuRankingContract {
     interface Presenter extends BasePresenter {
         void loadCpuRanking();
         void refreshCpuList(ArrayList<Cpu> arrayList);
-        void filterItems(ArrayList<RangeSeekBar> rangeSeekBars);
+        void filterItems(FilterValues filterValues);
+        RangeSeekBarValues getFilterMinMaxValues();
         void setOrder(CpuRankingSortBy orderType);
 
     }

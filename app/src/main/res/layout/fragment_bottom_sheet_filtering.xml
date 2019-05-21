@@ -6,11 +6,11 @@
     android:layout_marginTop="@dimen/dp_8"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/seek_bars_view"
+    <LinearLayout
+        android:id="@+id/seekbar_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 
     <Button
         android:id="@+id/apply_filter_button"

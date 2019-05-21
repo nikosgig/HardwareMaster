@@ -166,6 +166,7 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
             thumbShadowYOffset = defaultShadowYOffset;
             thumbShadowBlur = defaultShadowBlur;
             activateOnDefaultValues = false;
+            showLabels = true;
         } else {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RangeSeekBar, 0, 0);
             try {
@@ -265,6 +266,10 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
     public void setTextAboveThumbsColor(int textAboveThumbsColor) {
         this.textAboveThumbsColor = textAboveThumbsColor;
         invalidate();
+    }
+
+    public int getTextAboveThumbsColor() {
+        return textAboveThumbsColor;
     }
 
     public void setTextAboveThumbsColorResource(@ColorRes int resId) {
@@ -667,6 +672,12 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
                     maxPosition,
                     distanceToTop + textSize,
                     paint);
+        }
+
+        if (rangeSeekBarTitle != 0) {
+            // draw min and max labels
+            String rangeSeek = getContext().getString(this.rangeSeekBarTitle);
+            canvas.drawText(rangeSeek, 10, 40, paint);
         }
 
     }

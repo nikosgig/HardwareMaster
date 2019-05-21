@@ -114,7 +114,9 @@ public class CpuRankingInteractor {
         ArrayList<Cpu> filteredCpu = new ArrayList<>();
         for (Cpu cpu: mObjectList) {
             if(Double.parseDouble(cpu.getSingleScore()) > filterValues.getSingleScoreMin() &&
-                    Double.parseDouble(cpu.getSingleScore()) < filterValues.getSingleScoreMax()) {
+                    Double.parseDouble(cpu.getSingleScore()) < filterValues.getSingleScoreMax() &&
+                    Double.parseDouble(cpu.getMultiScore()) > filterValues.getMultiCoreMin() &&
+                    Double.parseDouble(cpu.getMultiScore()) < filterValues.getMultiCoreMax()) {
                 filteredCpu.add(cpu);
             }
         }
