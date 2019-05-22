@@ -1,21 +1,23 @@
-package hardwaremaster.com.CpuRanking;
+package hardwaremaster.com.Ranking;
 
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.logging.Filter;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import hardwaremaster.com.Base.BaseActivity;
 import hardwaremaster.com.R;
+import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
 import hardwaremaster.com.Filter.FilterFragment;
@@ -23,9 +25,9 @@ import hardwaremaster.com.util.ActivityUtils;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 
-public class CpuRankingActivity extends BaseActivity implements FilterFragment.OnBottomDialogFilterFragmentListener{
+public class RankingActivity extends BaseActivity implements FilterFragment.OnBottomDialogFilterFragmentListener{
 
-    private CpuRankingPresenter mCpuRankingPresenter;
+    private RankingPresenter mRankingPresenter;
     //private FilterPresenter mFilterPresenter;
     FilterValues filterValues = new FilterValues();
     //RangeSeekBar<Double> seekBarSingleScore;
@@ -33,24 +35,54 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
     private DrawerLayout mDrawerLayout;
     private RangeSeekBar seekBarSingleScore, seekBarMultiScore;
     ArrayList<RangeSeekBar> seekBarsToShow = new ArrayList<>();
+    private BottomNavigationView mBottomNav;
+    private int mSelectedItem;
+    private static final String SELECTED_ITEM = "arg_selected_item";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
+        mBottomNav = findViewById(R.id.navigation);
+
         //setContentView(R.layout.activity_cpuranking);
-        CpuRankingFragment cpuRankingFragment =
-                (CpuRankingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (cpuRankingFragment == null) {
+        RankingFragment rankingFragment =
+                (RankingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (rankingFragment == null) {
             // Create the fragment
-            cpuRankingFragment = CpuRankingFragment.newInstance();
+            rankingFragment = RankingFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), rankingFragment, R.id.contentFrame);
         }
 
         // Create the presenter
-        mCpuRankingPresenter = new CpuRankingPresenter(cpuRankingFragment);
-        mCpuRankingPresenter.loadCpuRanking();
+        mRankingPresenter = new RankingPresenter(rankingFragment);
+
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectFragment(item);
+                return true;
+            }
+        });
+
+        MenuItem selectedItem;
+        if (savedInstanceState != null) {
+            mSelectedItem = savedInstanceState.getInt(SELECTED_ITEM, 0);
+            selectedItem = mBottomNav.getMenu().findItem(mSelectedItem);
+        } else {
+            selectedItem = mBottomNav.getMenu().getItem(0);
+        }
+        selectFragment(selectedItem);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_ITEM, mSelectedItem);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -76,6 +108,42 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
         return true;
     }
 
+    private void selectFragment(MenuItem item) {
+        RankingFragment frag = null;
+        // init corresponding fragment
+        switch (item.getItemId()) {
+            case R.id.menu_cpu:
+                mRankingPresenter.loadCpuRanking();
+                break;
+            case R.id.menu_gpu:
+                //mRankingPresenter.loadGpuRanking();
+                ArrayList<Cpu> arrayList = new ArrayList<>();
+                Cpu cpu = new Cpu();
+                cpu.setModel("test");
+                arrayList.add(cpu);
+                mRankingPresenter.refreshCpuList(arrayList);
+                break;
+            case R.id.menu_settings:
+                ArrayList<Cpu> arrayList1 = new ArrayList<>();
+                Cpu cpu1 = new Cpu();
+                cpu1.setModel("test1");
+                arrayList1.add(cpu1);
+                mRankingPresenter.refreshCpuList(arrayList1);
+                //load settings
+                break;
+        }
+
+        // update selected item
+        mSelectedItem = item.getItemId();
+
+        // uncheck the other items.
+        for (int i = 0; i< mBottomNav.getMenu().size(); i++) {
+            MenuItem menuItem = mBottomNav.getMenu().getItem(i);
+            menuItem.setChecked(menuItem.getItemId() == item.getItemId());
+        }
+
+    }
+
     public FilterValues generateFilterValues() {
         filterValues = new FilterValues();
         filterValues.setSingleScoreMin((Double) seekBarSingleScore.getSelectedMinValue());
@@ -91,7 +159,7 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
     public void OnBottomDialogFilterFragmentInteraction() {
         filterFragment.dismiss();
         FilterValues filterValues = generateFilterValues();
-        mCpuRankingPresenter.filterItems(filterValues);
+        mRankingPresenter.filterItems(filterValues);
 /*        final ChipGroup entryChipGroup = findViewById(R.id.chip_group);
         entryChipGroup.setVisibility(View.VISIBLE);
         final Chip entryChip = getChip(entryChipGroup, "Single Score");
@@ -101,7 +169,7 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
     @Override
     public ArrayList<RangeSeekBar> OnRangeSeekBarInit() {
         ArrayList<RangeSeekBar> seekBarsToShow = new ArrayList<>();
-        RangeSeekBarValues rangeSeekBarValues = mCpuRankingPresenter.getFilterMinMaxValues();
+        RangeSeekBarValues rangeSeekBarValues = mRankingPresenter.getFilterMinMaxValues();
 
         seekBarSingleScore = new RangeSeekBar<>(this);
         seekBarSingleScore.setRangeSeekBarTitle(R.string.seek_bar_title_single);
@@ -134,7 +202,7 @@ public class CpuRankingActivity extends BaseActivity implements FilterFragment.O
             @Override
             public void onClick(View v) {
                 entryChipGroup.removeView(chip);
-                mCpuRankingPresenter.loadCpuRanking();
+                mRankingPresenter.loadCpuRanking();
             }
         });
         return chip;

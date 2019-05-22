@@ -1,4 +1,4 @@
-package hardwaremaster.com.CpuRanking;
+package hardwaremaster.com.Ranking;
 
 
 import java.util.ArrayList;
@@ -7,32 +7,34 @@ import java.util.Comparator;
 
 import androidx.annotation.NonNull;
 import hardwaremaster.com.data.Cpu;
+import hardwaremaster.com.data.DatabaseCalls;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
-import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
 /**
- * Listens to user actions from the UI ({@link CpuRankingFragment}), retrieves the data and updates
+ * Listens to user actions from the UI ({@link RankingFragment}), retrieves the data and updates
  * the UI as required.
  */
-public class CpuRankingPresenter implements CpuRankingContract.Presenter {
+public class RankingPresenter implements RankingContract.Presenter {
 
-    private final CpuRankingContract.View mCpuRankingsView;
-    private CpuRankingInteractor mCpuRankingInteractor;
+    private final RankingContract.View mRankingsView;
+    private DatabaseCalls mDatabaseCalls;
     private CpuRankingSortBy mCurrentOrderBy = CpuRankingSortBy.ALL;
 
 
-    public CpuRankingPresenter(@NonNull CpuRankingContract.View cpuRankingView) {
-        mCpuRankingsView = checkNotNull(cpuRankingView, "cpuRankings cannot be null!");
-        mCpuRankingsView.setPresenter(this);
-        mCpuRankingInteractor = new CpuRankingInteractor(this);
+    public RankingPresenter(@NonNull RankingContract.View RankingView) {
+        mRankingsView = checkNotNull(RankingView, "cpuRankings cannot be null!");
+        mRankingsView.setPresenter(this);
+        mDatabaseCalls = new DatabaseCalls(this);
     }
+
+
 
     @Override
     public void loadCpuRanking() {
-        mCpuRankingInteractor.getCpus();
+        mDatabaseCalls.getCpus();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
             break;
         }
 
-        mCpuRankingsView.showCpuRanking(cpuRankingList);
+        mRankingsView.showCpuRanking(cpuRankingList);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
         filterValues.setMultiCoreMin((Double) rangeSeekBars.get(1).getSelectedMinValue());
         filterValues.setMultiCoreMax((Double) rangeSeekBars.get(1).getSelectedMaxValue());*/
 
-        mCpuRankingInteractor.filterItems(filterValues);
+        mDatabaseCalls.filterItems(filterValues);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
 
     @Override
     public RangeSeekBarValues getFilterMinMaxValues() {
-        return mCpuRankingInteractor.getFilterMinMaxValues();
+        return mDatabaseCalls.getFilterMinMaxValues();
     }
 
 }

@@ -1,4 +1,4 @@
-package hardwaremaster.com.CpuRanking;
+package hardwaremaster.com.Ranking;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,23 +25,24 @@ import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class CpuRankingFragment extends Fragment implements CpuRankingContract.View {
+public class RankingFragment extends Fragment implements RankingContract.View {
 
-    private CpuRankingContract.Presenter mPresenter;
-    private CpuRankingAdapter mListAdapter;
+    private RankingContract.Presenter mPresenter;
+    private RankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
+    ImageView closeButton;
 
-    public CpuRankingFragment() {
+    public RankingFragment() {
     }
 
-    public static CpuRankingFragment newInstance() {
-        return new CpuRankingFragment();
+    public static RankingFragment newInstance() {
+        return new RankingFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new CpuRankingAdapter(new ArrayList<Cpu>(0));
+        mListAdapter = new RankingAdapter(new ArrayList<Cpu>(0));
     }
 
     @Override
@@ -68,11 +68,14 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         mPresenter.start();
     }
 
-    /* CpuRankingContract.View callbacks*/
+    /* RankingContract.View callbacks*/
     @Override
     public void showCpuRanking(List<Cpu> cpus) {
+
         mListAdapter.setList(cpus);
         mListAdapter.notifyDataSetChanged();
+        closeButton.performClick();
+
     }
 
     @Override
@@ -86,7 +89,7 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         searchView.clearFocus();
 
         // Catch event on [x] button inside search view
-        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
+        closeButton = searchView.findViewById(R.id.search_close_btn);
         // Set on click listener
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +146,7 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
     }*/
 
     @Override
-    public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
+    public void setPresenter(@NonNull RankingContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 }

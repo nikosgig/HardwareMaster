@@ -1,4 +1,4 @@
-package hardwaremaster.com.CpuRanking;
+package hardwaremaster.com.data;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,18 +11,19 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import androidx.annotation.NonNull;
+import hardwaremaster.com.Ranking.RankingPresenter;
 import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.RangeSeekBarValues;
 
-public class CpuRankingInteractor {
+public class DatabaseCalls {
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private CpuRankingPresenter mCpuRankingPresenter;
+    private RankingPresenter mRankingPresenter;
     private ArrayList<Cpu> mObjectList = new ArrayList<>();
 
-    public CpuRankingInteractor(CpuRankingPresenter presenter) {
-        mCpuRankingPresenter = presenter;
+    public DatabaseCalls(RankingPresenter presenter) {
+        mRankingPresenter = presenter;
     }
 
     public void getCpus() {
@@ -34,7 +35,7 @@ public class CpuRankingInteractor {
                     //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
                 }
                 //mCpuRankingsView.showCpuRanking(cpuList);
-                mCpuRankingPresenter.refreshCpuList(mObjectList);
+                mRankingPresenter.refreshCpuList(mObjectList);
             }
 
             @Override
@@ -110,7 +111,7 @@ public class CpuRankingInteractor {
 
 /*            ArrayList<Cpu> filteredCpu = (ArrayList<Cpu>) mObjectList.stream()
                     .filter(p -> Double.parseDouble(p.getSingleScore()) > filterValues.getSingleScoreLow()).collect(Collectors.toList());
-            mCpuRankingPresenter.refreshCpuList(filteredCpu);*/
+            mRankingPresenter.refreshCpuList(filteredCpu);*/
         ArrayList<Cpu> filteredCpu = new ArrayList<>();
         for (Cpu cpu: mObjectList) {
             if(Double.parseDouble(cpu.getSingleScore()) > filterValues.getSingleScoreMin() &&
@@ -120,7 +121,7 @@ public class CpuRankingInteractor {
                 filteredCpu.add(cpu);
             }
         }
-        mCpuRankingPresenter.refreshCpuList(filteredCpu);
+        mRankingPresenter.refreshCpuList(filteredCpu);
     }
 
 }

@@ -1,4 +1,4 @@
-package hardwaremaster.com.CpuRanking;
+package hardwaremaster.com.Ranking;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> implements Filterable {
+public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder> implements Filterable {
     private List<Cpu> mCpuList;
     private List<Cpu> mCpuListFull = new ArrayList<>();
     private Filter listFilter = new Filter() {
@@ -50,16 +49,16 @@ public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.Vi
     };
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CpuRankingAdapter(List<Cpu> data) {
+    public RankingAdapter(List<Cpu> data) {
         this.mCpuList = data;
     }
 
     public void setList(List<Cpu> cpuList) {
         mCpuList = checkNotNull(cpuList);
-        if (mCpuListFull.isEmpty()) {
-            mCpuListFull.addAll(mCpuList);
+        mCpuListFull.clear();
+        mCpuListFull.addAll(mCpuList);
 
-        }
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -68,7 +67,7 @@ public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.Vi
                                          int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card,
                 parent, false);
-        CpuRankingAdapter.ViewHolder viewHolder = new CpuRankingAdapter.ViewHolder(view);
+        RankingAdapter.ViewHolder viewHolder = new RankingAdapter.ViewHolder(view);
         return viewHolder;
     }
 
