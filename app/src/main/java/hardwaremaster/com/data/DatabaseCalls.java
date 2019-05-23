@@ -18,7 +18,7 @@ import hardwaremaster.com.data.RangeSeekBarValues;
 
 public class DatabaseCalls {
 
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private RankingPresenter mRankingPresenter;
     private ArrayList<Cpu> mObjectList = new ArrayList<>();
 
@@ -27,9 +27,10 @@ public class DatabaseCalls {
     }
 
     public void getCpus() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.getReference("cpu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mObjectList.clear();
                 for (DataSnapshot cpuDataSnapshot : dataSnapshot.getChildren()) {
                     mObjectList.add(cpuDataSnapshot.getValue(Cpu.class));
                     //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
