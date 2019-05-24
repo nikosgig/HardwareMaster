@@ -13,6 +13,8 @@ import com.google.android.material.chip.ChipGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import hardwaremaster.com.R;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class BaseActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -22,6 +24,14 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .name("database.realm")
+                .schemaVersion(0)
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View baseView = inflater.inflate(R.layout.activity_base, null);
         toolbar =  baseView.findViewById(R.id.toolbar);

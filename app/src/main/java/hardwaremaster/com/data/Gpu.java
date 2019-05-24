@@ -1,7 +1,13 @@
 package hardwaremaster.com.data;
 
-public class Gpu {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
+public class Gpu extends RealmObject {
+
+    @Required
+    @PrimaryKey
     private String Model;
     private Double AvgFps1080p;
     private Double AvgFps2k;

@@ -1,6 +1,10 @@
 package hardwaremaster.com.data;
 
-public class Cpu {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
+public class Cpu extends RealmObject {
 
 
     /**
@@ -12,6 +16,8 @@ public class Cpu {
      * Mark3d : 19449
      */
 
+    @Required
+    @PrimaryKey
     private String Model;
     private String QuadScore;
     private String SingleScore;
