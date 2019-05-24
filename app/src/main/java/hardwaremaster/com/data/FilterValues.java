@@ -1,8 +1,9 @@
 package hardwaremaster.com.data;
 
-public class FilterValues extends RangeSeekBarValues {
+public class FilterValues {
 
     private String model;
+    private String description;
 
     public String getModel() {
         return model;
@@ -10,5 +11,13 @@ public class FilterValues extends RangeSeekBarValues {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

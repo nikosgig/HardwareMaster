@@ -1,4 +1,4 @@
-package hardwaremaster.com.Ranking;
+package hardwaremaster.com.Ranking.CpuRanking;
 
 public enum CpuRankingSortBy {
     ALL,

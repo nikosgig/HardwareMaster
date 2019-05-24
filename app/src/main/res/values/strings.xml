@@ -13,7 +13,8 @@
 
 
     <string name="order">Order</string>
-    <string name="search_title">Search</string>
+    <string name="filter">Filter</string>
+    <string name="search_title">Search Model…</string>
     <string name="order_brand">By Brand</string>
     <string name="order_single">By Single Score</string>
     <string name="order_multi">By Multi Score</string>
@@ -24,7 +25,7 @@
     <string name="seek_bar_min_label">Min</string>
     <string name="seek_bar_max_label">Max</string>
 
-    <string name="menu_cpu">CPU</string>
-    <string name="menu_gpu">GPU</string>
+    <string name="menu_cpu">Processors</string>
+    <string name="menu_gpu">Graphics Card</string>
     <string name="menu_settings">Settings</string>
 </resources>

@@ -1,6 +1,6 @@
 package hardwaremaster.com.data;
 
-public class RangeSeekBarValues {
+public class CpuFilterValues extends FilterValues {
 
     private double singleScoreMax;
     private double singleScoreMin;

@@ -1,4 +1,4 @@
-package hardwaremaster.com.Ranking;
+package hardwaremaster.com.Ranking.CpuRanking;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder> implements Filterable {
+public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> implements Filterable {
     private List<Cpu> mCpuList;
     private List<Cpu> mCpuListFull = new ArrayList<>();
     private Filter listFilter = new Filter() {
@@ -49,7 +49,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     };
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RankingAdapter(List<Cpu> data) {
+    public CpuRankingAdapter(List<Cpu> data) {
         this.mCpuList = data;
     }
 
@@ -67,7 +67,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
                                          int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card,
                 parent, false);
-        RankingAdapter.ViewHolder viewHolder = new RankingAdapter.ViewHolder(view);
+        CpuRankingAdapter.ViewHolder viewHolder = new CpuRankingAdapter.ViewHolder(view);
         return viewHolder;
     }
 

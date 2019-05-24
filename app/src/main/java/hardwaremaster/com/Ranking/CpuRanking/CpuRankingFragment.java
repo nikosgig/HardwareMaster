@@ -1,4 +1,4 @@
-package hardwaremaster.com.Ranking;
+package hardwaremaster.com.Ranking.CpuRanking;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,24 +25,24 @@ import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class RankingFragment extends Fragment implements RankingContract.View {
+public class CpuRankingFragment extends Fragment implements CpuRankingContract.View {
 
-    private RankingContract.Presenter mPresenter;
-    private RankingAdapter mListAdapter;
+    private CpuRankingContract.Presenter mPresenter;
+    private CpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
-    ImageView closeButton;
+    private ImageView closeButton;
 
-    public RankingFragment() {
+    public CpuRankingFragment() {
     }
 
-    public static RankingFragment newInstance() {
-        return new RankingFragment();
+    public static CpuRankingFragment newInstance() {
+        return new CpuRankingFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new RankingAdapter(new ArrayList<Cpu>(0));
+        mListAdapter = new CpuRankingAdapter(new ArrayList<Cpu>(0));
     }
 
     @Override
@@ -62,20 +62,13 @@ public class RankingFragment extends Fragment implements RankingContract.View {
         return root;
     }
 
+    /* CpuRankingContract.View callbacks*/
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    /* RankingContract.View callbacks*/
-    @Override
-    public void showCpuRanking(List<Cpu> cpus) {
-
-        mListAdapter.setList(cpus);
-        mListAdapter.notifyDataSetChanged();
-        closeButton.performClick();
-
+    public void notifyCpuListChanged(List<Cpu> cpus) {
+        if(cpus != null) {
+            mListAdapter.setList(cpus);
+            mListAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -138,7 +131,7 @@ public class RankingFragment extends Fragment implements RankingContract.View {
                         //mPresenter.setFiltering(TasksFilterType.COMPLETED_TASKS);
                         break;
                 }
-                mPresenter.loadCpuRanking();
+                mPresenter.getCpuFromDatabase();
                 return true;
             }
         });
@@ -146,7 +139,7 @@ public class RankingFragment extends Fragment implements RankingContract.View {
     }*/
 
     @Override
-    public void setPresenter(@NonNull RankingContract.Presenter presenter) {
+    public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 }

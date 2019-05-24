@@ -1,4 +1,4 @@
-package hardwaremaster.com.Ranking;
+package hardwaremaster.com.Ranking.CpuRanking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,23 +6,22 @@ import java.util.List;
 import hardwaremaster.com.Base.BasePresenter;
 import hardwaremaster.com.Base.BaseView;
 import hardwaremaster.com.data.Cpu;
-import hardwaremaster.com.data.FilterValues;
-import hardwaremaster.com.data.RangeSeekBarValues;
+import hardwaremaster.com.data.CpuFilterValues;
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-public interface RankingContract {
+public interface CpuRankingContract {
     interface View extends BaseView<Presenter> {
-        void showCpuRanking(List<Cpu> tasks);
+        void notifyCpuListChanged(List<Cpu> cpuList);
         //void showOrderByMenu();
     }
 
     interface Presenter extends BasePresenter {
-        void loadCpuRanking();
-        void refreshCpuList(ArrayList<Cpu> arrayList);
-        void filterItems(FilterValues filterValues);
-        RangeSeekBarValues getFilterMinMaxValues();
+        void getCpuFromDatabase();
+        void applyFiltersForCpuList(CpuFilterValues cpuFilterValues);
+        CpuFilterValues getCpuFilterValuesToShow();
+        void onGetCpuFromDatabase(List<Cpu> cpuList);
         void setOrder(CpuRankingSortBy orderType);
 
     }

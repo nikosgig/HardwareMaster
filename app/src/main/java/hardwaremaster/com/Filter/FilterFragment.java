@@ -59,7 +59,7 @@ public class FilterFragment extends BottomSheetDialogFragment {
         rangeSeekBars = mListener.OnRangeSeekBarInit();
         seekBarHolder = view.findViewById(R.id.seekbar_placeholder);
         for(RangeSeekBar rangeSeekBar: rangeSeekBars) {
-            if(rangeSeekBar.getParent() != null) {
+            if(rangeSeekBar.getParent() != null && rangeSeekBars!= null) {
                 ((ViewGroup)rangeSeekBar.getParent()).removeView(rangeSeekBar); // <- fix
             }
             seekBarHolder.addView(rangeSeekBar);
