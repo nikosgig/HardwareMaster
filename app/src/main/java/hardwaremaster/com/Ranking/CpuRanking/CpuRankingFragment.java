@@ -115,29 +115,6 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
     }
 
-/*    @Override
-    public void showOrderByMenu() {
-        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_order));
-        popup.getMenuInflater().inflate(R.menu.order_by_options, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.order_brand:
-                        //mPresenter.setFiltering(TasksFilterType.ACTIVE_TASKS);
-                        mPresenter.setOrder(CpuRankingSortBy.BY_MODEL);
-                        break;
-                    case R.id.order_single:
-                        //mPresenter.setFiltering(TasksFilterType.COMPLETED_TASKS);
-                        break;
-                }
-                mPresenter.getCpuFromDatabase();
-                return true;
-            }
-        });
-        popup.show();
-    }*/
-
     @Override
     public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);

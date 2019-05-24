@@ -52,7 +52,7 @@ public class DatabaseCalls {
 
     }
 
-    public ArrayList<Gpu> getGpus() {
+    public void getGpus() {
         mDatabase.getReference("gpu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,8 +72,6 @@ public class DatabaseCalls {
 
             }
         });
-
-        return mGpuList;
     }
 
     public CpuFilterValues getFilterMinMaxValues() {
