@@ -107,7 +107,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mListAdapter.getFilter().filter(newText);
+                mPresenter.getSearchBarFilter().filter(newText);
                 if (TextUtils.isEmpty(newText)) {
                     //Text is cleared, do your thing
                     searchView.clearFocus();

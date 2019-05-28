@@ -17,36 +17,8 @@ import hardwaremaster.com.data.Cpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> implements Filterable {
+public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.ViewHolder> {
     private List<Cpu> mCpuList;
-    private List<Cpu> mCpuListFull = new ArrayList<>();
-    private Filter listFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Cpu> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mCpuListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Cpu item : mCpuListFull) {
-                    if (item.getModel().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mCpuList.clear();
-            mCpuList.addAll((List) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public CpuRankingAdapter(List<Cpu> data) {
@@ -55,10 +27,6 @@ public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.Vi
 
     public void setList(List<Cpu> cpuList) {
         mCpuList = checkNotNull(cpuList);
-        mCpuListFull.clear();
-        mCpuListFull.addAll(mCpuList);
-
-
     }
 
     // Create new views (invoked by the layout manager)
@@ -94,12 +62,6 @@ public class CpuRankingAdapter extends RecyclerView.Adapter<CpuRankingAdapter.Vi
     @Override
     public int getItemCount() {
         return mCpuList.size();
-    }
-
-    /* */
-    @Override
-    public Filter getFilter() {
-        return listFilter;
     }
 
     // Provide a reference to the views for each data item

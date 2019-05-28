@@ -1,6 +1,8 @@
 package hardwaremaster.com.Ranking.CpuRanking;
 
 
+import android.widget.Filter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -64,6 +66,24 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
     @Override
     public void setOrder(CpuRankingSortBy orderType) {
         mCurrentOrderBy = orderType;
+    }
+
+    @Override
+    public Filter getSearchBarFilter() {
+        Filter listFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                results.values = mDatabaseCalls.searchFilterCpuList(constraint);
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mRankingsView.notifyCpuListChanged((List) results.values);
+            }
+        };
+        return listFilter;
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import hardwaremaster.com.Base.BasePresenter;
@@ -134,6 +135,30 @@ public class DatabaseCalls {
 
 
         return cpuFilterValues;
+    }
+
+    public List<Cpu> searchFilterCpuList(CharSequence constraint) {
+        List<Cpu> filteredList = new ArrayList<>();
+        String filterPattern = constraint.toString().toLowerCase().trim();
+        for (Cpu item : mCpuList) {
+            if (item.getModel().toLowerCase().contains(filterPattern)) {
+                filteredList.add(item);
+            }
+        }
+
+        return filteredList;
+    }
+
+    public List<Gpu> searchFilterGpuList(CharSequence constraint) {
+        List<Gpu> filteredList = new ArrayList<>();
+        String filterPattern = constraint.toString().toLowerCase().trim();
+        for (Gpu item : mGpuList) {
+            if (item.getModel().toLowerCase().contains(filterPattern)) {
+                filteredList.add(item);
+            }
+        }
+
+        return filteredList;
     }
 
     public ArrayList<Cpu> filterCpuList(CpuFilterValues filterValues) {

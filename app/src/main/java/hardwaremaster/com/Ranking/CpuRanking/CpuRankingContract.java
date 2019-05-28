@@ -1,5 +1,7 @@
 package hardwaremaster.com.Ranking.CpuRanking;
 
+import android.widget.Filter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public interface CpuRankingContract {
         CpuFilterValues getCpuFilterValuesToShow();
         void onGetCpuFromDatabase(List<Cpu> cpuList);
         void setOrder(CpuRankingSortBy orderType);
+        Filter getSearchBarFilter();
 
     }
 }

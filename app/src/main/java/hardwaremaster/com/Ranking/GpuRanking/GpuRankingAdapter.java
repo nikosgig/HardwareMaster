@@ -17,36 +17,9 @@ import hardwaremaster.com.data.Gpu;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.ViewHolder> implements Filterable {
+public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.ViewHolder> {
     private List<Gpu> mGpuList;
-    private List<Gpu> mGpuListFull = new ArrayList<>();
-    private Filter listFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Gpu> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mGpuListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Gpu item : mGpuListFull) {
-                    if (item.getModel().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mGpuList.clear();
-            mGpuList.addAll((List) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GpuRankingAdapter(List<Gpu> data) {
@@ -55,8 +28,6 @@ public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.Vi
 
     public void setList(List<Gpu> gpuList) {
         mGpuList = checkNotNull(gpuList);
-        mGpuListFull.clear();
-        mGpuListFull.addAll(mGpuList);
     }
 
     // Create new views (invoked by the layout manager)
@@ -92,12 +63,6 @@ public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.Vi
     @Override
     public int getItemCount() {
         return mGpuList.size();
-    }
-
-    /* */
-    @Override
-    public Filter getFilter() {
-        return listFilter;
     }
 
     // Provide a reference to the views for each data item

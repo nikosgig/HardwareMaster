@@ -1,6 +1,8 @@
 package hardwaremaster.com.Ranking.GpuRanking;
 
 
+import android.widget.Filter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,25 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     public void applyFiltersForGpuList(GpuFilterValues filterValues) {
         mRankingsView.notifyGpuListChanged(mDatabaseCalls.filterGpuList(filterValues));
     }
+
+    @Override
+    public Filter getSearchBarFilter() {
+        Filter listFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                results.values = mDatabaseCalls.searchFilterGpuList(constraint);
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mRankingsView.notifyGpuListChanged((List) results.values);
+            }
+        };
+        return listFilter;
+    }
+
 
     @Override
     public void setOrder(CpuRankingSortBy orderType) {

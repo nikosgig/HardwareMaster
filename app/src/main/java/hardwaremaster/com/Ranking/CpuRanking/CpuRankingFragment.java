@@ -104,7 +104,8 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mListAdapter.getFilter().filter(newText);
+                //mListAdapter.getFilter().filter(newText);
+                mPresenter.getSearchBarFilter().filter(newText);
                 if (TextUtils.isEmpty(newText)) {
                     //Text is cleared, do your thing
                     searchView.clearFocus();

@@ -1,5 +1,7 @@
 package hardwaremaster.com.Ranking.GpuRanking;
 
+import android.widget.Filter;
+
 import java.util.List;
 
 import hardwaremaster.com.Base.BasePresenter;
@@ -24,6 +26,7 @@ public interface GpuRankingContract {
         void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
         CpuFilterValues getGpuFilterValuesToShow();
         void onGetCpuFromDatabase(List<Gpu> cpuList);
+        Filter getSearchBarFilter();
         void setOrder(CpuRankingSortBy orderType);
 
     }
