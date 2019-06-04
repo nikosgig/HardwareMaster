@@ -8,16 +8,19 @@ import android.view.ViewGroup;
 import com.google.firebase.database.annotations.Nullable;
 
 import androidx.fragment.app.Fragment;
-import hardwaremaster.com.R;
 
+import javax.inject.Inject;
+
+import hardwaremaster.com.R;
+import hardwaremaster.com.di.ActivityScoped;
+
+@ActivityScoped
 public class SettingsFragment extends Fragment {
 
+    @Inject
     public SettingsFragment() {
     }
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

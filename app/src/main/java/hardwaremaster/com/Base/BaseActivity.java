@@ -12,9 +12,11 @@ import com.google.android.material.chip.ChipGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import dagger.android.support.DaggerAppCompatActivity;
 import hardwaremaster.com.R;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends DaggerAppCompatActivity {
     Toolbar toolbar;
     AppBarLayout appBarLayout;
     ChipGroup chipGroup;

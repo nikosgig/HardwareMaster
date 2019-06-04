@@ -19,7 +19,7 @@ public interface CpuRankingContract {
         //void showOrderByMenu();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
         void getCpuFromDatabase();
         void applyFiltersForCpuList(CpuFilterValues cpuFilterValues);
         CpuFilterValues getCpuFilterValuesToShow();

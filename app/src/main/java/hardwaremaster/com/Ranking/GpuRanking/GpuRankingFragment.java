@@ -20,32 +20,48 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import javax.inject.Inject;
+
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingAdapter;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingContract;
 import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
+import hardwaremaster.com.di.ActivityScoped;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
+@ActivityScoped
 public class GpuRankingFragment extends Fragment implements GpuRankingContract.View {
 
-    private GpuRankingContract.Presenter mPresenter;
+    @Inject
+    GpuRankingContract.Presenter mPresenter;
     private GpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
     ImageView closeButton;
 
+    @Inject
     public GpuRankingFragment() {
-    }
-
-    public static GpuRankingFragment newInstance() {
-        return new GpuRankingFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new GpuRankingAdapter(new ArrayList<Gpu>(0));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.dropView();  //prevent leaking activity in
+        // case presenter is orchestrating a long running task
     }
 
     @Override
@@ -140,9 +156,4 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         });
         popup.show();
     }*/
-
-    @Override
-    public void setPresenter(@NonNull GpuRankingContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
-    }
 }

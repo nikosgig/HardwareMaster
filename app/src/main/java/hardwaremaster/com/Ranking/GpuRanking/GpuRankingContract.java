@@ -21,11 +21,11 @@ public interface GpuRankingContract {
         //void showOrderByMenu();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
         void getGpuFromDatabase();
         void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
         CpuFilterValues getGpuFilterValuesToShow();
-        void onGetCpuFromDatabase(List<Gpu> cpuList);
+        //void onGetCpuFromDatabase(List<Gpu> cpuList);
         Filter getSearchBarFilter();
         void setOrder(CpuRankingSortBy orderType);
 

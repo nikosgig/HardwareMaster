@@ -20,11 +20,16 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import javax.inject.Inject;
+
 import hardwaremaster.com.R;
+import hardwaremaster.com.di.ActivityScoped;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
+@ActivityScoped
 public class FilterFragment extends BottomSheetDialogFragment {
 
     private OnBottomDialogFilterFragmentListener mListener;
@@ -32,11 +37,8 @@ public class FilterFragment extends BottomSheetDialogFragment {
     private LinearLayout seekBarHolder;
     private Button applyFilterButton;
 
+    @Inject
     public FilterFragment() {
-    }
-
-    public static FilterFragment newInstance() {
-        return new FilterFragment();
     }
 
     @Override

@@ -1,185 +1,33 @@
 package hardwaremaster.com.data;
 
-import android.util.Log;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import hardwaremaster.com.Base.BasePresenter;
-import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
-import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
+public interface DatabaseCalls {
 
-public class DatabaseCalls {
+    interface LoadCpusCallback {
 
-    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    private CpuRankingPresenter mCpuRankingPresenter;
-    private GpuRankingPresenter mGpuRankingPresenter;
-    private ArrayList<Cpu> mCpuList = new ArrayList<>();
-    private ArrayList<Gpu> mGpuList = new ArrayList<>();
-
-    public DatabaseCalls(CpuRankingPresenter presenter) {
-        mCpuRankingPresenter = presenter;
+        void onCpusLoaded(ArrayList<Cpu> cpuList);
     }
 
-    public DatabaseCalls(GpuRankingPresenter presenter) {
-        mGpuRankingPresenter = presenter;
+    interface LoadGpusCallback {
+
+        void onGpusLoaded(ArrayList<Gpu> gpuList);
     }
 
-    public void getCpus() {
-        mDatabase.getReference("cpu").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mCpuList.clear();
-                for (DataSnapshot cpuDataSnapshot : dataSnapshot.getChildren()) {
-                    mCpuList.add(cpuDataSnapshot.getValue(Cpu.class));
-                }
-                //mCpuRankingsView.notifyCpuListChanged(cpuList);
-                mCpuRankingPresenter.onGetCpuFromDatabase(mCpuList);
-            }
+    void getCpus(@NonNull final LoadCpusCallback callback);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+    void getGpus(@NonNull final LoadGpusCallback callback);
 
-            }
-        });
+    CpuFilterValues getFilterMinMaxValues();
 
-    }
+    List<Cpu> searchFilterCpuList(CharSequence constraint);
 
-    public void getGpus() {
-        mDatabase.getReference("gpu").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mGpuList.clear();
-                for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
-                    mGpuList.add(gpuDataSnapshot.getValue(Gpu.class));
-                    //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
-                }
-                //mCpuRankingsView.notifyCpuListChanged(cpuList);
-                //mCpuRankingPresenter.refreshCpuList(mCpuList);
-                mGpuRankingPresenter.onGetCpuFromDatabase(mGpuList);
+    List<Gpu> searchFilterGpuList(CharSequence constraint);
 
-            }
+    ArrayList<Cpu> filterCpuList(CpuFilterValues filterValues);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public CpuFilterValues getFilterMinMaxValues() {
-        Cpu maxCpu = Collections.max(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
-            }
-        });
-
-        Cpu minCpu = Collections.min(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
-            }
-        });
-
-        CpuFilterValues cpuFilterValues = new CpuFilterValues();
-
-        cpuFilterValues.setSingleScoreMax(Double.parseDouble(maxCpu.getSingleScore()));
-        cpuFilterValues.setSingleScoreMin(Double.parseDouble(minCpu.getSingleScore()));
-
-        Cpu maxCpuMulti = Collections.max(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getMultiScore()), Double.parseDouble(o2.getMultiScore()));
-            }
-        });
-
-        Cpu minCpuMulti = Collections.min(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getMultiScore()), Double.parseDouble(o2.getMultiScore()));
-            }
-        });
-
-        cpuFilterValues.setMultiCoreMax(Double.parseDouble(maxCpuMulti.getMultiScore()));
-        cpuFilterValues.setMultiCoreMin(Double.parseDouble(minCpuMulti.getMultiScore()));
-
-/*        CpuFilterValues cpuFilterValues = new CpuFilterValues();
-
-        Query query = mDatabase.orderByChild("SingleScore").limitToLast(1);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // dataSnapshot is the "issue" node with all children with id 0
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        // do something with the individual "issues"
-                        Log.d("query", issue.getValue().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-
-        return cpuFilterValues;
-    }
-
-    public List<Cpu> searchFilterCpuList(CharSequence constraint) {
-        List<Cpu> filteredList = new ArrayList<>();
-        String filterPattern = constraint.toString().toLowerCase().trim();
-        for (Cpu item : mCpuList) {
-            if (item.getModel().toLowerCase().contains(filterPattern)) {
-                filteredList.add(item);
-            }
-        }
-
-        return filteredList;
-    }
-
-    public List<Gpu> searchFilterGpuList(CharSequence constraint) {
-        List<Gpu> filteredList = new ArrayList<>();
-        String filterPattern = constraint.toString().toLowerCase().trim();
-        for (Gpu item : mGpuList) {
-            if (item.getModel().toLowerCase().contains(filterPattern)) {
-                filteredList.add(item);
-            }
-        }
-
-        return filteredList;
-    }
-
-    public ArrayList<Cpu> filterCpuList(CpuFilterValues filterValues) {
-
-/*            ArrayList<Cpu> filteredCpu = (ArrayList<Cpu>) mCpuList.stream()
-                    .filter(p -> Double.parseDouble(p.getSingleScore()) > filterValues.getSingleScoreLow()).collect(Collectors.toList());
-            mCpuRankingPresenter.refreshCpuList(filteredCpu);*/
-        ArrayList<Cpu> filteredCpu = new ArrayList<>();
-        for (Cpu cpu: mCpuList) {
-            if(Double.parseDouble(cpu.getSingleScore()) > filterValues.getSingleScoreMin() &&
-                    Double.parseDouble(cpu.getSingleScore()) < filterValues.getSingleScoreMax() &&
-                    Double.parseDouble(cpu.getMultiScore()) > filterValues.getMultiCoreMin() &&
-                    Double.parseDouble(cpu.getMultiScore()) < filterValues.getMultiCoreMax()) {
-                filteredCpu.add(cpu);
-            }
-        }
-        return filteredCpu;
-    }
-
-    public ArrayList<Gpu> filterGpuList(GpuFilterValues filterValues) {
-        return mGpuList;
-    }
-
+    ArrayList<Gpu> filterGpuList(GpuFilterValues filterValues);
 }

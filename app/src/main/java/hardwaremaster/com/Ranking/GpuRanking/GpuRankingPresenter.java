@@ -7,12 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import javax.inject.Inject;
+
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingSortBy;
 import hardwaremaster.com.data.CpuFilterValues;
+import hardwaremaster.com.data.Database;
 import hardwaremaster.com.data.DatabaseCalls;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.data.GpuFilterValues;
+import hardwaremaster.com.di.ActivityScoped;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
@@ -20,35 +26,39 @@ import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
  * Listens to user actions from the UI ({@link CpuRankingFragment}), retrieves the data and updates
  * the UI as required.
  */
+@ActivityScoped
 public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
-    private final GpuRankingContract.View mRankingsView;
-    private DatabaseCalls mDatabaseCalls;
+    @Nullable
+    private GpuRankingContract.View mRankingsView;
+    private final Database mDatabase;
     private CpuRankingSortBy mCurrentOrderBy = CpuRankingSortBy.ALL;
 
-
-    public GpuRankingPresenter(@NonNull GpuRankingContract.View RankingView) {
-        mRankingsView = checkNotNull(RankingView, "GpuRankings cannot be null!");
-        mRankingsView.setPresenter(this);
-        mDatabaseCalls = new DatabaseCalls(this);
+    @Inject
+    public GpuRankingPresenter(Database database) {
+        mDatabase = database;
     }
 
 
 
     @Override
     public void getGpuFromDatabase() {
-        mDatabaseCalls.getGpus();
-
+        mDatabase.getGpus(new DatabaseCalls.LoadGpusCallback() {
+            @Override
+            public void onGpusLoaded(ArrayList<Gpu> gpuList) {
+                mRankingsView.notifyGpuListChanged(gpuList);
+            }
+        });
     }
 
-    @Override
+/*    @Override
     public void onGetCpuFromDatabase(List<Gpu> gpuRankingList) {
         mRankingsView.notifyGpuListChanged(gpuRankingList);
-    }
+    }*/
 
     @Override
     public void applyFiltersForGpuList(GpuFilterValues filterValues) {
-        mRankingsView.notifyGpuListChanged(mDatabaseCalls.filterGpuList(filterValues));
+        mRankingsView.notifyGpuListChanged(mDatabase.filterGpuList(filterValues));
     }
 
     @Override
@@ -57,7 +67,7 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
-                results.values = mDatabaseCalls.searchFilterGpuList(constraint);
+                results.values = mDatabase.searchFilterGpuList(constraint);
                 return results;
             }
 
@@ -77,9 +87,19 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
     @Override
     public CpuFilterValues getGpuFilterValuesToShow() {
-        return mDatabaseCalls.getFilterMinMaxValues();
+        return mDatabase.getFilterMinMaxValues();
     }
 
+    @Override
+    public void takeView(GpuRankingContract.View view) {
+        mRankingsView = view;
+        getGpuFromDatabase();
+    }
+
+    @Override
+    public void dropView() {
+        mRankingsView = null;
+    }
 
 
 }

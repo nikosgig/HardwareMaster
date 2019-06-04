@@ -13,12 +13,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import javax.inject.Inject;
+
+import dagger.Lazy;
 import hardwaremaster.com.Base.BaseActivity;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
@@ -35,11 +41,25 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
 
     private RangeSeekBar cpuBarSingleScore, cpuBarMultiScore;
     private CpuFilterValues cpuFilterValues = new CpuFilterValues();
+    private int CPU_CURRENT_TAB=0, GPU_CURRENT_TAB=1;
 
-    private CpuRankingPresenter mCpuRankingPresenter;
-    private GpuRankingPresenter mGpuRankingPresenter;
+    @Inject
+    CpuRankingPresenter mCpuRankingPresenter;
+    @Inject
+    GpuRankingPresenter mGpuRankingPresenter;
+    @Inject
+    Lazy<FilterFragment> filterFragmentProvider;
+    FilterFragment filterFragment;
+    @Inject
+    Lazy<CpuRankingFragment> cpuRankingFragmentProvider;
+    CpuRankingFragment cpuRankingFragment;
+    @Inject
+    Lazy<GpuRankingFragment> gpuRankingFragmentProvider;
+    GpuRankingFragment gpuRankingFragment;
+    @Inject
+    Lazy<SettingsFragment> settingsFragmentProvider;
+    SettingsFragment settingsFragment;
 
-    private FilterFragment filterFragment;
     private int currentTab;
     private BottomNavigationView mBottomNav;
     private ViewPager viewPager;
@@ -84,12 +104,12 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
                     case 0:
                         mBottomNav.setSelectedItemId(R.id.menu_cpu);
                         mCpuRankingPresenter.getCpuFromDatabase();
-                        currentTab=0;
+                        currentTab=CPU_CURRENT_TAB;
                         break;
                     case 1:
                         mBottomNav.setSelectedItemId(R.id.menu_gpu);
                         mGpuRankingPresenter.getGpuFromDatabase();
-                        currentTab=1;
+                        currentTab=GPU_CURRENT_TAB;
                         break;
                     case 2:
                         mBottomNav.setSelectedItemId(R.id.menu_settings);
@@ -107,9 +127,12 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(CpuRankingFragment.newInstance());
-        adapter.addFragment(GpuRankingFragment.newInstance());
-        adapter.addFragment(SettingsFragment.newInstance());
+        cpuRankingFragment = cpuRankingFragmentProvider.get();
+        gpuRankingFragment = gpuRankingFragmentProvider.get();
+        settingsFragment = settingsFragmentProvider.get();
+        adapter.addFragment(cpuRankingFragment);
+        adapter.addFragment(gpuRankingFragment);
+        adapter.addFragment(settingsFragment);
         viewPager.setAdapter(adapter);
     }
 
@@ -117,9 +140,7 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_order:
-                filterFragment =
-                        FilterFragment.newInstance();
-
+                filterFragment = filterFragmentProvider.get();
                 // Add to layout
                 filterFragment.show(getSupportFragmentManager(),
                         "add_photo_dialog_fragment");
@@ -146,10 +167,10 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
     @Override
     public void OnBottomDialogFilterFragmentInteraction() {
         filterFragment.dismiss();
-        if(currentTab==0) {
+        if(currentTab==CPU_CURRENT_TAB) {
             CpuFilterValues cpuFilterValues = getCpuFilters();
             mCpuRankingPresenter.applyFiltersForCpuList(cpuFilterValues);
-        } else if(currentTab==1) {
+        } else if(currentTab==GPU_CURRENT_TAB) {
 
         }
 
@@ -164,7 +185,7 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
     public ArrayList<RangeSeekBar> OnRangeSeekBarInit() {
         ArrayList<RangeSeekBar> seekBarsToShow = new ArrayList<>();
         seekBarsToShow.clear();
-        if(currentTab==0 && cpuBarSingleScore==null && cpuBarMultiScore== null) {
+        if(currentTab==CPU_CURRENT_TAB && cpuBarSingleScore==null && cpuBarMultiScore== null) {
             CpuFilterValues cpuFilterValues = mCpuRankingPresenter.getCpuFilterValuesToShow();
             cpuBarSingleScore = new RangeSeekBar<>(this);
             cpuBarSingleScore.setRangeSeekBarTitle(R.string.seek_bar_title_single);
@@ -182,7 +203,7 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
         } else if(cpuBarSingleScore!= null && cpuBarMultiScore != null){
             seekBarsToShow.add(cpuBarSingleScore);
             seekBarsToShow.add(cpuBarMultiScore);
-        } else if(currentTab==1) {
+        } else if(currentTab==GPU_CURRENT_TAB) {
 
         }
         return seekBarsToShow;
@@ -227,10 +248,10 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
         void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
             if(fragment instanceof CpuRankingFragment) {
-                mCpuRankingPresenter = new CpuRankingPresenter((CpuRankingFragment) fragment);
+                //mCpuRankingPresenter = new CpuRankingPresenter((CpuRankingFragment) fragment);
                 mCpuRankingPresenter.getCpuFromDatabase();
             } else if(fragment instanceof GpuRankingFragment) {
-                mGpuRankingPresenter = new GpuRankingPresenter((GpuRankingFragment) fragment);
+                //mGpuRankingPresenter = new GpuRankingPresenter((GpuRankingFragment) fragment);
             }
 
         }

@@ -20,23 +20,28 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 import hardwaremaster.com.R;
 import hardwaremaster.com.data.Cpu;
+import hardwaremaster.com.di.ActivityScoped;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
-public class CpuRankingFragment extends Fragment implements CpuRankingContract.View {
+@ActivityScoped
+public class CpuRankingFragment extends DaggerFragment implements CpuRankingContract.View {
 
-    private CpuRankingContract.Presenter mPresenter;
+    @Inject
+    CpuRankingContract.Presenter mPresenter;
     private CpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
     private ImageView closeButton;
 
+    @Inject
     public CpuRankingFragment() {
-    }
-
-    public static CpuRankingFragment newInstance() {
-        return new CpuRankingFragment();
+        // Requires empty public constructor
     }
 
     @Override
@@ -45,6 +50,20 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
         mListAdapter = new CpuRankingAdapter(new ArrayList<Cpu>(0));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.takeView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.dropView();  //prevent leaking activity in
+        // case presenter is orchestrating a long running task
+    }
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,8 +135,4 @@ public class CpuRankingFragment extends Fragment implements CpuRankingContract.V
 
     }
 
-    @Override
-    public void setPresenter(@NonNull CpuRankingContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
-    }
 }
