@@ -49,7 +49,7 @@ public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.Vi
         holder.textViewModel.setText(mGpuList.get(position).getModel());
         holder.textViewDescription.setText(mGpuList.get(position).getReleaseDate());
         holder.textViewTag1.setText(Double.toString(mGpuList.get(position).getAvgFps1080p()));
-        holder.textViewTag2.setText(Integer.toString(mGpuList.get(position).getFirestrike()));
+        holder.textViewTag2.setText(Double.toString(mGpuList.get(position).getPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
