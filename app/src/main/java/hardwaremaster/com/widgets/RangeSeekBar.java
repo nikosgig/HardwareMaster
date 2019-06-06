@@ -674,11 +674,11 @@ public class RangeSeekBar<T extends Number> extends AppCompatImageView {
                     paint);
         }
 
-        if (rangeSeekBarTitle != 0) {
+/*        if (rangeSeekBarTitle != 0) {
             // draw min and max labels
             String rangeSeek = getContext().getString(this.rangeSeekBarTitle);
             canvas.drawText(rangeSeek, 10, 40, paint);
-        }
+        }*/
 
     }
 

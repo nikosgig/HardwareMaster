@@ -14,6 +14,7 @@ public class Gpu {
     private String MemoryBus;
     private Integer GPUClock;
     private Integer MemoryClock;
+    private Double Price;
 
 
     public String getModel() {
@@ -110,5 +111,13 @@ public class Gpu {
 
     public void setMemoryClock(Integer memoryClock) {
         this.MemoryClock = memoryClock;
+    }
+
+    public Double getPrice() {
+        return Price;
+    }
+
+    public void setPrice(Double price) {
+        Price = price;
     }
 }
