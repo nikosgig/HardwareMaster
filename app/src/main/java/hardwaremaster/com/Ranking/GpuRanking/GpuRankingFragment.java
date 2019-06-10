@@ -1,7 +1,10 @@
 package hardwaremaster.com.Ranking.GpuRanking;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,20 +12,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Slide;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
+
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.chip.ChipGroup;
 
 import javax.inject.Inject;
 
+import hardwaremaster.com.Filter.FilterFragment;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingAdapter;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingContract;
@@ -40,6 +58,13 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     private GpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
     ImageView closeButton;
+    private Button applyFilterButton;
+    private View root;
+    private boolean toogleFilterView;
+    BottomSheetBehavior bottomSheetBehavior;
+    MenuItem menuItem, filterItem;
+    SearchView searchView;
+    OnBottomDialogFilterFragmentListener mListener;
 
     @Inject
     public GpuRankingFragment() {
@@ -49,6 +74,17 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new GpuRankingAdapter(new ArrayList<Gpu>(0));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof GpuRankingFragment.OnBottomDialogFilterFragmentListener) {
+            mListener = (GpuRankingFragment.OnBottomDialogFilterFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnBottomDialogFilterFragmentListener");
+        }
     }
 
     @Override
@@ -67,7 +103,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
         //Set up gpu rankings view
         mRecyclerView = root.findViewById(R.id.recycler_view);
@@ -77,6 +113,86 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         mRecyclerView.setAdapter(mListAdapter);
 
         setHasOptionsMenu(true);
+
+        //Set filters
+
+
+
+        //Set up seek bars
+/*        rangeSeekBars = mListener.OnGpuRangeSeekBarInit();
+        seekBarHolder = view.findViewById(R.id.seekbar_placeholder);
+        for(RangeSeekBar rangeSeekBar: rangeSeekBars) {
+            if(rangeSeekBar.getParent() != null && rangeSeekBars!= null) {
+                ((ViewGroup)rangeSeekBar.getParent()).removeView(rangeSeekBar); // <- fix
+            }
+            seekBarHolder.addView(rangeSeekBar);
+
+        }*/
+
+        MaterialButtonToggleGroup materialButtonToggleGroupSort = root.findViewById(R.id.sortByToggleGroup);
+        materialButtonToggleGroupSort.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
+                                        boolean isChecked) {
+                if(isChecked) {
+                    switch (checkedId) {
+                        case R.id.sort_price:
+                            mPresenter.setSorting(GpuRankingSortBy.BY_PRICE);
+                            break;
+                        case R.id.sort_1080p:
+                            mPresenter.setSorting(GpuRankingSortBy.BY_1080P);
+                            break;
+                        case R.id.sort_2k:
+                            mPresenter.setSorting(GpuRankingSortBy.BY_2K);
+                            break;
+                        case R.id.sort_4k:
+                            mPresenter.setSorting(GpuRankingSortBy.BY_4K);
+                            break;
+                        default:
+                            mPresenter.setSorting(GpuRankingSortBy.ALL);
+                            break;
+                    }
+                }
+            }
+        });
+
+        MaterialButtonToggleGroup materialButtonToggleGroupVRam = root.findViewById(R.id.vRamToggleGroup);
+        materialButtonToggleGroupVRam.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
+                                        boolean isChecked) {
+                switch (checkedId) {
+                    case R.id.vRamButton1:
+                        Log.d("button", "clicked1");
+                        break;
+                    case R.id.vRamButton2:
+                        Log.d("button", "clicked2");
+                        break;
+                    case R.id.vRamButton3:
+                        Log.d("button", "clicked3");
+                        break;
+                    case R.id.vRamButton4:
+                        Log.d("button", "clicked4");
+                        break;
+                    default:
+                        Log.d("button", "clicked5");
+                        break;
+                }
+
+            }
+        });
+
+        //setup apply button
+        applyFilterButton = root.findViewById(R.id.apply_filter_button);
+        applyFilterButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+/*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
+                mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
+                mListener.OnApplyGpuFilterClicked();
+            }
+        });
 
         return root;
     }
@@ -91,14 +207,46 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     }
 
     @Override
+    public void showHideFiltersView() {
+        if(!toogleFilterView) {
+            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
+            TransitionManager.beginDelayedTransition(constraintLayout);
+            constraintLayout.setVisibility(View.VISIBLE);
+            LinearLayout mask = root.findViewById(R.id.ll_mask);
+            TransitionManager.beginDelayedTransition(mask);
+            mask.setVisibility(View.VISIBLE);
+            filterItem.setIcon(R.drawable.ic_close);
+            searchView.setVisibility(View.GONE);
+            toogleFilterView=true;
+        } else {
+            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
+            TransitionManager.beginDelayedTransition(constraintLayout);
+            constraintLayout.setVisibility(View.GONE);
+            LinearLayout mask = root.findViewById(R.id.ll_mask);
+            TransitionManager.beginDelayedTransition(mask);
+            mask.setVisibility(View.GONE);
+            filterItem.setIcon(R.drawable.ic_filter_list);
+            searchView.setVisibility(View.VISIBLE);
+            toogleFilterView=false;
+        }
+
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         /* Setup Search View */
         inflater.inflate(R.menu.menu_options, menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
+        menuItem = menu.findItem(R.id.search);
+        filterItem = menu.findItem(R.id.menu_order);
 
-        final SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.onActionViewExpanded();
         searchView.clearFocus();
+//        searchView.setBackground(getResources().getDrawable(R.drawable.bg_white_rounded));
+//        LinearLayout searchEditFrame = (LinearLayout) searchView.findViewById(R.id.search_bar); // Get the Linear Layout
+// Get the associated LayoutParams and set leftMargin
+        //((LinearLayout.LayoutParams) searchEditFrame.getLayoutParams()).leftMargin = 0;
+        //searchView.setBackground(R.id.);
 
         // Catch event on [x] button inside search view
         closeButton = searchView.findViewById(R.id.search_close_btn);
@@ -144,7 +292,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 switch (item.getItemId()) {
                     case R.id.order_brand:
                         //mPresenter.setFiltering(TasksFilterType.ACTIVE_TASKS);
-                        mPresenter.setOrder(CpuRankingSortBy.BY_MODEL);
+                        mPresenter.setSorting(CpuRankingSortBy.BY_MODEL);
                         break;
                     case R.id.order_single:
                         //mPresenter.setFiltering(TasksFilterType.COMPLETED_TASKS);
@@ -156,4 +304,8 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         });
         popup.show();
     }*/
+
+    public interface OnBottomDialogFilterFragmentListener {
+        void OnApplyGpuFilterClicked();
+    }
 }

@@ -18,16 +18,18 @@ import hardwaremaster.com.data.GpuFilterValues;
 public interface GpuRankingContract {
     interface View extends BaseView<Presenter> {
         void notifyGpuListChanged(List<Gpu> gpuList);
+        void showHideFiltersView();
         //void showOrderByMenu();
     }
 
     interface Presenter extends BasePresenter<View> {
         void getGpuFromDatabase();
-        void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
+        //void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
         CpuFilterValues getGpuFilterValuesToShow();
         //void onGetCpuFromDatabase(List<Gpu> cpuList);
         Filter getSearchBarFilter();
-        void setOrder(CpuRankingSortBy orderType);
+        void setSorting(GpuRankingSortBy orderType);
+        void showHideFilters();
 
     }
 }

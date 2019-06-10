@@ -17,7 +17,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 import hardwaremaster.com.R;
 
 public class BaseActivity extends DaggerAppCompatActivity {
-    Toolbar toolbar;
+    protected Toolbar toolbar;
     AppBarLayout appBarLayout;
     ChipGroup chipGroup;
 

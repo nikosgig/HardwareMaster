@@ -13,13 +13,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.transition.AutoTransition;
+import androidx.transition.Slide;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 import androidx.viewpager.widget.ViewPager;
 
 import javax.inject.Inject;
@@ -34,13 +36,15 @@ import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.Filter.FilterFragment;
+import hardwaremaster.com.data.GpuFilterValues;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 
-public class RankingActivity extends BaseActivity implements FilterFragment.OnBottomDialogFilterFragmentListener{
+public class RankingActivity extends BaseActivity implements GpuRankingFragment.OnBottomDialogFilterFragmentListener {
 
     private RangeSeekBar cpuBarSingleScore, cpuBarMultiScore;
     private CpuFilterValues cpuFilterValues = new CpuFilterValues();
+    private GpuFilterValues gpuFilterValues = new GpuFilterValues();
     private int CPU_CURRENT_TAB=0, GPU_CURRENT_TAB=1;
 
     @Inject
@@ -140,10 +144,22 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_order:
-                filterFragment = filterFragmentProvider.get();
+/*                gpufilterFragment = gpufilterFragmentProvider.get();
                 // Add to layout
-                filterFragment.show(getSupportFragmentManager(),
-                        "add_photo_dialog_fragment");
+                gpufilterFragment.show(getSupportFragmentManager(),
+                        "cpu_filter");*/
+                if(mBottomNav.getVisibility()==View.VISIBLE) {
+                    Transition transition = new Slide();
+                    TransitionManager.beginDelayedTransition(mBottomNav, transition);
+                    mBottomNav.setVisibility(View.GONE);
+
+                } else {
+                    Transition transition = new Slide();
+                    TransitionManager.beginDelayedTransition(mBottomNav, transition);
+                    mBottomNav.setVisibility(View.VISIBLE);
+                }
+
+                mGpuRankingPresenter.showHideFilters();
                 break;
         }
         return true;
@@ -164,25 +180,23 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
         return cpuFilterValues;
     }
 
-    @Override
-    public void OnBottomDialogFilterFragmentInteraction() {
+/*    @Override
+    public void OnCpuFilterFragmentInteraction() {
         filterFragment.dismiss();
         if(currentTab==CPU_CURRENT_TAB) {
             CpuFilterValues cpuFilterValues = getCpuFilters();
             mCpuRankingPresenter.applyFiltersForCpuList(cpuFilterValues);
-        } else if(currentTab==GPU_CURRENT_TAB) {
-
         }
 
 
-/*        final ChipGroup entryChipGroup = findViewById(R.id.chip_group);
+*//*        final ChipGroup entryChipGroup = findViewById(R.id.chip_group);
         entryChipGroup.setVisibility(View.VISIBLE);
         final Chip entryChip = getChip(entryChipGroup, "Single Score");
-        entryChipGroup.addView(entryChip);*/
-    }
+        entryChipGroup.addView(entryChip);*//*
+    }*/
 
-    @Override
-    public ArrayList<RangeSeekBar> OnRangeSeekBarInit() {
+    /*@Override
+    public ArrayList<RangeSeekBar> OnCpuRangeSeekBarInit() {
         ArrayList<RangeSeekBar> seekBarsToShow = new ArrayList<>();
         seekBarsToShow.clear();
         if(currentTab==CPU_CURRENT_TAB && cpuBarSingleScore==null && cpuBarMultiScore== null) {
@@ -203,11 +217,9 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
         } else if(cpuBarSingleScore!= null && cpuBarMultiScore != null){
             seekBarsToShow.add(cpuBarSingleScore);
             seekBarsToShow.add(cpuBarMultiScore);
-        } else if(currentTab==GPU_CURRENT_TAB) {
-
         }
         return seekBarsToShow;
-    }
+    }*/
 
     private Chip getChip(final ChipGroup entryChipGroup, String text) {
         final Chip chip = new Chip(this);
@@ -227,6 +239,26 @@ public class RankingActivity extends BaseActivity implements FilterFragment.OnBo
         });
         return chip;
     }
+
+    @Override
+    public void OnApplyGpuFilterClicked() {
+        Transition transition = new Slide();
+        TransitionManager.beginDelayedTransition(mBottomNav, transition);
+        mBottomNav.setVisibility(View.VISIBLE);
+        mGpuRankingPresenter.showHideFilters();
+        mGpuRankingPresenter.getGpuFromDatabase();
+    }
+
+/*    @Override
+    public void OnGpuFragmentInteraction() {
+        //GpuFilterValues gpuFilterValues = getGpuFilters();
+        //mGpuRankingPresenter.applyFiltersForGpuList(gpuFilterValues);
+    }*/
+
+/*    @Override
+    public ArrayList<RangeSeekBar> OnGpuRangeSeekBarInit() {
+        return null;
+    }*/
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -4,20 +4,18 @@ package hardwaremaster.com.Ranking.GpuRanking;
 import android.widget.Filter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
-import hardwaremaster.com.Ranking.CpuRanking.CpuRankingSortBy;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.data.Database;
 import hardwaremaster.com.data.DatabaseCalls;
 import hardwaremaster.com.data.Gpu;
-import hardwaremaster.com.data.GpuFilterValues;
 import hardwaremaster.com.di.ActivityScoped;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
@@ -32,7 +30,7 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     @Nullable
     private GpuRankingContract.View mRankingsView;
     private final Database mDatabase;
-    private CpuRankingSortBy mCurrentOrderBy = CpuRankingSortBy.ALL;
+    private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.ALL;
 
     @Inject
     public GpuRankingPresenter(Database database) {
@@ -46,6 +44,27 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
         mDatabase.getGpus(new DatabaseCalls.LoadGpusCallback() {
             @Override
             public void onGpusLoaded(ArrayList<Gpu> gpuList) {
+                switch (mCurrentSortBy) {
+                    case BY_PRICE:
+                        Collections.sort(gpuList,
+                                (o1, o2) -> o1.getPrice().compareTo(o2.getPrice()));
+                        break;
+                    case BY_1080P:
+                        Collections.sort(gpuList,
+                                (o1, o2) -> o1.getAvgFps1080p().compareTo(o2.getAvgFps1080p()));
+                        break;
+                    case BY_2K:
+                        Collections.sort(gpuList,
+                                (o1, o2) -> o1.getAvgFps2k().compareTo(o2.getAvgFps2k()));
+                        break;
+                    case BY_4K:
+                        Collections.sort(gpuList,
+                                (o1, o2) -> o1.getAvgFps4k().compareTo(o2.getAvgFps4k()));
+                        break;
+                    default:
+                        break;
+
+                }
                 mRankingsView.notifyGpuListChanged(gpuList);
             }
         });
@@ -55,11 +74,6 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     public void onGetCpuFromDatabase(List<Gpu> gpuRankingList) {
         mRankingsView.notifyGpuListChanged(gpuRankingList);
     }*/
-
-    @Override
-    public void applyFiltersForGpuList(GpuFilterValues filterValues) {
-        mRankingsView.notifyGpuListChanged(mDatabase.filterGpuList(filterValues));
-    }
 
     @Override
     public Filter getSearchBarFilter() {
@@ -81,8 +95,13 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
 
     @Override
-    public void setOrder(CpuRankingSortBy orderType) {
-        mCurrentOrderBy = orderType;
+    public void setSorting(GpuRankingSortBy orderType) {
+        mCurrentSortBy = orderType;
+    }
+
+    @Override
+    public void showHideFilters() {
+        mRankingsView.showHideFiltersView();
     }
 
     @Override
