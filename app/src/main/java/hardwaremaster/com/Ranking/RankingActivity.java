@@ -31,12 +31,12 @@ import hardwaremaster.com.Base.BaseActivity;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
+import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragment;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.Filter.FilterFragment;
-import hardwaremaster.com.data.GpuFilterValues;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 

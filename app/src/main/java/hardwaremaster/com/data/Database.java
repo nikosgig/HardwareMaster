@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 
 import hardwaremaster.com.Base.BasePresenter;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
+import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 
 @Singleton
@@ -55,13 +56,16 @@ public class Database implements DatabaseCalls {
     }
 
     @Override
-    public void getGpus(@NonNull final LoadGpusCallback callback) {
+    public void getGpus(GpuFilterValues gpuFilterValues, @NonNull final LoadGpusCallback callback) {
         mDatabase.getReference("gpu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mGpuList.clear();
                 for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
-                    mGpuList.add(gpuDataSnapshot.getValue(Gpu.class));
+                    if(gpuDataSnapshot.getValue(Gpu.class).getPrice() >= gpuFilterValues.getMinPrice()
+                        && gpuDataSnapshot.getValue(Gpu.class).getPrice() <= gpuFilterValues.getMaxPrice()) {
+                        mGpuList.add(gpuDataSnapshot.getValue(Gpu.class));
+                    }
                     //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
                 }
                 //mCpuRankingsView.notifyCpuListChanged(cpuList);

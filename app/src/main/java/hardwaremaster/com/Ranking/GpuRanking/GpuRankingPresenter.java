@@ -4,14 +4,17 @@ package hardwaremaster.com.Ranking.GpuRanking;
 import android.widget.Filter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
+import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.data.Database;
 import hardwaremaster.com.data.DatabaseCalls;
@@ -31,6 +34,8 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     private GpuRankingContract.View mRankingsView;
     private final Database mDatabase;
     private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.ALL;
+    private GpuFilterValues gpuFilterValues = new GpuFilterValues();
+    private boolean alreadyInit;
 
     @Inject
     public GpuRankingPresenter(Database database) {
@@ -41,9 +46,22 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
     @Override
     public void getGpuFromDatabase() {
-        mDatabase.getGpus(new DatabaseCalls.LoadGpusCallback() {
+        mDatabase.getGpus(gpuFilterValues, new DatabaseCalls.LoadGpusCallback() {
             @Override
             public void onGpusLoaded(ArrayList<Gpu> gpuList) {
+
+                if(!alreadyInit) {
+                    Gpu max = Collections.max(gpuList, ((o1, o2) -> o1.getPrice().compareTo(o2.getPrice())));
+                    Gpu min = Collections.min(gpuList, ((o1, o2) -> o1.getPrice().compareTo(o2.getPrice())));
+                    mRankingsView.setPriceBarMinMaxValues(min.getPrice(), max.getPrice());
+                    alreadyInit = true;
+                }
+
+
+/*                if(gpuFilterValues.getMaxPrice() != max.getPrice() || gpuFilterValues.getMinPrice() != min.getPrice()) {
+                    mRankingsView.setPriceBarSelectedMinMaxValues(gpuFilterValues.getMinPrice(), gpuFilterValues.getMaxPrice());
+                }*/
+
                 switch (mCurrentSortBy) {
                     case BY_PRICE:
                         Collections.sort(gpuList,
@@ -97,6 +115,22 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     @Override
     public void setSorting(GpuRankingSortBy orderType) {
         mCurrentSortBy = orderType;
+    }
+
+    @Override
+    public void setMinPrice(double minPrice) {
+        gpuFilterValues.setMinPrice(minPrice);
+
+    }
+
+    @Override
+    public void setMaxPrice(double maxPrice) {
+        gpuFilterValues.setMaxPrice(maxPrice);
+    }
+
+    @Override
+    public void addVRamCapacity(double vRamCapacity) {
+        gpuFilterValues.setvRamCapacity(vRamCapacity);
     }
 
     @Override

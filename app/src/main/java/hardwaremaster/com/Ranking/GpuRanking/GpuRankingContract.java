@@ -10,7 +10,6 @@ import hardwaremaster.com.Ranking.CpuRanking.CpuRankingSortBy;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.Gpu;
-import hardwaremaster.com.data.GpuFilterValues;
 
 /**
  * This specifies the contract between the view and the presenter.
@@ -19,7 +18,8 @@ public interface GpuRankingContract {
     interface View extends BaseView<Presenter> {
         void notifyGpuListChanged(List<Gpu> gpuList);
         void showHideFiltersView();
-        //void showOrderByMenu();
+        void setPriceBarMinMaxValues(double min, double max);
+        void setPriceBarSelectedMinMaxValues(double min, double max);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -29,6 +29,9 @@ public interface GpuRankingContract {
         //void onGetCpuFromDatabase(List<Gpu> cpuList);
         Filter getSearchBarFilter();
         void setSorting(GpuRankingSortBy orderType);
+        void setMinPrice(double minPrice);
+        void setMaxPrice(double maxPrice);
+        void addVRamCapacity(double vRamCapacity);
         void showHideFilters();
 
     }

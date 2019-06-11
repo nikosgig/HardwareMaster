@@ -47,6 +47,7 @@ import hardwaremaster.com.Ranking.CpuRanking.CpuRankingContract;
 import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
+import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
@@ -64,6 +65,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     BottomSheetBehavior bottomSheetBehavior;
     MenuItem menuItem, filterItem;
     SearchView searchView;
+    private RangeSeekBar rangeSeekBar;
     OnBottomDialogFilterFragmentListener mListener;
 
     @Inject
@@ -182,6 +184,16 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             }
         });
 
+        rangeSeekBar = root.findViewById(R.id.rangeSeekBar);
+        rangeSeekBar.setNotifyWhileDragging(true);
+        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Number minValue,
+                                                    Number maxValue) {
+                mPresenter.setMaxPrice((double) maxValue);
+                mPresenter.setMinPrice((double) minValue);
+            }
+        });
         //setup apply button
         applyFilterButton = root.findViewById(R.id.apply_filter_button);
         applyFilterButton.setOnClickListener(new View.OnClickListener() {
@@ -230,6 +242,17 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             toogleFilterView=false;
         }
 
+    }
+
+    @Override
+    public void setPriceBarMinMaxValues(double min, double max) {
+        rangeSeekBar.setRangeValues(min, max);
+    }
+
+    @Override
+    public void setPriceBarSelectedMinMaxValues(double min, double max) {
+        rangeSeekBar.setSelectedMinValue(min);
+        rangeSeekBar.setSelectedMaxValue(max);
     }
 
     @Override

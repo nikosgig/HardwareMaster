@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
+
 public interface DatabaseCalls {
 
     interface LoadCpusCallback {
@@ -19,7 +21,7 @@ public interface DatabaseCalls {
 
     void getCpus(@NonNull final LoadCpusCallback callback);
 
-    void getGpus(@NonNull final LoadGpusCallback callback);
+    void getGpus(GpuFilterValues gpuFilterValues, @NonNull final LoadGpusCallback callback);
 
     CpuFilterValues getFilterMinMaxValues();
 
