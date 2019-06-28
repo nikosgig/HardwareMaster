@@ -3,66 +3,103 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/firewatch_burgundy</item>
+        <item name="colorPrimaryDark">@color/firewatch_burgundy</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="gpuCardChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/indigo_50</item>
+        <item name="chipBackgroundColor">@color/indigo_A700</item>
+        <item name="chipIconTint">@color/indigo_50</item>
+
+    </style>
+
+    <style name="gpuCardChipHeavy" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/orange_50</item>
+        <item name="chipBackgroundColor">@color/orange_A700</item>
+        <item name="chipIconTint">@color/orange_50</item>
+
+    </style>
 
 
     <declare-styleable name="RangeSeekBar">
         <!-- the minimum of the range -->
-        <attr name="absoluteMinValue" format="integer|float"/>
+        <attr name="absoluteMinValue" format="integer|float" />
 
         <!-- the maximum of the range -->
-        <attr name="absoluteMaxValue" format="integer|float"/>
+        <attr name="absoluteMaxValue" format="integer|float" />
 
         <!-- the step value -->
-        <attr name="step" format="integer|float"/>
+        <attr name="step" format="integer|float" />
 
         <!-- show a single slider -->
-        <attr name="singleThumb" format="boolean"/>
+        <attr name="singleThumb" format="boolean" />
 
         <!-- show the labels on the right and left-->
-        <attr name="showLabels" format="boolean"/>
+        <attr name="showLabels" format="boolean" />
 
         <!-- alwaysActive will make the buttons and bar always draw as the activeColor (the default is false) -->
-        <attr name="alwaysActive" format="boolean"/>
+        <attr name="alwaysActive" format="boolean" />
 
         <!-- show the currently selected value above each thumb (defaults to true) -->
-        <attr name="valuesAboveThumbs" format="boolean"/>
+        <attr name="valuesAboveThumbs" format="boolean" />
 
         <!-- padding on either side on the slider -->
-        <attr name="internalPadding" format="dimension"/>
+        <attr name="internalPadding" format="dimension" />
 
         <!-- the height of the bar -->
-        <attr name="barHeight" format="dimension"/>
+        <attr name="barHeight" format="dimension" />
 
         <!-- the color of the bar that is not selected -->
-        <attr name="defaultColor" format="color"/>
+        <attr name="defaultColor" format="color" />
 
         <!-- the color of the bar that is selected -->
-        <attr name="activeColor" format="color"/>
+        <attr name="activeColor" format="color" />
 
         <!-- the color of the text above thumbs -->
-        <attr name="textAboveThumbsColor" format="color"/>
+        <attr name="textAboveThumbsColor" format="color" />
 
         <!-- set drawables for thumb handles -->
-        <attr name="thumbNormal" format="reference"/>
-        <attr name="thumbPressed" format="reference"/>
-        <attr name="thumbDisabled" format="reference"/>
+        <attr name="thumbNormal" format="reference" />
+        <attr name="thumbPressed" format="reference" />
+        <attr name="thumbDisabled" format="reference" />
 
         <!-- thumb shadow specifications -->
-        <attr name="thumbShadow" format="boolean"/>
-        <attr name="thumbShadowColor" format="color"/>
-        <attr name="thumbShadowXOffset" format="dimension"/>
-        <attr name="thumbShadowYOffset" format="dimension"/>
-        <attr name="thumbShadowBlur" format="dimension"/>
+        <attr name="thumbShadow" format="boolean" />
+        <attr name="thumbShadowColor" format="color" />
+        <attr name="thumbShadowXOffset" format="dimension" />
+        <attr name="thumbShadowYOffset" format="dimension" />
+        <attr name="thumbShadowBlur" format="dimension" />
 
         <!-- to activate the thumbs and texts when the min and max values are the default ones (defaults to false) -->
-        <attr name="activateOnDefaultValues" format="boolean"/>
+        <attr name="activateOnDefaultValues" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="ExpandableCardView">
+        <attr name="title" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="inner_view" format="reference" />
+        <attr name="expandOnClick" format="boolean" />
+        <attr name="animationDuration" format="integer" />
+        <attr name="startExpanded" format="boolean" />
+
+        <attr name="cardViewBackgroundColor" format="color" />
+        <attr name="cardViewBackgroundDrawable" format="reference" />
+        <attr name="cardViewCornerRadius" format="dimension" />
+        <attr name="cardViewElevation" format="dimension" />
+        <attr name="cardViewMaxElevation" format="dimension" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="expandIconColor" format="color" />
+    </declare-styleable>
+
+    <dimen name="default_card_height">50dp</dimen>
+    <dimen name="default_vertical_padding">10dp</dimen>
 
 </resources>
