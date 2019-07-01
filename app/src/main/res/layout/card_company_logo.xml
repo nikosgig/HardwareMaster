@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     style="@style/Base.CardView"
-    app:cardBackgroundColor="@color/firewatch_dark_red"
     app:cardCornerRadius="6dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
             app:layout_constraintEnd_toStartOf="@+id/model"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_icons8_nvidia_geforce" />
+            app:srcCompat="@drawable/ic_nvidia" />
 
         <TextView
             android:id="@+id/model"
