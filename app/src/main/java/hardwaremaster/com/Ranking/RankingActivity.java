@@ -1,12 +1,14 @@
 package hardwaremaster.com.Ranking;
 
 import android.os.Bundle;
-import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -20,12 +22,12 @@ import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragment;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.data.CpuFilterValues;
-import hardwaremaster.com.Filter.FilterFragment;
+import hardwaremaster.com.Filter.GpuFilterFragment;
 import hardwaremaster.com.util.ActivityUtils;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 
-public class RankingActivity extends BaseActivity implements GpuRankingFragment.OnBottomDialogFilterFragmentListener {
+public class RankingActivity extends BaseActivity implements GpuRankingFragment.OnBottomDialogFilterFragmentListener, GpuFilterFragment.OnBottomDialogFilterFragmentListener {
 
     private RangeSeekBar cpuBarSingleScore, cpuBarMultiScore;
     private CpuFilterValues cpuFilterValues = new CpuFilterValues();
@@ -37,8 +39,8 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
     @Inject
     GpuRankingPresenter mGpuRankingPresenter;
     @Inject
-    Lazy<FilterFragment> filterFragmentProvider;
-    FilterFragment filterFragment;
+    Lazy<GpuFilterFragment> filterFragmentProvider;
+    GpuFilterFragment gpuFilterFragment;
     @Inject
     Lazy<CpuRankingFragment> cpuRankingFragmentProvider;
     CpuRankingFragment cpuRankingFragment;
@@ -73,11 +75,23 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
         }
     };
 
+    private FloatingActionButton.OnClickListener mOnFloatingActionButtonListener = new FloatingActionButton.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            gpuFilterFragment = filterFragmentProvider.get();
+            //bottomAppBar.performHide();
+            //floatingActionButton.hide();
+            ActivityUtils.replaceAddToBackStackFragmentToActivity(getSupportFragmentManager(), gpuFilterFragment, R.id.contentFrame);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         bottomAppBar.setOnMenuItemClickListener(mOnNavigationItemSelectedListener);
+        floatingActionButton.setOnClickListener(mOnFloatingActionButtonListener);
 
         cpuRankingFragment = cpuRankingFragmentProvider.get();
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
@@ -116,4 +130,13 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
         mGpuRankingPresenter.getGpuFromDatabase();
     }
 
+    @Override
+    public void OnBottomDialogFilterFragmentInteraction() {
+        
+    }
+
+    @Override
+    public ArrayList<RangeSeekBar> OnRangeSeekBarInit() {
+        return null;
+    }
 }

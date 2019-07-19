@@ -33,7 +33,7 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     @Nullable
     private GpuRankingContract.View mRankingsView;
     private final Database mDatabase;
-    private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.ALL;
+    private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.BY_SCORE;
     private GpuFilterValues gpuFilterValues = new GpuFilterValues();
     private boolean alreadyInit;
 
@@ -49,6 +49,15 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
         mDatabase.getGpus(gpuFilterValues, new DatabaseCalls.LoadGpusCallback() {
             @Override
             public void onGpusLoaded(ArrayList<Gpu> gpuList) {
+
+                for ( Gpu curGpu : gpuList)
+                {
+                    if(curGpu.getPrice()!=0) {
+                        curGpu.setScore((curGpu.getAvgFps1080p() + curGpu.getAvgFps2k() + curGpu.getAvgFps4k())/curGpu.getPrice());
+                    } else {
+                        curGpu.setScore(0.0);
+                    }
+                }
 
                 if(!alreadyInit) {
                     Gpu max = Collections.max(gpuList, ((o1, o2) -> o1.getPrice().compareTo(o2.getPrice())));
@@ -78,6 +87,10 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
                     case BY_4K:
                         Collections.sort(gpuList,
                                 (o1, o2) -> o1.getAvgFps4k().compareTo(o2.getAvgFps4k()));
+                        break;
+                    case BY_SCORE:
+                        Collections.sort(gpuList,
+                                (o1, o2) -> o1.getScore().compareTo(o2.getScore()));
                         break;
                     default:
                         break;

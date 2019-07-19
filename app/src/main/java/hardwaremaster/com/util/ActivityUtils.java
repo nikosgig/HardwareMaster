@@ -27,4 +27,13 @@ public class ActivityUtils {
         transaction.commit();
     }
 
+    public static void replaceAddToBackStackFragmentToActivity(@NonNull FragmentManager fragmentManager,
+                                                               @NonNull Fragment fragment, int frameId) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment).addToBackStack("review");
+        transaction.commit();
+    }
+
 }

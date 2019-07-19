@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/rangeSeekBar1080"
+        layout="@layout/labeled_range_seek_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
+
+    <include
+        android:id="@+id/rangeSeekBar2k"
+        layout="@layout/labeled_range_seek_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rangeSeekBar1080"/>
+
+    <include
+        android:id="@+id/rangeSeekBar4k"
+        layout="@layout/labeled_range_seek_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rangeSeekBar2k"/>
+
+
+    <include
+        android:id="@+id/rangeSeekBarFirestrike"
+        layout="@layout/labeled_range_seek_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rangeSeekBar4k"/>
+
+
+    <include
+        android:id="@+id/rangeSeekBarPassmark"
+        layout="@layout/labeled_range_seek_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rangeSeekBarFirestrike"/>
+
+
+</RelativeLayout>

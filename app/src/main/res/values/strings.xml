@@ -23,6 +23,8 @@
     <string name="sort_1080p">1080p FPS</string>
     <string name="sort_2k">2K FPS</string>
     <string name="sort_4k">4K FPS</string>
+    <string name="score_firestrike">Firestrike Score</string>
+    <string name="score_passmark">Passmark Score</string>
     <string name="sort_by">Sort By</string>
 
     <string name="filter_vram">Video RAM Capacity</string>

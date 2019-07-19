@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="?colorPrimary"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:text="@string/sort_price" />
+
+    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+        android:id="@+id/rangeSeekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/title"
+        app:corner_radius="10"
+        app:min_value="0"
+        app:max_value="1000"
+        app:gap="10"
+        app:bar_color="?colorPrimary"
+        app:bar_highlight_color="?colorSecondary"
+        app:left_thumb_color="?colorPrimary"
+        app:right_thumb_color="?colorPrimary"
+        app:left_thumb_color_pressed="?colorSecondary"
+        app:right_thumb_color_pressed="?colorSecondary"
+        app:data_type="_integer"/>
+
+    <TextView
+        android:id="@+id/min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/oval_textview"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="0"
+        android:textAlignment="center"
+        android:layout_below="@+id/rangeSeekBar"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="?colorSecondary"/>
+
+    <TextView
+        android:id="@+id/max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/oval_textview"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="1000+"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="?colorSecondary"
+        android:layout_below="@+id/rangeSeekBar"
+        android:layout_alignParentEnd="true"
+        />
+
+
+</RelativeLayout>

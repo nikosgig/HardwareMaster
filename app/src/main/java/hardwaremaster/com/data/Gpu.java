@@ -15,6 +15,7 @@ public class Gpu {
     private Integer GPUClock;
     private Integer MemoryClock;
     private Double Price;
+    private Double Score;
 
 
     public String getModel() {
@@ -119,5 +120,13 @@ public class Gpu {
 
     public void setPrice(Double price) {
         Price = price;
+    }
+
+    public Double getScore() {
+        return Score;
+    }
+
+    public void setScore(Double score) {
+        Score = score;
     }
 }

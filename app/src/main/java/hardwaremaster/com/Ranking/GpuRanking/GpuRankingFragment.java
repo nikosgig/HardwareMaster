@@ -1,7 +1,9 @@
 package hardwaremaster.com.Ranking.GpuRanking;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,10 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -210,6 +215,17 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     /* CpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
+//        for ( Gpu curGpu : gpuList)
+//        {
+//            if(curGpu.getPrice()!=0) {
+//                curGpu.setScore((curGpu.getAvgFps1080p() + curGpu.getAvgFps2k() + curGpu.getAvgFps4k())/curGpu.getPrice());
+//            } else {
+//                curGpu.setScore(0.0);
+//            }
+//        }
+//        Collections.sort(gpuList,
+//                (o1, o2) -> o1.getScore().compareTo(o2.getScore()));
+
         if(gpuList != null) {
             mListAdapter.setList(gpuList);
             mListAdapter.notifyDataSetChanged();
@@ -499,7 +515,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             holder.vRamSize.setText(Integer.toString(mGpuList.get(position).getGraphicsRamSize().intValue()) + "GB");
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
-            holder.scoreVFM.setText("100%");
+            holder.scoreVFM.setText(Double.toString(mGpuList.get(position).getScore()));
             holder.price.setText(String.valueOf(mGpuList.get(position).getPrice()) + " €");
             holder.fps1080.setText(Double.toString(mGpuList.get(position).getAvgFps1080p()));
             holder.fps2k.setText(Double.toString(mGpuList.get(position).getAvgFps2k()));
@@ -507,13 +523,13 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             holder.scoreFirestrike.setText(String.valueOf((int) mGpuList.get(position).getFirestrike()));
             holder.scorePassmark.setText(String.valueOf(((int) mGpuList.get(position).getPassmark())));
 
-            holder.titlePrice.setText("Price");
+            holder.titlePrice.setText(R.string.sort_price);
             holder.titleVFM.setText("Value for money");
-            holder.title1080.setText("1080p (FPS)");
-            holder.title2k.setText("2k (FPS)");
-            holder.title4k.setText("4k (FPS)");
-            holder.titleFirestrike.setText("Firestrike Score");
-            holder.titlePassmark.setText("Passmark Score");
+            holder.title1080.setText(R.string.sort_1080p);
+            holder.title2k.setText(R.string.sort_2k);
+            holder.title4k.setText(R.string.sort_4k);
+            holder.titleFirestrike.setText(R.string.score_firestrike);
+            holder.titlePassmark.setText(R.string.score_passmark);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -524,6 +540,37 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
+                }
+            });
+
+            holder.price.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Title");
+
+// Set up the input
+                    final EditText input = new EditText(getContext());
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    builder.setView(input);
+
+// Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String price = input.getText().toString();
+                            mGpuList.get(position).setPrice(Double.valueOf(price));
+                            notifyGpuListChanged(mGpuList);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
                 }
             });
 

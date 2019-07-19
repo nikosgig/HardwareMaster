@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/firewatch_burgundy</item>
         <item name="colorPrimary">@color/firewatch_burgundy</item>
         <item name="colorPrimaryVariant">@color/firewatch_burgundy</item>
         <item name="colorOnPrimary">@color/firewatch_light</item>
@@ -19,7 +20,16 @@
         <item name="actionMenuTextColor">@color/firewatch_light</item>
     </style>
 
+    <style name="UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    </style>
 
+    <style name="ToogleGroupButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="iconPadding">0dp</item>
+
+    </style>
 
 
     <declare-styleable name="RangeSeekBar">

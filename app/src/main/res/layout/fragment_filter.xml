@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/sort_by"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--<com.google.android.flexbox.FlexboxLayout-->
+            <!--android:id="@+id/sortByToggleGroup"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--app:dividerDrawable="@drawable/divider"-->
+            <!--app:flexWrap="wrap"-->
+            <!--app:justifyContent="center"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"-->
+            <!--app:showDividerVertical="middle|end">-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/sort_price"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/sort_price"-->
+                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
+                <!--app:icon="@drawable/arrow_down"/>-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/sort_1080p"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/sort_1080p"-->
+                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
+                <!--app:icon="@drawable/arrow_down"/>-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/sort_2k"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/sort_2k"-->
+                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
+                <!--app:icon="@drawable/arrow_down"/>-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/sort_4k"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/sort_4k"-->
+                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
+                <!--app:icon="@drawable/arrow_down" />-->
+        <!--</com.google.android.flexbox.FlexboxLayout>-->
+
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/sortByToggleGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:singleSelection="true"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sort_price"
+                app:icon="@drawable/arrow_down"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_price" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sort_1080p"
+                app:icon="@drawable/arrow_down"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_1080p" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sort_2k"
+                app:icon="@drawable/arrow_down"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_2k" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sort_4k"
+                app:icon="@drawable/arrow_down"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_4k" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/brandTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/brand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sortByToggleGroup" />
+
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/brandToggleGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brandTextView">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/brandButton1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brand_amd" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/brandButton2"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/brand_Nvidia" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!--<androidx.appcompat.widget.AppCompatTextView-->
+            <!--android:id="@+id/vRamTextView"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:text="@string/filter_vram"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/brandToggleGroup" />-->
+
+        <!--<com.google.android.material.button.MaterialButtonToggleGroup-->
+            <!--android:id="@+id/vRamToggleGroup"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/vRamTextView">-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/vRamButton1"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/filter_1gb" />-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/vRamButton2"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/filter_2gb" />-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/vRamButton3"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/filter_4gb" />-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+                <!--android:id="@+id/vRamButton4"-->
+                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/filter_8gb" />-->
+        <!--</com.google.android.material.button.MaterialButtonToggleGroup>-->
+
+        <include
+            android:id="@+id/rangeSeekBarPrice"
+            layout="@layout/labeled_range_seek_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brandToggleGroup" />
+
+        <hardwaremaster.com.widgets.ExpandableCardView
+            android:id="@+id/expandableViewFilters"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:animationDuration="300"
+            app:cardViewCornerRadius="6dp"
+            app:cardViewElevation="4dp"
+            app:cardViewMaxElevation="6dp"
+            app:expandIconColor="?colorPrimary"
+            app:expandOnClick="true"
+            app:inner_view="@layout/gpu_filters_inner_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rangeSeekBarPrice"
+            app:startExpanded="false"
+            app:title="Score Filters"
+            app:titleTextColor="?colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/apply_filter_button"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/Apply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expandableViewFilters" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

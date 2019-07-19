@@ -17,6 +17,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class ExpandableCardView extends LinearLayout {
 
     private View innerView;
     private ViewGroup containerView;
+    private RelativeLayout containerHeader;
 
     private ImageButton arrowBtn;
     private ImageButton headerIcon;
@@ -161,6 +163,7 @@ public class ExpandableCardView extends LinearLayout {
         }
 
         card = findViewById(R.id.card);
+        containerHeader = findViewById(R.id.header);
         card.setCardBackgroundColor(backgroundColor);
         card.setBackground(backgroundDrawable);
         card.setRadius(cardCornerRadius);
@@ -183,7 +186,7 @@ public class ExpandableCardView extends LinearLayout {
         }
 
         if(expandOnClick){
-            card.setOnClickListener(defaultClickListener);
+            containerHeader.setOnClickListener(defaultClickListener);
             arrowBtn.setOnClickListener(defaultClickListener);
         }
 

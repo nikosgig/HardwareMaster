@@ -3,7 +3,9 @@ package hardwaremaster.com.Ranking;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import hardwaremaster.com.Filter.FilterFragment;
+import hardwaremaster.com.Filter.GpuFilterContract;
+import hardwaremaster.com.Filter.GpuFilterFragment;
+import hardwaremaster.com.Filter.GpuFilterPresenter;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingContract;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
@@ -29,7 +31,7 @@ public abstract class RankingModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    abstract FilterFragment filterFragment();
+    abstract GpuFilterFragment filterFragment();
 
     @FragmentScoped
     @ContributesAndroidInjector
@@ -40,4 +42,7 @@ public abstract class RankingModule {
 
     @ActivityScoped
     @Binds abstract GpuRankingContract.Presenter gpuRankingPresenter(GpuRankingPresenter presenter);
+
+    @ActivityScoped
+    @Binds abstract GpuFilterContract.Presenter gpuFilterPresenter(GpuFilterPresenter presenter);
 }
