@@ -152,6 +152,11 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     }
 
     @Override
+    public void updatePrice(String key, double price) {
+        mDatabase.addUserPrice(key, price);
+    }
+
+    @Override
     public CpuFilterValues getGpuFilterValuesToShow() {
         return mDatabase.getFilterMinMaxValues();
     }

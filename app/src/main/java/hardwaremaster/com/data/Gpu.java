@@ -1,7 +1,11 @@
 package hardwaremaster.com.data;
 
+import com.google.firebase.database.Exclude;
+
 public class Gpu {
 
+    @Exclude
+    private String Key;
     private String Model;
     private Double AvgFps1080p;
     private Double AvgFps2k;
@@ -128,5 +132,13 @@ public class Gpu {
 
     public void setScore(Double score) {
         Score = score;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 }

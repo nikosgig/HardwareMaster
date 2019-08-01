@@ -41,6 +41,7 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -121,7 +122,9 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
         //Set filters
 
-
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        TextView textView = root.findViewById(R.id.appCompatTextView);
+        textView.setText(auth.getCurrentUser().getEmail());
 
         //Set up seek bars
 /*        rangeSeekBars = mListener.OnGpuRangeSeekBarInit();
@@ -561,6 +564,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                             String price = input.getText().toString();
                             mGpuList.get(position).setPrice(Double.valueOf(price));
                             notifyGpuListChanged(mGpuList);
+                            mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

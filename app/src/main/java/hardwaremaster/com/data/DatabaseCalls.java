@@ -32,4 +32,6 @@ public interface DatabaseCalls {
     ArrayList<Cpu> filterCpuList(CpuFilterValues filterValues);
 
     ArrayList<Gpu> filterGpuList(GpuFilterValues filterValues);
+
+    void addUserPrice(String key, double price);
 }

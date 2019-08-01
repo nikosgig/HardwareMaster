@@ -2,8 +2,10 @@ package hardwaremaster.com.data;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -64,7 +66,11 @@ public class Database implements DatabaseCalls {
                 for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
                     if(gpuDataSnapshot.getValue(Gpu.class).getPrice() >= gpuFilterValues.getMinPrice()
                         && gpuDataSnapshot.getValue(Gpu.class).getPrice() <= gpuFilterValues.getMaxPrice()) {
-                        mGpuList.add(gpuDataSnapshot.getValue(Gpu.class));
+                        Gpu curGpu = gpuDataSnapshot.getValue(Gpu.class);
+                        if (curGpu != null) {
+                            curGpu.setKey(gpuDataSnapshot.getKey());
+                        }
+                        mGpuList.add(curGpu);
                     }
                     //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
                 }
@@ -192,6 +198,24 @@ public class Database implements DatabaseCalls {
     @Override
     public ArrayList<Gpu> filterGpuList(GpuFilterValues filterValues) {
         return mGpuList;
+    }
+
+    @Override
+    public void addUserPrice(String key, double price) {
+        final DatabaseReference usersRef = mDatabase.getReference("price").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                usersRef.child(key).setValue(price);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

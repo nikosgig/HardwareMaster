@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         bottomAppBar.setOnMenuItemClickListener(mOnNavigationItemSelectedListener);
         floatingActionButton.setOnClickListener(mOnFloatingActionButtonListener);
 

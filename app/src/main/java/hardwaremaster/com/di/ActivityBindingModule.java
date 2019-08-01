@@ -2,6 +2,7 @@ package hardwaremaster.com.di;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import hardwaremaster.com.Login.LoginActivity;
 import hardwaremaster.com.Ranking.RankingActivity;
 import hardwaremaster.com.Ranking.RankingModule;
 
@@ -17,5 +18,9 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = RankingModule.class)
     abstract RankingActivity rankingActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = RankingModule.class)
+    abstract LoginActivity loginActivity();
 
 }

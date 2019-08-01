@@ -33,6 +33,7 @@ public interface GpuRankingContract {
         void setMaxPrice(double maxPrice);
         void addVRamCapacity(double vRamCapacity);
         void showHideFilters();
+        void updatePrice(String key, double price);
 
     }
 }
