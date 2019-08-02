@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -59,31 +60,52 @@ public class Database implements DatabaseCalls {
 
     @Override
     public void getGpus(GpuFilterValues gpuFilterValues, @NonNull final LoadGpusCallback callback) {
-        mDatabase.getReference("gpu").addValueEventListener(new ValueEventListener() {
+        mDatabase.getReference("price/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mGpuList.clear();
-                for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
-                    if(gpuDataSnapshot.getValue(Gpu.class).getPrice() >= gpuFilterValues.getMinPrice()
-                        && gpuDataSnapshot.getValue(Gpu.class).getPrice() <= gpuFilterValues.getMaxPrice()) {
-                        Gpu curGpu = gpuDataSnapshot.getValue(Gpu.class);
-                        if (curGpu != null) {
-                            curGpu.setKey(gpuDataSnapshot.getKey());
-                        }
-                        mGpuList.add(curGpu);
-                    }
-                    //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
+                HashMap<String, Long> valuesMap = new HashMap<>();
+                for (DataSnapshot userPriceSnapshot : dataSnapshot.getChildren()) {
+                    valuesMap.put(userPriceSnapshot.getKey(),
+                            (Long) userPriceSnapshot.getValue());
                 }
-                //mCpuRankingsView.notifyCpuListChanged(cpuList);
-                //mCpuRankingPresenter.refreshCpuList(mCpuList);
-                //mGpuRankingPresenter.onGetCpuFromDatabase(mGpuList);
-                callback.onGpusLoaded(mGpuList);
 
+                mDatabase.getReference("gpu").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mGpuList.clear();
+                        for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
+                            if (gpuDataSnapshot.getValue(Gpu.class).getPrice() >= gpuFilterValues.getMinPrice()
+                                    && gpuDataSnapshot.getValue(Gpu.class).getPrice() <= gpuFilterValues.getMaxPrice()) {
+                                Gpu curGpu = gpuDataSnapshot.getValue(Gpu.class);
+                                if (curGpu != null) {
+                                    curGpu.setKey(gpuDataSnapshot.getKey());
+
+                                    for (HashMap.Entry<String, Long> entry :
+                                            valuesMap.entrySet()) {
+                                        if (curGpu.getKey().equals(entry.getKey())) {
+                                            curGpu.setPrice((double) entry.getValue());
+                                        }
+                                    }
+                                }
+                                mGpuList.add(curGpu);
+                            }
+                            //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
+                        }
+                        //mCpuRankingsView.notifyCpuListChanged(cpuList);
+                        //mCpuRankingPresenter.refreshCpuList(mCpuList);
+                        //mGpuRankingPresenter.onGetCpuFromDatabase(mGpuList);
+                        callback.onGpusLoaded(mGpuList);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

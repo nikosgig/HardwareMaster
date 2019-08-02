@@ -89,8 +89,8 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
                                 (o1, o2) -> o1.getAvgFps4k().compareTo(o2.getAvgFps4k()));
                         break;
                     case BY_SCORE:
-                        Collections.sort(gpuList,
-                                (o1, o2) -> o1.getScore().compareTo(o2.getScore()));
+                        Collections.sort(gpuList, Collections.reverseOrder(
+                                (o1, o2) -> o1.getScore().compareTo(o2.getScore())));
                         break;
                     default:
                         break;

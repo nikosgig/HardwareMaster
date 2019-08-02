@@ -26,6 +26,7 @@
     <string name="score_firestrike">Firestrike Score</string>
     <string name="score_passmark">Passmark Score</string>
     <string name="sort_by">Sort By</string>
+    <string name="sort_vfm">Value for Money</string>
 
     <string name="filter_vram">Video RAM Capacity</string>
     <string name="filter_1gb">1GB</string>

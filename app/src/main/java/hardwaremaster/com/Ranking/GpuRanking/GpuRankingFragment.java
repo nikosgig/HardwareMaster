@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -515,19 +516,19 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             holder.titleGpuModel.setText(mGpuList.get(position).getModel());
-            holder.vRamSize.setText(Integer.toString(mGpuList.get(position).getGraphicsRamSize().intValue()) + "GB");
+            holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + "GB");
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
-            holder.scoreVFM.setText(Double.toString(mGpuList.get(position).getScore()));
+            holder.scoreVFM.setText(NumberFormat.getPercentInstance().format((mGpuList.get(position).getScore())));
             holder.price.setText(String.valueOf(mGpuList.get(position).getPrice()) + " €");
-            holder.fps1080.setText(Double.toString(mGpuList.get(position).getAvgFps1080p()));
-            holder.fps2k.setText(Double.toString(mGpuList.get(position).getAvgFps2k()));
-            holder.fps4k.setText(Double.toString(mGpuList.get(position).getAvgFps4k()));
+            holder.fps1080.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps1080p()));
+            holder.fps2k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps2k()));
+            holder.fps4k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps4k()));
             holder.scoreFirestrike.setText(String.valueOf((int) mGpuList.get(position).getFirestrike()));
             holder.scorePassmark.setText(String.valueOf(((int) mGpuList.get(position).getPassmark())));
 
             holder.titlePrice.setText(R.string.sort_price);
-            holder.titleVFM.setText("Value for money");
+            holder.titleVFM.setText(R.string.sort_vfm);
             holder.title1080.setText(R.string.sort_1080p);
             holder.title2k.setText(R.string.sort_2k);
             holder.title4k.setText(R.string.sort_4k);
@@ -546,7 +547,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 }
             });
 
-            holder.price.setOnClickListener(new View.OnClickListener() {
+            holder.itemPrice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -563,6 +564,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                         public void onClick(DialogInterface dialog, int which) {
                             String price = input.getText().toString();
                             mGpuList.get(position).setPrice(Double.valueOf(price));
+                            mGpuList.get(position).setScore((mGpuList.get(position).getAvgFps1080p() + mGpuList.get(position).getAvgFps2k() + mGpuList.get(position).getAvgFps4k()) /mGpuList.get(position).getPrice());
                             notifyGpuListChanged(mGpuList);
                             mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
                         }
@@ -600,6 +602,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //        public Button textViewTag2;
             public TextView scoreVFM;
             public TextView titleVFM;
+            public ConstraintLayout itemPrice;
             public TextView price;
             public TextView titlePrice;
             public ConstraintLayout cardContainer;
@@ -632,6 +635,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 //this.imageViewImage = itemView.findViewById(R.id.image);
                 this.scoreVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_value);
                 this.titleVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
+                this.itemPrice = itemView.findViewById(R.id.price);
                 this.price = itemView.findViewById(R.id.price).findViewById(R.id.score_value);
                 this.titlePrice = itemView.findViewById(R.id.price).findViewById(R.id.score_title);
 //                this.expandableView = itemView.findViewById(R.id.expandable_view);

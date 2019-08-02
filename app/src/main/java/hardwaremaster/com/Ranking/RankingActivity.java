@@ -3,6 +3,7 @@ package hardwaremaster.com.Ranking;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,6 +91,7 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         bottomAppBar.setOnMenuItemClickListener(mOnNavigationItemSelectedListener);
         floatingActionButton.setOnClickListener(mOnFloatingActionButtonListener);
