@@ -1,7 +1,5 @@
 package hardwaremaster.com.data;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,10 +18,7 @@ import androidx.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import hardwaremaster.com.Base.BasePresenter;
-import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
 import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
-import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 
 @Singleton
 public class Database implements DatabaseCalls {
@@ -31,6 +26,7 @@ public class Database implements DatabaseCalls {
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private ArrayList<Cpu> mCpuList = new ArrayList<>();
     private ArrayList<Gpu> mGpuList = new ArrayList<>();
+    private GpuFilterValues gpuFilters = new GpuFilterValues();
 
     @Inject
     Database() {
@@ -59,7 +55,7 @@ public class Database implements DatabaseCalls {
     }
 
     @Override
-    public void getGpus(GpuFilterValues gpuFilterValues, @NonNull final LoadGpusCallback callback) {
+    public void getGpus(@NonNull final LoadGpusCallback callback) {
         mDatabase.getReference("price/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,19 +70,23 @@ public class Database implements DatabaseCalls {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mGpuList.clear();
                         for (DataSnapshot gpuDataSnapshot : dataSnapshot.getChildren()) {
-                            if (gpuDataSnapshot.getValue(Gpu.class).getPrice() >= gpuFilterValues.getMinPrice()
-                                    && gpuDataSnapshot.getValue(Gpu.class).getPrice() <= gpuFilterValues.getMaxPrice()) {
-                                Gpu curGpu = gpuDataSnapshot.getValue(Gpu.class);
-                                if (curGpu != null) {
-                                    curGpu.setKey(gpuDataSnapshot.getKey());
+                            Gpu curGpu = gpuDataSnapshot.getValue(Gpu.class);
+                            if (curGpu != null) {
+                                curGpu.setKey(gpuDataSnapshot.getKey());
 
-                                    for (HashMap.Entry<String, Long> entry :
-                                            valuesMap.entrySet()) {
-                                        if (curGpu.getKey().equals(entry.getKey())) {
-                                            curGpu.setPrice((double) entry.getValue());
-                                        }
+                                for (HashMap.Entry<String, Long> entry : valuesMap.entrySet()) {
+                                    if (curGpu.getKey().equals(entry.getKey())) {
+                                        curGpu.setPrice((double) entry.getValue());
                                     }
                                 }
+                            }
+
+                            if (curGpu.getPrice()>= gpuFilters.getMinPrice() && curGpu.getPrice() <= gpuFilters.getMaxPrice()
+                                    && curGpu.getAvgFps1080p() >= gpuFilters.getMinFps1080p() && curGpu.getAvgFps1080p() <= gpuFilters.getMaxFps1080p()
+                                    && curGpu.getAvgFps2k() >= gpuFilters.getMinFps2k() && curGpu.getAvgFps2k() <= gpuFilters.getMaxFps2k()
+                                    && curGpu.getAvgFps4k() >= gpuFilters.getMinFps4k() && curGpu.getAvgFps4k() <= gpuFilters.getMaxFps4k()
+                                    && curGpu.getFirestrike() >= gpuFilters.getMinFirestrike() && curGpu.getFirestrike() <= gpuFilters.getMaxFirestrike()
+                                    && curGpu.getPassmark() >= gpuFilters.getMinPassmark() && curGpu.getPassmark() <= gpuFilters.getMaxPassmark()) {
                                 mGpuList.add(curGpu);
                             }
                             //Log.d("hi", cpuDataSnapshot.getValue(Cpu.class).getModel());
@@ -240,4 +240,8 @@ public class Database implements DatabaseCalls {
 
     }
 
+    @Override
+    public void setGpuFilters(GpuFilterValues gpuFilterValues) {
+        gpuFilters = gpuFilterValues;
+    }
 }

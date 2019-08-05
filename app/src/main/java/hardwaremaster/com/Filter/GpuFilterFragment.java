@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -18,7 +16,6 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import androidx.annotation.IdRes;
 
@@ -96,6 +93,9 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
         //price bar
         RelativeLayout rangeSeekBarLayoutPrice = view.findViewById(R.id.rangeSeekBarPrice);
         CrystalRangeSeekbar rangeSeekbarPrice = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayoutPrice, R.string.sort_price, DEFAULT_MIN_VALUE, PRICE_MAX_VALUE);
+        rangeSeekbarPrice.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinPrice());
+        rangeSeekbarPrice.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxPrice());
+        rangeSeekbarPrice.apply();
         rangeSeekbarPrice.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -108,6 +108,9 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
         //1080 bar
         RelativeLayout rangeSeekBarLayout1080 = view.findViewById(R.id.expandableViewFilters).findViewById(R.id.rangeSeekBar1080);
         CrystalRangeSeekbar rangeSeekbar1080 = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayout1080, R.string.sort_1080p, DEFAULT_MIN_VALUE, FPS_MAX_VALUE);
+        rangeSeekbar1080.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinFps1080p());
+        rangeSeekbar1080.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxFps1080p());
+        rangeSeekbar1080.apply();
         rangeSeekbar1080.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -120,6 +123,9 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
         //2k bar
         RelativeLayout rangeSeekBarLayout2k = view.findViewById(R.id.expandableViewFilters).findViewById(R.id.rangeSeekBar2k);
         CrystalRangeSeekbar rangeSeekbar2k = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayout2k, R.string.sort_2k, DEFAULT_MIN_VALUE, FPS_MAX_VALUE);
+        rangeSeekbar2k.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinFps2k());
+        rangeSeekbar2k.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxFps2k());
+        rangeSeekbar2k.apply();
         rangeSeekbar2k.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -132,6 +138,9 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
         //4k bar
         RelativeLayout rangeSeekBarLayout4k = view.findViewById(R.id.expandableViewFilters).findViewById(R.id.rangeSeekBar4k);
         CrystalRangeSeekbar rangeSeekbar4k = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayout4k, R.string.sort_4k, DEFAULT_MIN_VALUE, FPS_MAX_VALUE);
+        rangeSeekbar4k.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinFps4k());
+        rangeSeekbar4k.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxFps4k());
+        rangeSeekbar4k.apply();
         rangeSeekbar4k.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -144,6 +153,9 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
         //Firestrike bar
         RelativeLayout rangeSeekBarLayoutFirestrike = view.findViewById(R.id.expandableViewFilters).findViewById(R.id.rangeSeekBarFirestrike);
         CrystalRangeSeekbar rangeSeekbarFirestrike = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayoutFirestrike, R.string.score_firestrike, DEFAULT_MIN_VALUE, 30000);
+        rangeSeekbarFirestrike.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinFirestrike());
+        rangeSeekbarFirestrike.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxFirestrike());
+        rangeSeekbarFirestrike.apply();
         rangeSeekbarFirestrike.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -153,9 +165,12 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
             }
         });
 
-        //4k bar
+        //Passmark bar
         RelativeLayout rangeSeekBarLayoutPassmark = view.findViewById(R.id.expandableViewFilters).findViewById(R.id.rangeSeekBarPassmark);
         CrystalRangeSeekbar rangeSeekbarPassmark = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayoutPassmark, R.string.score_passmark, DEFAULT_MIN_VALUE, 15000);
+        rangeSeekbarPassmark.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinPassmark());
+        rangeSeekbarPassmark.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxPassmark());
+        rangeSeekbarPassmark.apply();
         rangeSeekbarPassmark.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
             @Override
             public void finalValue(Number minValue, Number maxValue) {
@@ -203,6 +218,7 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
             public void onClick(View arg0) {
 /*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
                 mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
+                mPresenter.setDatabaseGpuFilters();
                 mListener.OnBottomDialogFilterFragmentInteraction();
             }
         });

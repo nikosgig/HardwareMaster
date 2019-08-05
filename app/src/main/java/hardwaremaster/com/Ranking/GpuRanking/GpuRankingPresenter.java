@@ -46,7 +46,7 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
     @Override
     public void getGpuFromDatabase() {
-        mDatabase.getGpus(gpuFilterValues, new DatabaseCalls.LoadGpusCallback() {
+        mDatabase.getGpus(new DatabaseCalls.LoadGpusCallback() {
             @Override
             public void onGpusLoaded(ArrayList<Gpu> gpuList) {
 
@@ -57,13 +57,6 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
                     } else {
                         curGpu.setScore(0.0);
                     }
-                }
-
-                if(!alreadyInit) {
-                    Gpu max = Collections.max(gpuList, ((o1, o2) -> o1.getPrice().compareTo(o2.getPrice())));
-                    Gpu min = Collections.min(gpuList, ((o1, o2) -> o1.getPrice().compareTo(o2.getPrice())));
-                    mRankingsView.setPriceBarMinMaxValues(min.getPrice(), max.getPrice());
-                    alreadyInit = true;
                 }
 
 

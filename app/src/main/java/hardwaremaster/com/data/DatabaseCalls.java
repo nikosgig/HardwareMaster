@@ -21,7 +21,7 @@ public interface DatabaseCalls {
 
     void getCpus(@NonNull final LoadCpusCallback callback);
 
-    void getGpus(GpuFilterValues gpuFilterValues, @NonNull final LoadGpusCallback callback);
+    void getGpus(@NonNull final LoadGpusCallback callback);
 
     CpuFilterValues getFilterMinMaxValues();
 
@@ -34,4 +34,6 @@ public interface DatabaseCalls {
     ArrayList<Gpu> filterGpuList(GpuFilterValues filterValues);
 
     void addUserPrice(String key, double price);
+
+    void setGpuFilters(GpuFilterValues gpuFilters);
 }

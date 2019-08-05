@@ -135,7 +135,9 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
 
     @Override
     public void OnBottomDialogFilterFragmentInteraction() {
-        
+        //mGpuRankingPresenter.getGpuFromDatabase();
+        getSupportFragmentManager().popBackStack();
+
     }
 
     @Override

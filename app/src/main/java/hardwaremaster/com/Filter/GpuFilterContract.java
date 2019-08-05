@@ -2,6 +2,7 @@ package hardwaremaster.com.Filter;
 
 import hardwaremaster.com.Base.BasePresenter;
 import hardwaremaster.com.Base.BaseView;
+import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingSortBy;
 
 public interface GpuFilterContract {
@@ -35,5 +36,8 @@ public interface GpuFilterContract {
         void removeBrand(String brand);
 
         void setSorting(GpuRankingSortBy orderType);
+
+        GpuFilterValues getGpuFilterValues();
+        void setDatabaseGpuFilters();
     }
 }
