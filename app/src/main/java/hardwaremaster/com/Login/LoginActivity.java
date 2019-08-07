@@ -129,6 +129,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            Intent intent = new Intent(LoginActivity.this, RankingActivity.class);
+                            startActivity(intent);
 
                         } else {
                             // If sign in fails, display a message to the user.

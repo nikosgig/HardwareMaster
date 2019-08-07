@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +45,8 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
@@ -550,16 +555,22 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             holder.itemPrice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Title");
+                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext(), R.style.dialogTheme);
+                    builder.setTitle(getString(R.string.dialog_price_title));
 
 // Set up the input
-                    final EditText input = new EditText(getContext());
+                    //final EditText input = new EditText(getContext());
+                    //input.setInputType(InputType.TYPE_CLASS_NUMBER);
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                    builder.setView(input);
+                    View dialogView = getLayoutInflater().inflate(R.layout.dialog_input_price, null);
+                    builder.setView(dialogView);
+                    final TextInputEditText input = dialogView.findViewById(R.id.editText);
+                    input.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
 // Set up the buttons
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String price = input.getText().toString();
@@ -569,9 +580,11 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                             mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getString(R.string.dismiss), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            getActivity().getWindow().setSoftInputMode(
+                                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                             dialog.cancel();
                         }
                     });

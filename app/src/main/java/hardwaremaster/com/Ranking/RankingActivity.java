@@ -82,8 +82,8 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
         @Override
         public void onClick(View v) {
             gpuFilterFragment = filterFragmentProvider.get();
-            //bottomAppBar.performHide();
-            //floatingActionButton.hide();
+            bottomAppBar.performHide();
+            floatingActionButton.hide();
             ActivityUtils.replaceAddToBackStackFragmentToActivity(getSupportFragmentManager(), gpuFilterFragment, R.id.contentFrame);
         }
     };
@@ -136,6 +136,8 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
     @Override
     public void OnBottomDialogFilterFragmentInteraction() {
         //mGpuRankingPresenter.getGpuFromDatabase();
+        bottomAppBar.performShow();
+        floatingActionButton.show();
         getSupportFragmentManager().popBackStack();
 
     }

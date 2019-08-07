@@ -47,4 +47,9 @@
     <string name="menu_cpu">Processors</string>
     <string name="menu_gpu">Graphics Card</string>
     <string name="menu_settings">Settings</string>
+
+    <string name="dialog_price_title">Please type your local price</string>
+    <string name="dialog_price_hint">200</string>
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

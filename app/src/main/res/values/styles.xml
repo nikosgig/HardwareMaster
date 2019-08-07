@@ -19,6 +19,10 @@
         <item name="colorControlNormal">@color/firewatch_light</item>
         <item name="actionMenuTextColor">@color/firewatch_light</item>
     </style>
+    
+    <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/firewatch_light</item>
+    </style>
 
     <style name="UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
     </style>
