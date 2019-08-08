@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/firewatch_burgundy</item>
         <item name="colorPrimary">@color/firewatch_burgundy</item>
@@ -18,6 +18,13 @@
         <item name="colorOnBackground">@color/firewatch_black</item>
         <item name="colorControlNormal">@color/firewatch_light</item>
         <item name="actionMenuTextColor">@color/firewatch_light</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+
+    </style>
+
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/firewatch_light</item>
+        <item name="android:textColorHint">@color/firewatch_light</item>
     </style>
     
     <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">

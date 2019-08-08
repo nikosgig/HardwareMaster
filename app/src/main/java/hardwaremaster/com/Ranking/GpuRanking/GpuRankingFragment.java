@@ -38,6 +38,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -126,97 +127,138 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
         setHasOptionsMenu(true);
 
+        SearchView customSearchView = (SearchView) root.findViewById(R.id.customSearchView);
+
+        customSearchView.onActionViewExpanded(); //new Added line
+        customSearchView.setIconifiedByDefault(false);
+
+        if(!customSearchView.isFocused()) {
+            customSearchView.clearFocus();
+        }
+
+        // Catch event on [x] button inside search view
+        closeButton = customSearchView.findViewById(R.id.search_close_btn);
+        // Set on click listener
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Manage this event.
+                customSearchView.setQuery("", false);
+                customSearchView.clearFocus();
+            }
+        });
+
+
+        customSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        customSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                customSearchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mPresenter.getSearchBarFilter().filter(newText);
+                if (TextUtils.isEmpty(newText)) {
+                    //Text is cleared, do your thing
+                    customSearchView.clearFocus();
+                }
+                return true;
+            }
+        });
+
         //Set filters
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        TextView textView = root.findViewById(R.id.appCompatTextView);
-        textView.setText(auth.getCurrentUser().getEmail());
-
-        //Set up seek bars
-/*        rangeSeekBars = mListener.OnGpuRangeSeekBarInit();
-        seekBarHolder = view.findViewById(R.id.seekbar_placeholder);
-        for(RangeSeekBar rangeSeekBar: rangeSeekBars) {
-            if(rangeSeekBar.getParent() != null && rangeSeekBars!= null) {
-                ((ViewGroup)rangeSeekBar.getParent()).removeView(rangeSeekBar); // <- fix
-            }
-            seekBarHolder.addView(rangeSeekBar);
-
-        }*/
-
-        MaterialButtonToggleGroup materialButtonToggleGroupSort = root.findViewById(R.id.sortByToggleGroup);
-        materialButtonToggleGroupSort.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
-                                        boolean isChecked) {
-                if(isChecked) {
-                    switch (checkedId) {
-                        case R.id.sort_price:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_PRICE);
-                            break;
-                        case R.id.sort_1080p:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_1080P);
-                            break;
-                        case R.id.sort_2k:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_2K);
-                            break;
-                        case R.id.sort_4k:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_4K);
-                            break;
-                        default:
-                            mPresenter.setSorting(GpuRankingSortBy.ALL);
-                            break;
-                    }
-                }
-            }
-        });
-
-        MaterialButtonToggleGroup materialButtonToggleGroupVRam = root.findViewById(R.id.vRamToggleGroup);
-        materialButtonToggleGroupVRam.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
-                                        boolean isChecked) {
-                switch (checkedId) {
-                    case R.id.vRamButton1:
-                        Log.d("button", "clicked1");
-                        break;
-                    case R.id.vRamButton2:
-                        Log.d("button", "clicked2");
-                        break;
-                    case R.id.vRamButton3:
-                        Log.d("button", "clicked3");
-                        break;
-                    case R.id.vRamButton4:
-                        Log.d("button", "clicked4");
-                        break;
-                    default:
-                        Log.d("button", "clicked5");
-                        break;
-                }
-
-            }
-        });
-
-        rangeSeekBar = root.findViewById(R.id.rangeSeekBar);
-        rangeSeekBar.setNotifyWhileDragging(true);
-        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
-            @Override
-            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Number minValue,
-                                                    Number maxValue) {
-                mPresenter.setMaxPrice((double) maxValue);
-                mPresenter.setMinPrice((double) minValue);
-            }
-        });
-        //setup apply button
-        applyFilterButton = root.findViewById(R.id.apply_filter_button);
-        applyFilterButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-/*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
-                mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
-                mListener.OnApplyGpuFilterClicked();
-            }
-        });
+//
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        TextView textView = root.findViewById(R.id.appCompatTextView);
+//        textView.setText(auth.getCurrentUser().getEmail());
+//
+//        //Set up seek bars
+///*        rangeSeekBars = mListener.OnGpuRangeSeekBarInit();
+//        seekBarHolder = view.findViewById(R.id.seekbar_placeholder);
+//        for(RangeSeekBar rangeSeekBar: rangeSeekBars) {
+//            if(rangeSeekBar.getParent() != null && rangeSeekBars!= null) {
+//                ((ViewGroup)rangeSeekBar.getParent()).removeView(rangeSeekBar); // <- fix
+//            }
+//            seekBarHolder.addView(rangeSeekBar);
+//
+//        }*/
+//
+//        MaterialButtonToggleGroup materialButtonToggleGroupSort = root.findViewById(R.id.sortByToggleGroup);
+//        materialButtonToggleGroupSort.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+//            @Override
+//            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
+//                                        boolean isChecked) {
+//                if(isChecked) {
+//                    switch (checkedId) {
+//                        case R.id.sort_price:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_PRICE);
+//                            break;
+//                        case R.id.sort_1080p:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_1080P);
+//                            break;
+//                        case R.id.sort_2k:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_2K);
+//                            break;
+//                        case R.id.sort_4k:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_4K);
+//                            break;
+//                        default:
+//                            mPresenter.setSorting(GpuRankingSortBy.ALL);
+//                            break;
+//                    }
+//                }
+//            }
+//        });
+//
+//        MaterialButtonToggleGroup materialButtonToggleGroupVRam = root.findViewById(R.id.vRamToggleGroup);
+//        materialButtonToggleGroupVRam.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+//            @Override
+//            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
+//                                        boolean isChecked) {
+//                switch (checkedId) {
+//                    case R.id.vRamButton1:
+//                        Log.d("button", "clicked1");
+//                        break;
+//                    case R.id.vRamButton2:
+//                        Log.d("button", "clicked2");
+//                        break;
+//                    case R.id.vRamButton3:
+//                        Log.d("button", "clicked3");
+//                        break;
+//                    case R.id.vRamButton4:
+//                        Log.d("button", "clicked4");
+//                        break;
+//                    default:
+//                        Log.d("button", "clicked5");
+//                        break;
+//                }
+//
+//            }
+//        });
+//
+//        rangeSeekBar = root.findViewById(R.id.rangeSeekBar);
+//        rangeSeekBar.setNotifyWhileDragging(true);
+//        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+//            @Override
+//            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Number minValue,
+//                                                    Number maxValue) {
+//                mPresenter.setMaxPrice((double) maxValue);
+//                mPresenter.setMinPrice((double) minValue);
+//            }
+//        });
+//        //setup apply button
+//        applyFilterButton = root.findViewById(R.id.apply_filter_button);
+//        applyFilterButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+///*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
+//                mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
+//                mListener.OnApplyGpuFilterClicked();
+//            }
+//        });
 
         return root;
     }
@@ -243,39 +285,39 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
     @Override
     public void showHideFiltersView() {
-        if(!toogleFilterView) {
-            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
-            TransitionManager.beginDelayedTransition(constraintLayout);
-            constraintLayout.setVisibility(View.VISIBLE);
-            LinearLayout mask = root.findViewById(R.id.ll_mask);
-            TransitionManager.beginDelayedTransition(mask);
-            mask.setVisibility(View.VISIBLE);
-            filterItem.setIcon(R.drawable.ic_close);
-            searchView.setVisibility(View.GONE);
-            toogleFilterView=true;
-        } else {
-            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
-            TransitionManager.beginDelayedTransition(constraintLayout);
-            constraintLayout.setVisibility(View.GONE);
-            LinearLayout mask = root.findViewById(R.id.ll_mask);
-            TransitionManager.beginDelayedTransition(mask);
-            mask.setVisibility(View.GONE);
-            filterItem.setIcon(R.drawable.ic_filter_list);
-            searchView.setVisibility(View.VISIBLE);
-            toogleFilterView=false;
-        }
+//        if(!toogleFilterView) {
+//            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
+//            TransitionManager.beginDelayedTransition(constraintLayout);
+//            constraintLayout.setVisibility(View.VISIBLE);
+//            LinearLayout mask = root.findViewById(R.id.ll_mask);
+//            TransitionManager.beginDelayedTransition(mask);
+//            mask.setVisibility(View.VISIBLE);
+//            filterItem.setIcon(R.drawable.ic_close);
+//            searchView.setVisibility(View.GONE);
+//            toogleFilterView=true;
+//        } else {
+//            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
+//            TransitionManager.beginDelayedTransition(constraintLayout);
+//            constraintLayout.setVisibility(View.GONE);
+//            LinearLayout mask = root.findViewById(R.id.ll_mask);
+//            TransitionManager.beginDelayedTransition(mask);
+//            mask.setVisibility(View.GONE);
+//            filterItem.setIcon(R.drawable.ic_filter_list);
+//            searchView.setVisibility(View.VISIBLE);
+//            toogleFilterView=false;
+//        }
 
     }
 
     @Override
     public void setPriceBarMinMaxValues(double min, double max) {
-        rangeSeekBar.setRangeValues(min, max);
+        //rangeSeekBar.setRangeValues(min, max);
     }
 
     @Override
     public void setPriceBarSelectedMinMaxValues(double min, double max) {
-        rangeSeekBar.setSelectedMinValue(min);
-        rangeSeekBar.setSelectedMaxValue(max);
+        //rangeSeekBar.setSelectedMinValue(min);
+        //rangeSeekBar.setSelectedMaxValue(max);
     }
 
     @Override
@@ -283,7 +325,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         /* Setup Search View */
         inflater.inflate(R.menu.menu_options, menu);
         menuItem = menu.findItem(R.id.search);
-        filterItem = menu.findItem(R.id.menu_order);
+        //filterItem = menu.findItem(R.id.menu_order);
 
         searchView = (SearchView) menuItem.getActionView();
         searchView.onActionViewExpanded();

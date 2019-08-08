@@ -103,11 +103,11 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_order:
-                mGpuRankingPresenter.showHideFilters();
-                break;
-        }
+//        switch (item.getItemId()) {
+//            case R.id.menu_order:
+//                mGpuRankingPresenter.showHideFilters();
+//                break;
+//        }
         return true;
     }
 
