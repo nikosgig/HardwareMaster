@@ -29,6 +29,7 @@ public class BaseActivity extends DaggerAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View baseView = inflater.inflate(R.layout.activity_base, null);

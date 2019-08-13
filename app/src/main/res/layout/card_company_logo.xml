@@ -45,7 +45,7 @@
             android:text="GeForce RTX 2080 Ti"
 
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textColor="@color/firewatch_light"
+            android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
             android:text="8GB"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@color/firewatch_light"
+            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toStartOf="@+id/model"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -75,7 +75,7 @@
             android:text="GDDR5"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@color/firewatch_light"
+            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamSize"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -89,7 +89,7 @@
             android:paddingEnd="5dp"
             android:text="2019"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@color/firewatch_light"
+            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamType"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -157,7 +157,7 @@
             app:cardViewCornerRadius="6dp"
             app:cardViewElevation="4dp"
             app:cardViewMaxElevation="6dp"
-            app:expandIconColor="@color/firewatch_light"
+            app:expandIconColor="?colorOnPrimary"
             app:expandOnClick="true"
             app:inner_view="@layout/gpu_performance_details_inner_view"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -166,7 +166,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mainDetails"
             app:startExpanded="false"
             app:title="Performance Details"
-            app:titleTextColor="@color/firewatch_light" />
+            app:titleTextColor="?colorOnPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

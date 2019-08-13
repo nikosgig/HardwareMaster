@@ -19,7 +19,7 @@
         android:text="Firestrike Score"
         android:layout_below="@+id/score_value"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textColor="@color/firewatch_light" />
+        android:textColor="?colorOnPrimary" />
 
     <TextView
         android:id="@+id/score_value"
@@ -30,7 +30,7 @@
         android:layout_marginEnd="8dp"
         android:text="31862"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/firewatch_light"
+        android:textColor="?colorOnPrimary"
 />
 
 </RelativeLayout>

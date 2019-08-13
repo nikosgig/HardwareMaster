@@ -22,13 +22,35 @@
 
     </style>
 
-    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-        <item name="android:textColor">@color/firewatch_light</item>
-        <item name="android:textColorHint">@color/firewatch_light</item>
+    <style name="ThemeSea" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/theme_primary</item>
+        <item name="colorPrimary">@color/theme_primary</item>
+        <item name="colorPrimaryVariant">@color/theme_primary</item>
+        <item name="colorOnPrimary">@color/theme_on</item>
+        <item name="colorSecondary">@color/theme_secondary</item>
+        <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
+        <item name="colorOnSecondary">@color/theme_on</item>
+        <item name="colorError">@color/firewatch_cinn</item>
+        <item name="colorOnError">@color/theme_on</item>
+        <item name="colorSurface">@color/theme_primary</item>
+        <item name="colorOnSurface">@color/theme_secondary</item>
+        <item name="android:colorBackground">@color/theme_background</item>
+        <item name="colorOnBackground">@color/theme_secondary</item>
+        <item name="colorControlNormal">@color/theme_on</item>
+        <item name="actionMenuTextColor">@color/theme_on</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+
     </style>
-    
+
+
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">?colorOnSecondary</item>
+        <item name="android:textColorHint">?colorOnSecondary</item>
+    </style>
+
     <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">@color/firewatch_light</item>
+        <item name="colorSurface">?colorOnSecondary</item>
     </style>
 
     <style name="UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">

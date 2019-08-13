@@ -327,6 +327,14 @@
     <color name="firewatch_cinn">#ef473a</color>
     <color name="firewatch_light">#ffd6bf</color>
 
+    <!-- Custom Theme-->
+    <color name="theme_secondary">#00171F</color>
+    <color name="theme_primary">#003459</color>
+    <color name="theme_background">#ccd6dd</color>
+    <color name="theme_on">#FFFFFF</color>
+    <color name="theme_gradient_start">#cb2d3e</color>
+    <color name="theme_gradient_end">#ef473a</color>
+
 
     <!--for random color generator -->
     <array name="mdcolor_random">
