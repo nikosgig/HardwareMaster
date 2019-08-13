@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/firewatch_burgundy</item>
         <item name="colorPrimary">@color/firewatch_burgundy</item>
         <item name="colorPrimaryVariant">@color/firewatch_burgundy</item>
-        <item name="colorOnPrimary">@color/firewatch_light</item>
+        <item name="colorOnPrimary">@color/theme_on</item>
         <item name="colorSecondary">@color/firewatch_black</item>
         <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
         <item name="colorOnSecondary">@color/firewatch_light</item>
@@ -45,8 +45,8 @@
 
 
     <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-        <item name="android:textColor">?colorOnSecondary</item>
-        <item name="android:textColorHint">?colorOnSecondary</item>
+        <item name="android:textColor">?colorControlNormal</item>
+        <item name="android:textColorHint">?colorControlNormal</item>
     </style>
 
     <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">

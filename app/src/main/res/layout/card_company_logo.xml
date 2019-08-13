@@ -33,6 +33,7 @@
             app:layout_constraintEnd_toStartOf="@+id/model"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tint="?colorOnPrimary"
             app:srcCompat="@drawable/ic_nvidia" />
 
         <TextView
