@@ -20,6 +20,10 @@
     <string name="order_single">By Single Score</string>
     <string name="order_multi">By Multi Score</string>
     <string name="sort_price">Price</string>
+    <string name="sort_price_low_to_high">Price low to high</string>
+    <string name="sort_price_high_to_low">Price high to low</string>
+    <string name="sort_vfm_low_to_high">Value for money low to high</string>
+    <string name="sort_vfm_high_to_low">Value for money high to low</string>
     <string name="sort_1080p">1080p FPS</string>
     <string name="sort_2k">2K FPS</string>
     <string name="sort_4k">4K FPS</string>

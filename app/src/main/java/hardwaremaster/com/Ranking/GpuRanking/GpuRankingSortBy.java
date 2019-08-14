@@ -2,9 +2,8 @@ package hardwaremaster.com.Ranking.GpuRanking;
 
 public enum GpuRankingSortBy {
     ALL,
-    BY_PRICE,
-    BY_1080P,
-    BY_2K,
-    BY_4K,
-    BY_SCORE
+    SORT_PRICE_HIGH_TO_LOW,
+    SORT_PRICE_LOW_TO_HIGH,
+    SORT_VFM_HIGH_TO_LOW,
+    SORT_VFM_LOW_TO_HIGH
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
@@ -61,32 +62,53 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
 
 
 
-        MaterialButtonToggleGroup materialButtonToggleGroupSort =
+        RadioGroup materialButtonToggleGroupSort =
                 view.findViewById(R.id.sortByToggleGroup);
-        materialButtonToggleGroupSort.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+        materialButtonToggleGroupSort.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
-                                        boolean isChecked) {
-                if (isChecked) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
-                        case R.id.sort_price:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_PRICE);
+                        case R.id.sort_price_high_to_low:
+                            mPresenter.setSorting(GpuRankingSortBy.SORT_PRICE_HIGH_TO_LOW);
                             break;
-                        case R.id.sort_1080p:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_1080P);
+                        case R.id.sort_price_low_to_high:
+                            mPresenter.setSorting(GpuRankingSortBy.SORT_PRICE_LOW_TO_HIGH);
                             break;
-                        case R.id.sort_2k:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_2K);
+                        case R.id.sort_vfm_high_to_low:
+                            mPresenter.setSorting(GpuRankingSortBy.SORT_VFM_HIGH_TO_LOW);
                             break;
-                        case R.id.sort_4k:
-                            mPresenter.setSorting(GpuRankingSortBy.BY_4K);
+                        case R.id.sort_vfm_low_to_high:
+                            mPresenter.setSorting(GpuRankingSortBy.SORT_VFM_LOW_TO_HIGH);
                             break;
                         default:
                             mPresenter.setSorting(GpuRankingSortBy.ALL);
                             break;
-                    }
                 }
             }
+
+//            @Override
+//            public void onButtonChecked(MaterialButtonToggleGroup group, @IdRes int checkedId,
+//                                        boolean isChecked) {
+//                if (isChecked) {
+//                    switch (checkedId) {
+//                        case R.id.sort_price:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_PRICE);
+//                            break;
+//                        case R.id.sort_1080p:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_1080P);
+//                            break;
+//                        case R.id.sort_2k:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_2K);
+//                            break;
+//                        case R.id.sort_4k:
+//                            mPresenter.setSorting(GpuRankingSortBy.BY_4K);
+//                            break;
+//                        default:
+//                            mPresenter.setSorting(GpuRankingSortBy.ALL);
+//                            break;
+//                    }
+//                }
+//            }
         });
 
 

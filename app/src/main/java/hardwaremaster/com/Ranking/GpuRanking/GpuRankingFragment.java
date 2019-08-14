@@ -2,62 +2,47 @@ package hardwaremaster.com.Ranking.GpuRanking;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.Layout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.TransitionManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
 import hardwaremaster.com.R;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
-import hardwaremaster.com.util.Tools;
-import hardwaremaster.com.util.ViewAnimation;
-import hardwaremaster.com.widgets.ExpandableCardView;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
@@ -474,7 +459,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //            public TextView vRamSize;
 //            public TextView vRamType;
 //            public TextView date;
-//            public ImageView imageViewImage;
+//            public ImageView companyImage;
 //            //        public Button textViewTag1;
 ////        public Button textViewTag2;
 //            public TextView scoreVFM;
@@ -500,7 +485,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //                this.vRamSize = itemView.findViewById(R.id.vRamSize);
 //                this.vRamType = itemView.findViewById(R.id.vRamType);
 //                this.date = itemView.findViewById(R.id.date);
-//                this.imageViewImage = itemView.findViewById(R.id.image);
+//                this.companyImage = itemView.findViewById(R.id.image);
 //                this.scoreVFM = itemView.findViewById(R.id.expandable_view).findViewById(R.id.scoreVFM).findViewById(R.id.score_value);
 //                this.titleVFM = itemView.findViewById(R.id.expandable_view).findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
 //                this.price = itemView.findViewById(R.id.expandable_view).findViewById(R.id.price).findViewById(R.id.score_value);
@@ -563,6 +548,14 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             holder.titleGpuModel.setText(mGpuList.get(position).getModel());
+
+            if(mGpuList.get(position).getModel().contains("Radeon")) {
+                holder.companyImage.setImageResource(R.drawable.ic_amd);
+                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.amd_standard)));
+            } else {
+                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.nvidia_standard)));
+            }
+
             holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + "GB");
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
@@ -652,7 +645,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             public TextView vRamSize;
             public TextView vRamType;
             public TextView date;
-            public ImageView imageViewImage;
+            public ImageView companyImage;
             //        public Button textViewTag1;
 //        public Button textViewTag2;
             public TextView scoreVFM;
@@ -687,7 +680,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 this.vRamSize = itemView.findViewById(R.id.vRamSize);
                 this.vRamType = itemView.findViewById(R.id.vRamType);
                 this.date = itemView.findViewById(R.id.date);
-                //this.imageViewImage = itemView.findViewById(R.id.image);
+                this.companyImage = itemView.findViewById(R.id.image);
                 this.scoreVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_value);
                 this.titleVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
                 this.itemPrice = itemView.findViewById(R.id.price);

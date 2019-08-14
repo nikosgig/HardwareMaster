@@ -33,7 +33,7 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     @Nullable
     private GpuRankingContract.View mRankingsView;
     private final Database mDatabase;
-    private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.BY_SCORE;
+    private GpuRankingSortBy mCurrentSortBy = GpuRankingSortBy.SORT_VFM_HIGH_TO_LOW;
     private GpuFilterValues gpuFilterValues = new GpuFilterValues();
     private boolean alreadyInit;
 
@@ -65,23 +65,23 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
                 }*/
 
                 switch (mCurrentSortBy) {
-                    case BY_PRICE:
+                    case SORT_PRICE_HIGH_TO_LOW:
                         Collections.sort(gpuList,
                                 (o1, o2) -> o1.getPrice().compareTo(o2.getPrice()));
                         break;
-                    case BY_1080P:
-                        Collections.sort(gpuList,
-                                (o1, o2) -> o1.getAvgFps1080p().compareTo(o2.getAvgFps1080p()));
-                        break;
-                    case BY_2K:
-                        Collections.sort(gpuList,
-                                (o1, o2) -> o1.getAvgFps2k().compareTo(o2.getAvgFps2k()));
-                        break;
-                    case BY_4K:
-                        Collections.sort(gpuList,
-                                (o1, o2) -> o1.getAvgFps4k().compareTo(o2.getAvgFps4k()));
-                        break;
-                    case BY_SCORE:
+//                    case BY_1080P:
+//                        Collections.sort(gpuList,
+//                                (o1, o2) -> o1.getAvgFps1080p().compareTo(o2.getAvgFps1080p()));
+//                        break;
+//                    case BY_2K:
+//                        Collections.sort(gpuList,
+//                                (o1, o2) -> o1.getAvgFps2k().compareTo(o2.getAvgFps2k()));
+//                        break;
+//                    case BY_4K:
+//                        Collections.sort(gpuList,
+//                                (o1, o2) -> o1.getAvgFps4k().compareTo(o2.getAvgFps4k()));
+//                        break;
+                    case SORT_VFM_HIGH_TO_LOW:
                         Collections.sort(gpuList, Collections.reverseOrder(
                                 (o1, o2) -> o1.getScore().compareTo(o2.getScore())));
                         break;

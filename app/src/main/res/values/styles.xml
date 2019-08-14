@@ -3,23 +3,23 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/firewatch_burgundy</item>
-        <item name="colorPrimary">@color/firewatch_burgundy</item>
+        <item name="colorPrimaryDark">@color/firewatch_burgundy</item> <!-- color of android status bar -->
+        <item name="colorPrimary">@color/firewatch_burgundy</item> <!-- color of search bar background -->
         <item name="colorPrimaryVariant">@color/firewatch_burgundy</item>
         <item name="colorOnPrimary">@color/theme_on</item>
-        <item name="colorSecondary">@color/firewatch_black</item>
+        <item name="colorSecondary">@color/firewatch_black</item> <!-- color of floating button -->
         <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
         <item name="colorOnSecondary">@color/firewatch_light</item>
         <item name="colorError">@color/firewatch_cinn</item>
         <item name="colorOnError">@color/firewatch_light</item>
-        <item name="colorSurface">@color/firewatch_burgundy</item>
-        <item name="colorOnSurface">@color/firewatch_black</item>
+        <item name="colorSurface">@color/firewatch_burgundy</item> <!-- color of bottom app bar -->
+        <item name="colorOnSurface">@color/firewatch_light</item>
         <item name="android:colorBackground">@color/firewatch_light</item>
         <item name="colorOnBackground">@color/firewatch_black</item>
-        <item name="colorControlNormal">@color/firewatch_light</item>
+        <item name="colorControlNormal">@color/firewatch_light</item>   <!-- color of search bar text -->
         <item name="actionMenuTextColor">@color/firewatch_light</item>
         <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
-
+        <item name="colorControlActivated">@color/firewatch_cinn</item>
     </style>
 
     <style name="ThemeSea" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -43,7 +43,7 @@
 
     </style>
 
-
+    <!-- Search bar edit text -> text color -->
     <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
         <item name="android:textColor">?colorControlNormal</item>
         <item name="android:textColorHint">?colorControlNormal</item>
