@@ -158,7 +158,7 @@
             app:cardViewCornerRadius="6dp"
             app:cardViewElevation="4dp"
             app:cardViewMaxElevation="6dp"
-            app:expandIconColor="?colorOnPrimary"
+            app:expandIconColor="?colorSecondary"
             app:expandOnClick="true"
             app:inner_view="@layout/gpu_performance_details_inner_view"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -556,19 +556,21 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.nvidia_standard)));
             }
 
-            holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + "GB");
+            holder.imageVFM.setImageResource(R.drawable.ic_flash);
+
+            holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + " GB");
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
             holder.scoreVFM.setText(NumberFormat.getPercentInstance().format((mGpuList.get(position).getScore())));
             holder.price.setText(String.valueOf(mGpuList.get(position).getPrice()) + " €");
-            holder.fps1080.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps1080p()));
-            holder.fps2k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps2k()));
-            holder.fps4k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps4k()));
+            holder.fps1080.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps1080p()) + " FPS");
+            holder.fps2k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps2k())+ " FPS");
+            holder.fps4k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps4k()) + " FPS");
             holder.scoreFirestrike.setText(String.valueOf((int) mGpuList.get(position).getFirestrike()));
             holder.scorePassmark.setText(String.valueOf(((int) mGpuList.get(position).getPassmark())));
 
-            holder.titlePrice.setText(R.string.sort_price);
-            holder.titleVFM.setText(R.string.sort_vfm);
+//            holder.titlePrice.setText(R.string.sort_price);
+//            holder.titleVFM.setText(R.string.sort_vfm);
             holder.title1080.setText(R.string.sort_1080p);
             holder.title2k.setText(R.string.sort_2k);
             holder.title4k.setText(R.string.sort_4k);
@@ -650,6 +652,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //        public Button textViewTag2;
             public TextView scoreVFM;
             public TextView titleVFM;
+            public ImageView imageVFM;
             public ConstraintLayout itemPrice;
             public TextView price;
             public TextView titlePrice;
@@ -681,8 +684,11 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 this.vRamType = itemView.findViewById(R.id.vRamType);
                 this.date = itemView.findViewById(R.id.date);
                 this.companyImage = itemView.findViewById(R.id.image);
+
                 this.scoreVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_value);
                 this.titleVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
+                this.imageVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_image);
+
                 this.itemPrice = itemView.findViewById(R.id.price);
                 this.price = itemView.findViewById(R.id.price).findViewById(R.id.score_value);
                 this.titlePrice = itemView.findViewById(R.id.price).findViewById(R.id.score_title);

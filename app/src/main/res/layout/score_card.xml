@@ -14,21 +14,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Firestrike Score"
-        android:layout_below="@+id/score_value"
+        android:text="Firestrike"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textColor="?colorOnPrimary" />
+        android:textColor="?colorSecondary" />
 
     <TextView
         android:id="@+id/score_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:text="31862"
+        android:layout_below="@+id/score_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="?colorOnPrimary"
 />

@@ -30,7 +30,7 @@
         <item name="colorOnPrimary">@color/theme_on</item>
         <item name="colorSecondary">@color/theme_secondary</item>
         <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
-        <item name="colorOnSecondary">@color/theme_on</item>
+        <item name="colorOnSecondary">@color/theme_on_secondary</item>
         <item name="colorError">@color/firewatch_cinn</item>
         <item name="colorOnError">@color/theme_on</item>
         <item name="colorSurface">@color/theme_primary</item>

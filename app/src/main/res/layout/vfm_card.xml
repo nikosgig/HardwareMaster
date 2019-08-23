@@ -9,34 +9,44 @@
     android:background="@drawable/oval_vfm"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/score_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--<TextView-->
+        <!--android:id="@+id/score_title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:text="Firestrike Score"-->
+        <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"-->
+        <!--android:textColor="?colorOnPrimary"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/score_value" />-->
+
+    <ImageView
+        android:id="@+id/score_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Firestrike Score"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textColor="?colorOnPrimary"
+        android:src="@drawable/ic_money"
+        android:tint="?colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_value" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/score_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="31862"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="?colorOnPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/score_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/score_image"
+        app:layout_constraintStart_toEndOf="@id/score_image"
+        app:layout_constraintTop_toTopOf="@+id/score_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
