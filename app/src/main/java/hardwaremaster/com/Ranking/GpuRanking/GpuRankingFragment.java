@@ -553,6 +553,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 holder.companyImage.setImageResource(R.drawable.ic_amd);
                 ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.amd_standard)));
             } else {
+                holder.companyImage.setImageResource(R.drawable.ic_nvidia);
                 ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.nvidia_standard)));
             }
 
@@ -563,9 +564,9 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
             holder.scoreVFM.setText(NumberFormat.getPercentInstance().format((mGpuList.get(position).getScore())));
             holder.price.setText(String.valueOf(mGpuList.get(position).getPrice()) + " €");
-            holder.fps1080.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps1080p()) + " FPS");
-            holder.fps2k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps2k())+ " FPS");
-            holder.fps4k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps4k()) + " FPS");
+            holder.fps1080.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps1080p()));
+            holder.fps2k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps2k()));
+            holder.fps4k.setText(NumberFormat.getInstance().format(mGpuList.get(position).getAvgFps4k()));
             holder.scoreFirestrike.setText(String.valueOf((int) mGpuList.get(position).getFirestrike()));
             holder.scorePassmark.setText(String.valueOf(((int) mGpuList.get(position).getPassmark())));
 

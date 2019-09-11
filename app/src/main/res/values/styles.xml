@@ -22,7 +22,7 @@
         <item name="colorControlActivated">@color/firewatch_cinn</item>
     </style>
 
-    <style name="ThemeSea" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/theme_primary</item>
         <item name="colorPrimary">@color/theme_primary</item>
@@ -35,13 +35,25 @@
         <item name="colorOnError">@color/theme_on</item>
         <item name="colorSurface">@color/theme_primary</item>
         <item name="colorOnSurface">@color/theme_secondary</item>
-        <item name="android:colorBackground">@color/theme_background</item>
+        <item name="android:colorBackground">@color/theme_on_secondary</item>
         <item name="colorOnBackground">@color/theme_secondary</item>
         <item name="colorControlNormal">@color/theme_on</item>
         <item name="actionMenuTextColor">@color/theme_on</item>
         <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
 
+        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
+
     </style>
+
+    <!--<style name="AppBottomSheetDialogTheme"-->
+        <!--parent="Theme.Design.BottomSheetDialog">-->
+        <!--<item name="bottomSheetStyle">@style/AppModalStyle</item>-->
+    <!--</style>-->
+
+    <!--<style name="AppModalStyle"-->
+        <!--parent="Widget.Design.BottomSheet.Modal">-->
+        <!--<item name="android:background">@color/theme_background</item>-->
+    <!--</style>-->
 
     <!-- Search bar edit text -> text color -->
     <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">

@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/firewatch_gradient_main_card"
+    android:padding="8dp">
     <androidx.appcompat.widget.AppCompatTextView
-        android:textColor="?colorPrimary"
+        style="@style/TextAppearance.MaterialComponents.Overline"
+        android:textColor="?colorSecondary"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
         android:text="@string/sort_price" />
 
     <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
@@ -24,9 +26,9 @@
         app:max_value="1000"
         app:gap="10"
         app:bar_color="?colorPrimary"
-        app:bar_highlight_color="?colorSecondary"
-        app:left_thumb_color="?colorPrimary"
-        app:right_thumb_color="?colorPrimary"
+        app:bar_highlight_color="?colorOnPrimary"
+        app:left_thumb_color="?colorOnPrimary"
+        app:right_thumb_color="?colorOnPrimary"
         app:left_thumb_color_pressed="?colorSecondary"
         app:right_thumb_color_pressed="?colorSecondary"
         app:data_type="_integer"/>
@@ -43,8 +45,8 @@
         android:textAlignment="center"
         android:layout_below="@+id/rangeSeekBar"
         android:layout_alignParentStart="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:textColor="?colorSecondary"/>
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="?colorOnPrimary"/>
 
     <TextView
         android:id="@+id/max"
@@ -56,8 +58,8 @@
         android:paddingEnd="5dp"
         android:text="1000+"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:textColor="?colorSecondary"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="?colorOnPrimary"
         android:layout_below="@+id/rangeSeekBar"
         android:layout_alignParentEnd="true"
         />

@@ -9,137 +9,106 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView"
+        <RelativeLayout
+            android:id="@+id/sortByHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/sort_by"
-            android:textAllCaps="true"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--<com.google.android.flexbox.FlexboxLayout-->
-            <!--android:id="@+id/sortByToggleGroup"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--app:dividerDrawable="@drawable/divider"-->
-            <!--app:flexWrap="wrap"-->
-            <!--app:justifyContent="center"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"-->
-            <!--app:showDividerVertical="middle|end">-->
-
-            <!--<com.google.android.material.button.MaterialButton-->
-                <!--android:id="@+id/sort_price"-->
-                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/sort_price"-->
-                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-                <!--app:icon="@drawable/arrow_down"/>-->
-
-            <!--<com.google.android.material.button.MaterialButton-->
-                <!--android:id="@+id/sort_1080p"-->
-                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/sort_1080p"-->
-                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-                <!--app:icon="@drawable/arrow_down"/>-->
-
-            <!--<com.google.android.material.button.MaterialButton-->
-                <!--android:id="@+id/sort_2k"-->
-                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/sort_2k"-->
-                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-                <!--app:icon="@drawable/arrow_down"/>-->
-
-            <!--<com.google.android.material.button.MaterialButton-->
-                <!--android:id="@+id/sort_4k"-->
-                <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/sort_4k"-->
-                <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-                <!--app:icon="@drawable/arrow_down" />-->
-        <!--</com.google.android.flexbox.FlexboxLayout>-->
-
-
-        <RadioGroup
             android:background="@drawable/firewatch_gradient_main_card"
-            android:id="@+id/sortByToggleGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView"
+                android:layout_alignParentTop="true"
+
+                style="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/sort_by"
+                android:textColor="?colorSecondary" />
+
+
+            <RadioGroup
+                android:id="@+id/sortByToggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/appCompatTextView"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                app:singleSelection="true">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sort_price_low_to_high"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_price_low_to_high"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textColor="?colorOnPrimary" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sort_price_high_to_low"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_price_high_to_low"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textColor="?colorOnPrimary" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sort_vfm_low_to_high"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_vfm_low_to_high"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textColor="?colorOnPrimary" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sort_vfm_high_to_low"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_vfm_high_to_low"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textColor="?colorOnPrimary" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/brandHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/dp_8"
             android:layout_marginEnd="8dp"
-            android:gravity="center"
+            android:background="@drawable/firewatch_gradient_main_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
-            app:singleSelection="true">
+            app:layout_constraintTop_toBottomOf="@+id/sortByHolder">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/sort_price_low_to_high"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/brandTextView"
+                style="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_width="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_height="wrap_content"
-                android:text="@string/sort_price_low_to_high"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="?colorOnPrimary" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/sort_price_high_to_low"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sort_price_high_to_low"
-                android:textColor="?colorOnPrimary"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/sort_vfm_low_to_high"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sort_vfm_low_to_high"
-                android:textColor="?colorOnPrimary"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/sort_vfm_high_to_low"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sort_vfm_high_to_low"
-                android:textColor="?colorOnPrimary"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-        </RadioGroup>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/brandTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:text="@string/brand"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sortByToggleGroup" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="@string/brand"
+                android:textColor="?colorSecondary" />
 
 
-        <!--<com.google.android.material.button.MaterialButtonToggleGroup-->
+            <!--<com.google.android.material.button.MaterialButtonToggleGroup-->
             <!--android:id="@+id/brandToggleGroup"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="wrap_content"-->
@@ -151,24 +120,31 @@
             <!--app:layout_constraintStart_toStartOf="parent"-->
             <!--app:layout_constraintTop_toBottomOf="@+id/brandTextView">-->
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/brandButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/brand_amd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/brandTextView" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/brandButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brandTextView"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/brand_amd"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="?colorOnPrimary" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/brandButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/brand_Nvidia"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/brandButton1" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/brandButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brandButton1"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/brand_Nvidia"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="?colorOnPrimary" />
+
+        </RelativeLayout>
+
+
         <!--</com.google.android.material.button.MaterialButtonToggleGroup>-->
 
         <!--<androidx.appcompat.widget.AppCompatTextView-->
@@ -235,12 +211,13 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/brandButton2" />
+            app:layout_constraintTop_toBottomOf="@+id/brandHolder" />
 
         <hardwaremaster.com.widgets.ExpandableCardView
             android:id="@+id/expandableViewFilters"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:cardViewBackgroundDrawable="@drawable/firewatch_gradient_expandable_card"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -248,7 +225,7 @@
             app:cardViewCornerRadius="6dp"
             app:cardViewElevation="4dp"
             app:cardViewMaxElevation="6dp"
-            app:expandIconColor="?colorPrimary"
+            app:expandIconColor="?colorSecondary"
             app:expandOnClick="true"
             app:inner_view="@layout/gpu_filters_inner_view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -256,7 +233,8 @@
             app:layout_constraintTop_toBottomOf="@+id/rangeSeekBarPrice"
             app:startExpanded="false"
             app:title="Advanced"
-            app:titleTextColor="?colorPrimary" />
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            app:titleTextColor="?colorSecondary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_filter_button"

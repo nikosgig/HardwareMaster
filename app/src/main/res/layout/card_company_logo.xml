@@ -60,7 +60,7 @@
             android:paddingEnd="5dp"
             android:text="8GB"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toStartOf="@+id/model"
             app:layout_constraintTop_toBottomOf="@+id/model" />
@@ -75,7 +75,7 @@
             android:paddingEnd="5dp"
             android:text="GDDR5"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamSize"
             app:layout_constraintTop_toBottomOf="@+id/model" />
@@ -89,7 +89,7 @@
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="2019"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamType"
             app:layout_constraintTop_toBottomOf="@+id/model" />
@@ -126,7 +126,6 @@
                 layout="@layout/vfm_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/price"
                 app:layout_constraintStart_toStartOf="parent"

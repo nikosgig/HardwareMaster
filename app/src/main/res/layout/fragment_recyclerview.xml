@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:queryBackground="?colorPrimary"
         app:queryHint="@string/search_title">
 
     </androidx.appcompat.widget.SearchView>
