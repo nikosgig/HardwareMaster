@@ -39,12 +39,34 @@
         <item name="colorOnBackground">@color/theme_secondary</item>
         <item name="colorControlNormal">@color/theme_on</item>
         <item name="actionMenuTextColor">@color/theme_on</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
 
         <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
 
     </style>
 
+    <style name="textInputStyleTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">?colorSecondary</item>
+        <item name="hintTextColor">?colorSecondary</item>
+        <item name="startIconTint">?colorSecondary</item>
+        <item name="endIconTint">?colorSecondary</item>
+
+    </style>
+
+    <style name="CustomWingInner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">?colorOnPrimary</item>
+    </style>
+
+    <style name="CustomWingOuter">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
     <!--<style name="AppBottomSheetDialogTheme"-->
         <!--parent="Theme.Design.BottomSheetDialog">-->
         <!--<item name="bottomSheetStyle">@style/AppModalStyle</item>-->

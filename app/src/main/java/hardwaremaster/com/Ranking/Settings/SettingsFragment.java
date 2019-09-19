@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import hardwaremaster.com.di.ActivityScoped;
 
 @ActivityScoped
 public class SettingsFragment extends Fragment {
+
+    MaterialButton signOutButton;
 
     @Inject
     public SettingsFragment() {
@@ -33,6 +37,16 @@ public class SettingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         setHasOptionsMenu(false);
 
+        signOutButton = root.findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+/*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
+                mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
+                FirebaseAuth.getInstance().signOut();
+            }
+        });
         return root;
     }
 }

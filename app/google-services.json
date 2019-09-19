@@ -8,45 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:444120415614:android:4ceb6bbb54e7d2e8",
+        "mobilesdk_app_id": "1:444120415614:android:93f077df8ce4bfab4d872f",
         "android_client_info": {
           "package_name": "hardwaremaster.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "444120415614-ucad7mbpuj4e70oeh43qqkog9agsq5pt.apps.googleusercontent.com",
+          "client_id": "444120415614-78madqt91n3d65b0snl3610mk65tvlqq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "hardwaremaster.com",
-            "certificate_hash": "3d945be6c60ac3ef30baa34640759a4ac5dddd27"
+            "certificate_hash": "6fff5713d029ec42d5a90f9968155f1a3b20b0fb"
           }
-        }
-      ],
-      "api_key": [
+        },
         {
-          "current_key": "AIzaSyD_qNQeHhpTIc_MMM3I6rxn37VKRnewWNc"
+          "client_id": "444120415614-ohrblursqjrs6hfteao0ghihem82l16b.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "444120415614-ohrblursqjrs6hfteao0ghihem82l16b.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:444120415614:android:7f07a320c32be4c3",
-        "android_client_info": {
-          "package_name": "hardwaremaster.hardwaremaster.com"
-        }
-      },
-      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyD_qNQeHhpTIc_MMM3I6rxn37VKRnewWNc"

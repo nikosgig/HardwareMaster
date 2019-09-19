@@ -25,12 +25,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import javax.inject.Inject;
+
+import dagger.Lazy;
 import hardwaremaster.com.Base.BaseActivity;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.RankingActivity;
 import hardwaremaster.com.data.User;
+import hardwaremaster.com.util.ActivityUtils;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginFragment.OnCreateAccountFragmentInteraction, RegisterFragment.onRegisterFragmentInteraction {
 
     private static final String TAG = "EmailPassword";
 
@@ -43,28 +47,52 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
+    @Inject
+    Lazy<LoginFragment> loginFragmentProvider;
+    LoginFragment loginFragment;
+
+    @Inject
+    Lazy<RegisterFragment> registerFragmentProvider;
+    RegisterFragment registerFragment;
+
+    @Inject
+    LoginPresenter mLoginPresenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        setContentView(R.layout.activity_emailpassword);
+        bottomAppBar.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
 
-        // Views
-        mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
-        mEmailField = findViewById(R.id.fieldEmail);
-        mPasswordField = findViewById(R.id.fieldPassword);
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        // Buttons
-        findViewById(R.id.emailSignInButton).setOnClickListener(this);
-        findViewById(R.id.emailCreateAccountButton).setOnClickListener(this);
-        findViewById(R.id.signOutButton).setOnClickListener(this);
-        findViewById(R.id.verifyEmailButton).setOnClickListener(this);
+        if(mLoginPresenter.isUserLoggedIn()) {
+            Intent intent = new Intent(LoginActivity.this, RankingActivity.class);
+            startActivity(intent);
+        } else {
+            loginFragment = loginFragmentProvider.get();
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), loginFragment, R.id.contentFrame);
+        }
 
-        // [START initialize_auth]
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
+//        setContentView(R.layout.activity_emailpassword);
+//
+//        // Views
+//        mStatusTextView = findViewById(R.id.status);
+//        mDetailTextView = findViewById(R.id.detail);
+//        mEmailField = findViewById(R.id.fieldEmail);
+//        mPasswordField = findViewById(R.id.fieldPassword);
+//
+//        // Buttons
+//        findViewById(R.id.emailSignInButton).setOnClickListener(this);
+//        findViewById(R.id.emailCreateAccountButton).setOnClickListener(this);
+//        findViewById(R.id.signOutButton).setOnClickListener(this);
+//        findViewById(R.id.verifyEmailButton).setOnClickListener(this);
+//
+//        // [START initialize_auth]
+//        // Initialize Firebase Auth
+//        mAuth = FirebaseAuth.getInstance();
+//        // [END initialize_auth]
     }
 
     // [START on_start_check_user]
@@ -72,8 +100,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
     }
     // [END on_start_check_user]
 
@@ -289,5 +317,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else if (i == R.id.verifyEmailButton) {
             sendEmailVerification();
         }
+    }
+
+    @Override
+    public void OnCreateAccountButtonClicked() {
+        registerFragment = registerFragmentProvider.get();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), registerFragment, R.id.contentFrame);
+    }
+
+    @Override
+    public void OnGoToLoginButtonClicked() {
+        loginFragment = loginFragmentProvider.get();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), loginFragment, R.id.contentFrame);
     }
 }

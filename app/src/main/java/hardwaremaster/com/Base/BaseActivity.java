@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.FirebaseDatabase;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import hardwaremaster.com.R;
