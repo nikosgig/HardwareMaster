@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/firewatch_burgundy</item> <!-- color of android status bar -->
         <item name="colorPrimary">@color/firewatch_burgundy</item> <!-- color of search bar background -->
         <item name="colorPrimaryVariant">@color/firewatch_burgundy</item>
-        <item name="colorOnPrimary">@color/theme_on</item>
+        <item name="colorOnPrimary">@color/theme_color_on_primary</item>
         <item name="colorSecondary">@color/firewatch_black</item> <!-- color of floating button -->
         <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
         <item name="colorOnSecondary">@color/firewatch_light</item>
@@ -22,43 +22,126 @@
         <item name="colorControlActivated">@color/firewatch_cinn</item>
     </style>
 
+<!--    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimaryDark">@color/theme_primary</item>-->
+<!--        <item name="colorPrimary">@color/theme_primary</item>-->
+<!--        <item name="colorPrimaryVariant">@color/theme_primary</item>-->
+<!--        <item name="colorOnPrimary">@color/theme_on</item>-->
+<!--        <item name="colorSecondary">@color/theme_secondary</item>-->
+<!--        <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>-->
+<!--        <item name="colorOnSecondary">@color/theme_on_secondary</item>-->
+<!--        <item name="colorError">@color/firewatch_cinn</item>-->
+<!--        <item name="colorOnError">@color/theme_on</item>-->
+<!--        <item name="colorSurface">@color/theme_primary</item>-->
+<!--        <item name="colorOnSurface">@color/theme_secondary</item>-->
+<!--        <item name="android:colorBackground">@color/theme_on_secondary</item>-->
+<!--        <item name="colorOnBackground">@color/theme_secondary</item>-->
+<!--        <item name="colorControlNormal">@color/theme_on</item>-->
+<!--        <item name="actionMenuTextColor">@color/theme_on</item>-->
+<!--        <item name="android:fontFamily">sans-serif</item>-->
+<!--        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>-->
+
+
+
+<!--    </style>-->
+
+    <!--*******************************-->
+    <!--***STYLE CHEAT SHEET MEANING***-->
+    <!--*******************************-->
+
+    <!--colorPrimaryDark: Toolbar color-->
+    <!--colorPrimary: The primary brand color of your app, used most predominantly in theming-->
+    <!--colorPrimaryVariant: A lighter/darker variant of your primary brand color, used sparingly in theming-->
+    <!--colorOnPrimary: The color used for elements displayed on top of your primary colors eg text -->
+
+    <!--colorSecondary: The secondary brand color of your app, used mostly as an accent for certain widgets that need to stand out-->
+    <!--colorSecondaryVariant: A lighter/darker variant of your secondary brand color, used sparingly in theming-->
+    <!--colorOnSecondary: The color used for elements displayed on top of your secondary colors-->
+
+    <!--colorError: The color used for errors (often a shade of red)-->
+    <!--colorOnError: The color used for elements displayed on top of your error color-->
+
+    <!--colorSurface: The color used for surfaces (i.e. Material “sheets”)-->
+    <!--colorOnSurface: The color used for elements displayed on top of your surface color-->
+    <!--android:colorBackground: The color behind all other screen content-->
+    <!--colorOnBackground: The color used for elements displayed on top of your background color-->
+
+    <!--android:statusBarColor: Status bar color-->
+
+
     <style name="DarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/theme_primary</item>
+        <!-- Global color attributes -->
         <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorPrimaryVariant">@color/theme_primary</item>
-        <item name="colorOnPrimary">@color/theme_on</item>
+        <item name="colorPrimaryVariant">@color/theme_surface</item>
+        <item name="colorOnPrimary">@color/theme_color_on_primary</item>
+
         <item name="colorSecondary">@color/theme_secondary</item>
-        <item name="colorSecondaryVariant">@color/firewatch_dark_red</item>
-        <item name="colorOnSecondary">@color/theme_on_secondary</item>
-        <item name="colorError">@color/firewatch_cinn</item>
-        <item name="colorOnError">@color/theme_on</item>
-        <item name="colorSurface">@color/theme_primary</item>
-        <item name="colorOnSurface">@color/theme_secondary</item>
-        <item name="android:colorBackground">@color/theme_on_secondary</item>
-        <item name="colorOnBackground">@color/theme_secondary</item>
-        <item name="colorControlNormal">@color/theme_on</item>
-        <item name="actionMenuTextColor">@color/theme_on</item>
+        <item name="colorSecondaryVariant">@color/theme_secondary_variant</item>
+        <item name="colorOnSecondary">@color/theme_surface</item>
+        <!--<item name="colorError"></item>-->
+        <!--<item name="colorOnError"></item>-->
+        <item name="colorSurface">@color/theme_surface</item>
+        <item name="colorOnSurface">@color/theme_color_on_primary</item>
+        <item name="android:colorBackground">@color/theme_background</item>
+        <item name="colorOnBackground">@color/theme_color_on_primary</item>
+
+        <item name="android:statusBarColor">@color/theme_background</item>
+
+        <!-- Global type attributes -->
+        <item name="fontFamily">sans-serif</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
 
-        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog</item>
+        <item name="android:textColorPrimary">?colorOnPrimary</item>
+        <item name="android:textColorSecondary">?colorOnPrimary</item>
 
-    </style>
-
-    <style name="textInputStyleTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">?colorSecondary</item>
-        <item name="hintTextColor">?colorSecondary</item>
-        <item name="startIconTint">?colorSecondary</item>
-        <item name="endIconTint">?colorSecondary</item>
+        <!-- Global shape attributes -->
+        <item name="shapeAppearanceSmallComponent">@style/AppShapeAppearance.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/AppShapeAppearance.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/AppShapeAppearance.LargeComponent</item>
 
     </style>
+
+    <style name="AppShapeAppearance.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="AppShapeAppearance.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="AppShapeAppearance.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Caption.Colored" parent="TextAppearance.MaterialComponents.Caption">
+        <!--Your custom type style here-->
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+
+
+    <!--    <style name="Widget.AppCompat.CompoundButton.CheckBox.CustomColor" parent="Widget.MaterialComponents.CompoundButton.CheckBox">-->
+<!--        <item name="android:textColor">?android:textColorPrimary</item>-->
+<!--    </style>-->
+
+<!--    <style name="Widget.AppCompat.CompoundButton.RadioButton.Materialized" parent="Widget.MaterialComponents.CompoundButton.RadioButton">-->
+<!--        <item name="android:textColor">?android:textColorPrimary</item>-->
+<!--    </style>-->
+
+<!--    <style name="textInputStyleTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+<!--        <item name="boxStrokeColor">?colorSecondary</item>-->
+<!--        <item name="hintTextColor">?colorSecondary</item>-->
+<!--        <item name="startIconTint">?colorSecondary</item>-->
+<!--        <item name="endIconTint">?colorSecondary</item>-->
+
+<!--    </style>-->
 
     <style name="CustomWingInner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:background">?colorOnPrimary</item>
+        <item name="android:background">?colorOnBackground</item>
     </style>
 
     <style name="CustomWingOuter">
@@ -84,20 +167,7 @@
     </style>
 
     <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">?colorOnSecondary</item>
     </style>
-
-    <style name="UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-    </style>
-
-    <style name="ToogleGroupButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:padding">0dp</item>
-        <item name="android:paddingRight">0dp</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="iconPadding">0dp</item>
-
-    </style>
-
 
     <declare-styleable name="RangeSeekBar">
         <!-- the minimum of the range -->

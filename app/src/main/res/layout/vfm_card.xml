@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/oval_vfm"
+    android:background="@drawable/oval_score"
     android:orientation="vertical">
 
     <!--<TextView-->
@@ -32,7 +32,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_money"
-        android:tint="?colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +43,6 @@
         android:layout_marginStart="8dp"
         android:text="31862"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="?colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/score_image"
         app:layout_constraintStart_toEndOf="@id/score_image"
         app:layout_constraintTop_toTopOf="@+id/score_image" />

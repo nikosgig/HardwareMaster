@@ -31,7 +31,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -537,7 +536,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         // Create new views (invoked by the layout manager)
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_company_logo,
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_gpu,
                     parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
             return viewHolder;

@@ -65,6 +65,7 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
             public void onShow(DialogInterface dialog) {
                 BottomSheetDialog d = (BottomSheetDialog) dialog;
                 View bottomSheetInternal = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+                bottomSheetInternal.setBackgroundColor(getResources().getColor(R.color.grey_1000));
                 BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });

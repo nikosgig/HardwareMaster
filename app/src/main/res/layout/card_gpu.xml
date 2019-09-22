@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    style="@style/Base.CardView"
+    style="@style/Widget.MaterialComponents.CardView"
     app:cardCornerRadius="6dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/firewatch_gradient_main_card">
+        >
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,6 @@
             android:text="GeForce RTX 2080 Ti"
 
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textColor="?colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,13 +54,12 @@
             android:id="@+id/vRamSize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/oval_textview"
+            android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="8GB"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toStartOf="@+id/model"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -70,13 +68,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@drawable/oval_textview"
+            android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="GDDR5"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamSize"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -85,12 +82,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@drawable/oval_textview"
+            android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="2019"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="?colorOnPrimary"
             app:layout_constraintStart_toEndOf="@+id/vRamType"
             app:layout_constraintTop_toBottomOf="@+id/model" />
 
@@ -153,10 +149,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:animationDuration="300"
-            app:cardViewBackgroundDrawable="@drawable/firewatch_gradient_expandable_card"
+            app:cardViewBackgroundDrawable="@drawable/card_expandable_gradient"
             app:cardViewCornerRadius="6dp"
-            app:cardViewElevation="4dp"
-            app:cardViewMaxElevation="6dp"
             app:expandIconColor="?colorSecondary"
             app:expandOnClick="true"
             app:inner_view="@layout/gpu_performance_details_inner_view"
@@ -166,7 +160,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mainDetails"
             app:startExpanded="false"
             app:title="Performance Details"
-            app:titleTextColor="?colorOnPrimary" />
+            app:titleTextColor="?android:textColorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -328,15 +328,24 @@
     <color name="firewatch_light">#ffd6bf</color>
 
     <!-- Custom Theme-->
-    <color name="theme_primary">#353535</color> <!-- color of android status bar, search bar background, bottom app bar -->
+    <color name="theme_primary_dark">#0f0f0f</color> <!-- color of android status bar, search bar background, bottom app bar -->
+    <color name="theme_primary">#303030</color> <!-- color of android status bar, search bar background, bottom app bar -->
+    <color name="theme_surface">#1c1c1c</color> <!-- color of android status bar, search bar background, bottom app bar -->
+    <color name="theme_color_on_primary">#EDE6E3</color> <!-- color of all text -->
+    <color name="theme_background">#121212</color> <!-- color of android status bar, search bar background, bottom app bar -->
+
+
     <color name="theme_secondary">#FF652F</color> <!-- color of floating button -->
-    <color name="theme_background">#A6A6A6</color> <!-- color of background -->
-    <color name="theme_on">#EDE6E3</color> <!-- color of all text -->
-    <color name="theme_on_secondary">#3b3b3b</color>
-    <color name="theme_gradient_start">#272727</color>
-    <color name="theme_gradient_end">#272727</color>
+    <color name="theme_secondary_variant">#D15327</color>
+
     <color name="amd_standard">#ff6961</color>
     <color name="nvidia_standard">#77dd77</color>
+
+    <!--Not used-->
+    <color name="theme_gradient_start">#272727</color>
+    <color name="theme_gradient_end">#272727</color>
+    <color name="theme_on_secondary">#3b3b3b</color>
+    <color name="theme_background_depricated">#A6A6A6</color>
 
     <!--<color name="theme_primary">#0B2545</color> &lt;!&ndash; color of android status bar, search bar background, bottom app bar &ndash;&gt;-->
     <!--<color name="theme_secondary">#DB504A</color> &lt;!&ndash; color of floating button &ndash;&gt;-->

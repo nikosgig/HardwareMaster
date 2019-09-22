@@ -45,7 +45,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailWrapper"
-        style="@style/textInputStyleTheme"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,15 +64,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:textColor="?colorOnPrimary" />
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordWrapper"
-        style="@style/textInputStyleTheme"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -81,7 +80,6 @@
         android:hint="Password"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
-
         app:startIconDrawable="@drawable/ic_lock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +88,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
-            android:textColor="?colorOnPrimary"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
 
@@ -98,7 +95,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -123,12 +120,12 @@
     </FrameLayout>
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MaterialComponents.Body1"
         android:id="@+id/header_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/or_continue"
-        android:textColor="?colorOnPrimary"
         app:layout_constraintEnd_toStartOf="@+id/header_continue_wing_right"
         app:layout_constraintStart_toEndOf="@+id/header_continue_wing_left"
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -179,7 +176,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/customFacebookButton"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/Widget.MaterialComponents.Button.Icon"
             app:icon="@drawable/ic_facebook_colored"
             app:iconTint="@null"
             android:layout_width="match_parent"
@@ -200,7 +197,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textColor="?colorOnPrimary"
         android:text="Create an Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
