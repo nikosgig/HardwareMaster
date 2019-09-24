@@ -120,6 +120,15 @@
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
+    <style name="Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <!--Your custom type style here-->
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.CompoundButton.CheckBox.OnSurface" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <!--Your custom type style here-->
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
 
     <!--    <style name="Widget.AppCompat.CompoundButton.CheckBox.CustomColor" parent="Widget.MaterialComponents.CompoundButton.CheckBox">-->
 <!--        <item name="android:textColor">?android:textColorPrimary</item>-->

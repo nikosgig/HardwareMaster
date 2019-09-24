@@ -25,9 +25,9 @@
         app:max_value="1000"
         app:gap="10"
         app:bar_color="?colorPrimary"
-        app:bar_highlight_color="?colorPrimary"
-        app:left_thumb_color="?colorPrimary"
-        app:right_thumb_color="?colorPrimary"
+        app:bar_highlight_color="?colorOnSurface"
+        app:left_thumb_color="?colorOnSurface"
+        app:right_thumb_color="?colorOnSurface"
         app:left_thumb_color_pressed="?colorSecondary"
         app:right_thumb_color_pressed="?colorSecondary"
         app:data_type="_integer"/>
