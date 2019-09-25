@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
-    <include
+    <hardwaremaster.com.widgets.CaptionValueView
         android:id="@+id/tag_1080"
-        layout="@layout/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:layout_marginStart="8dp"
-
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/tag_firestrike"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/oval_score"
 
-    <include
+        app:captionText="@string/sort_1080p"
+        app:layout_constraintEnd_toStartOf="@+id/tag_firestrike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:valueText="31111" />
+
+    <hardwaremaster.com.widgets.CaptionValueView
         android:id="@+id/tag_2k"
-        layout="@layout/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="8dp"
+        android:background="@drawable/oval_score"
+        app:captionText="@string/sort_2k"
+
         app:layout_constraintEnd_toEndOf="@+id/tag_1080"
         app:layout_constraintStart_toStartOf="@+id/tag_1080"
-        app:layout_constraintTop_toBottomOf="@+id/tag_1080" />
+        app:layout_constraintTop_toBottomOf="@+id/tag_1080"
+        tools:valueText="31111" />
 
-    <include
+    <hardwaremaster.com.widgets.CaptionValueView
         android:id="@+id/tag_4k"
-        layout="@layout/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/oval_score"
+        app:captionText="@string/sort_4k"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tag_2k"
         app:layout_constraintStart_toStartOf="@+id/tag_2k"
-        app:layout_constraintTop_toBottomOf="@+id/tag_2k" />
+        app:layout_constraintTop_toBottomOf="@+id/tag_2k"
+        tools:valueText="31111" />
 
-    <include
+    <hardwaremaster.com.widgets.CaptionValueView
         android:id="@+id/tag_firestrike"
-        layout="@layout/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/oval_score"
+        app:captionText="@string/score_firestrike"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tag_1080"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:valueText="31111" />
 
-    <include
+    <hardwaremaster.com.widgets.CaptionValueView
         android:id="@+id/tag_passmark"
-        layout="@layout/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="8dp"
+        android:background="@drawable/oval_score"
+        app:captionText="@string/score_passmark"
+
         app:layout_constraintEnd_toEndOf="@+id/tag_firestrike"
         app:layout_constraintStart_toStartOf="@+id/tag_firestrike"
-        app:layout_constraintTop_toBottomOf="@+id/tag_firestrike" />
+        app:layout_constraintTop_toBottomOf="@+id/tag_firestrike"
+        tools:valueText="31111" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

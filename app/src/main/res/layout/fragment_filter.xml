@@ -25,7 +25,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView"
                 android:layout_alignParentTop="true"
-                style="@style/TextAppearance.MaterialComponents.Caption.Colored"
+                style="@style/MyMaterial.Caption.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -47,28 +47,28 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface"
+                    style="@style/MyMaterial.RadioButton"
                     android:id="@+id/sort_price_low_to_high"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sort_price_low_to_high" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface"
+                    style="@style/MyMaterial.RadioButton"
                     android:id="@+id/sort_price_high_to_low"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sort_price_high_to_low" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface"
+                    style="@style/MyMaterial.RadioButton"
                     android:id="@+id/sort_vfm_low_to_high"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/sort_vfm_low_to_high" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface"
+                    style="@style/MyMaterial.RadioButton"
                     android:id="@+id/sort_vfm_high_to_low"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/brandTextView"
-                style="@style/TextAppearance.MaterialComponents.Caption.Colored"
+                style="@style/MyMaterial.Caption.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -115,7 +115,7 @@
             <!--app:layout_constraintTop_toBottomOf="@+id/brandTextView">-->
 
             <com.google.android.material.checkbox.MaterialCheckBox
-                style="@style/Widget.MaterialComponents.CompoundButton.CheckBox.OnSurface"
+                style="@style/MyMaterial.Checkbox"
                 android:id="@+id/brandButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                 android:text="@string/brand_amd" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
-                style="@style/Widget.MaterialComponents.CompoundButton.CheckBox.OnSurface"
+                style="@style/MyMaterial.Checkbox"
                 android:id="@+id/brandButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

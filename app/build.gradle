@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -53,6 +55,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:5.5.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

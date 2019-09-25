@@ -114,20 +114,27 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="TextAppearance.MaterialComponents.Caption.Colored" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="MyMaterial.Caption.Colored" parent="TextAppearance.MaterialComponents.Caption">
         <!--Your custom type style here-->
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="Widget.MaterialComponents.CompoundButton.RadioButton.OnSurface" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+    <style name="MyMaterial.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
         <!--Your custom type style here-->
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
-    <style name="Widget.MaterialComponents.CompoundButton.CheckBox.OnSurface" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+    <style name="MyMaterial.Checkbox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <!--Your custom type style here-->
         <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="MyMaterial.Textview.Icon" parent="Widget.MaterialComponents.TextView">
+        <!--Your custom type style here-->
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
     </style>
 
     <!--    <style name="Widget.AppCompat.CompoundButton.CheckBox.CustomColor" parent="Widget.MaterialComponents.CompoundButton.CheckBox">-->

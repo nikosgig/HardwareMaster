@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/oval_score"
     android:orientation="vertical">
 
     <TextView
@@ -16,8 +15,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Firestrike"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption.Colored"
+        tools:text="Firestrike"
+        android:textAppearance="@style/MyMaterial.Caption.Colored"
         />
 
     <TextView
@@ -27,7 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="31862"
+        tools:text="31862"
         android:layout_below="@+id/score_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
 />

@@ -6,7 +6,7 @@
     android:background="@drawable/card_main_gradient"
     android:padding="8dp">
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextAppearance.MaterialComponents.Caption.Colored"
+        style="@style/MyMaterial.Caption.Colored"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

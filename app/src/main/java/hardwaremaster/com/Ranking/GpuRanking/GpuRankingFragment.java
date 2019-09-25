@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 import javax.inject.Inject;
 
@@ -557,7 +558,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.nvidia_standard)));
             }
 
-            holder.imageVFM.setImageResource(R.drawable.ic_flash);
+            //holder.imageVFM.setImageResource(R.drawable.ic_flash);
 
             holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + " GB");
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
@@ -572,11 +573,11 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
 //            holder.titlePrice.setText(R.string.sort_price);
 //            holder.titleVFM.setText(R.string.sort_vfm);
-            holder.title1080.setText(R.string.sort_1080p);
-            holder.title2k.setText(R.string.sort_2k);
-            holder.title4k.setText(R.string.sort_4k);
-            holder.titleFirestrike.setText(R.string.score_firestrike);
-            holder.titlePassmark.setText(R.string.score_passmark);
+//            holder.title1080.setText(R.string.sort_1080p);
+//            holder.title2k.setText(R.string.sort_2k);
+//            holder.title4k.setText(R.string.sort_4k);
+//            holder.titleFirestrike.setText(R.string.score_firestrike);
+//            holder.titlePassmark.setText(R.string.score_passmark);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -590,7 +591,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 }
             });
 
-            holder.itemPrice.setOnClickListener(new View.OnClickListener() {
+            holder.price.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext(), R.style.dialogTheme);
@@ -651,11 +652,11 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             public ImageView companyImage;
             //        public Button textViewTag1;
 //        public Button textViewTag2;
-            public TextView scoreVFM;
+            public MaterialTextView scoreVFM;
             public TextView titleVFM;
             public ImageView imageVFM;
             public ConstraintLayout itemPrice;
-            public TextView price;
+            public MaterialTextView price;
             public TextView titlePrice;
             public ConstraintLayout cardContainer;
             public ConstraintLayout expandableView;
@@ -686,35 +687,35 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 this.date = itemView.findViewById(R.id.date);
                 this.companyImage = itemView.findViewById(R.id.image);
 
-                this.scoreVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_value);
-                this.titleVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
-                this.imageVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_image);
+                this.scoreVFM = itemView.findViewById(R.id.scoreVFM);
+                //this.titleVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_title);
+                //this.imageVFM = itemView.findViewById(R.id.scoreVFM).findViewById(R.id.score_image);
 
-                this.itemPrice = itemView.findViewById(R.id.price);
-                this.price = itemView.findViewById(R.id.price).findViewById(R.id.score_value);
-                this.titlePrice = itemView.findViewById(R.id.price).findViewById(R.id.score_title);
+                //this.itemPrice = itemView.findViewById(R.id.price);
+                this.price = itemView.findViewById(R.id.price);
+                //this.titlePrice = itemView.findViewById(R.id.price).findViewById(R.id.score_title);
 //                this.expandableView = itemView.findViewById(R.id.expandable_view);
 //                this.cardContainer = itemView.findViewById(R.id.cardContainer);
 //                this.expandButton = itemView.findViewById(R.id.expand_button);
-                this.item1080 = itemView.findViewById(R.id.tag_1080);
+                //this.item1080 = itemView.findViewById(R.id.tag_1080);
                 this.fps1080 = itemView.findViewById(R.id.tag_1080).findViewById(R.id.score_value);
-                this.title1080 = itemView.findViewById(R.id.tag_1080).findViewById(R.id.score_title);
+                //this.title1080 = itemView.findViewById(R.id.tag_1080).findViewById(R.id.score_title);
 
-                this.item2k = itemView.findViewById(R.id.tag_2k);
+                //this.item2k = itemView.findViewById(R.id.tag_2k);
                 this.fps2k = itemView.findViewById(R.id.tag_2k).findViewById(R.id.score_value);
-                this.title2k = itemView.findViewById(R.id.tag_2k).findViewById(R.id.score_title);
+                //this.title2k = itemView.findViewById(R.id.tag_2k).findViewById(R.id.score_title);
 
-                this.item4k = itemView.findViewById(R.id.tag_4k);
+                //this.item4k = itemView.findViewById(R.id.tag_4k);
                 this.fps4k = itemView.findViewById(R.id.tag_4k).findViewById(R.id.score_value);
-                this.title4k = itemView.findViewById(R.id.tag_4k).findViewById(R.id.score_title);
+                //this.title4k = itemView.findViewById(R.id.tag_4k).findViewById(R.id.score_title);
 
-                this.itemFirestrike = itemView.findViewById(R.id.tag_firestrike);
+                //this.itemFirestrike = itemView.findViewById(R.id.tag_firestrike);
                 this.scoreFirestrike = itemView.findViewById(R.id.tag_firestrike).findViewById(R.id.score_value);
-                this.titleFirestrike = itemView.findViewById(R.id.tag_firestrike).findViewById(R.id.score_title);
+                //this.titleFirestrike = itemView.findViewById(R.id.tag_firestrike).findViewById(R.id.score_title);
 
-                this.itemPassmark = itemView.findViewById(R.id.tag_passmark);
+                //this.itemPassmark = itemView.findViewById(R.id.tag_passmark);
                 this.scorePassmark = itemView.findViewById(R.id.tag_passmark).findViewById(R.id.score_value);
-                this.titlePassmark = itemView.findViewById(R.id.tag_passmark).findViewById(R.id.score_title);
+                //this.titlePassmark = itemView.findViewById(R.id.tag_passmark).findViewById(R.id.score_title);
 
 
 //                expandableView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
