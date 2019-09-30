@@ -1,5 +1,6 @@
 package hardwaremaster.com.Ranking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
 import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragment;
+import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragmentFirebase;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.data.CpuFilterValues;
@@ -67,6 +69,8 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
                 case R.id.menu_gpu:
                     gpuRankingFragment = gpuRankingFragmentProvider.get();
                     ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), gpuRankingFragment, R.id.contentFrame);
+//                    Intent intent = new Intent(RankingActivity.this, GpuRankingActivity.class);
+//                    startActivity(intent);
                     return true;
                 case R.id.menu_settings:
                     settingsFragment = settingsFragmentProvider.get();

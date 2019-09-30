@@ -24,6 +24,10 @@
             android:name=".Ranking.RankingActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Ranking.GpuRankingActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

@@ -25,7 +25,8 @@ public class ActivityUtils {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        //transaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(frameId, fragment);
         transaction.commit();
     }

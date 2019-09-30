@@ -11,6 +11,7 @@ import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingContract;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragment;
+import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragmentFirebase;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.di.ActivityScoped;
@@ -24,6 +25,10 @@ public abstract class RankingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract CpuRankingFragment cpuRankingFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract GpuRankingFragmentFirebase gpuRankingFragmentFirebase();
 
     @FragmentScoped
     @ContributesAndroidInjector

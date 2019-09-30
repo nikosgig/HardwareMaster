@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="6dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:tint="?colorSecondary" />
+
+        <TextView
+            android:id="@+id/model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@+id/image"
+
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            tools:text="GeForce RTX 2080 Ti" />
+
+        <TextView
+            android:id="@+id/vRamSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/model"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/image"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="8GB" />
+
+        <TextView
+            android:id="@+id/vRamType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/model"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/vRamSize"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="GDDR5" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/model"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/vRamType"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="2019" />
+
+
+        <TextView
+            android:id="@+id/scoreVFM"
+            style="@style/MyMaterial.Textview.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/oval_score"
+            tools:text="1111" />
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/Widget.MaterialComponents.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/scoreVFM"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/oval_score"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="1111"
+            tools:valueTxt="11111" />
+
+
+<!--        <hardwaremaster.com.widgets.ExpandableCardView-->
+<!--            android:id="@+id/expandable_view"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:layout_below="@id/scoreVFM"-->
+<!--            app:animationDuration="300"-->
+<!--            app:cardViewCornerRadius="6dp"-->
+<!--            app:expandIconColor="?colorSecondary"-->
+<!--            app:expandOnClick="true"-->
+<!--            app:inner_view="@layout/gpu_performance_details_inner_view"-->
+<!--            app:startExpanded="false"-->
+<!--            app:title="Performance Details"-->
+<!--            app:titleTextColor="?android:textColorPrimary" />-->
+
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
