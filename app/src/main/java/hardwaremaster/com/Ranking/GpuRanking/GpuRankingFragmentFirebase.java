@@ -214,48 +214,6 @@ public class GpuRankingFragmentFirebase extends Fragment implements GpuRankingCo
     }
 
     @Override
-    public void notifyCpuListChanged(List<Cpu> cpuList) {
-
-    }
-
-    @Override
-    public void showHideFiltersView() {
-//        if(!toogleFilterView) {
-//            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
-//            TransitionManager.beginDelayedTransition(constraintLayout);
-//            constraintLayout.setVisibility(View.VISIBLE);
-//            LinearLayout mask = root.findViewById(R.id.ll_mask);
-//            TransitionManager.beginDelayedTransition(mask);
-//            mask.setVisibility(View.VISIBLE);
-//            filterItem.setIcon(R.drawable.ic_close);
-//            searchView.setVisibility(View.GONE);
-//            toogleFilterView=true;
-//        } else {
-//            ConstraintLayout constraintLayout = root.findViewById(R.id.filters);
-//            TransitionManager.beginDelayedTransition(constraintLayout);
-//            constraintLayout.setVisibility(View.GONE);
-//            LinearLayout mask = root.findViewById(R.id.ll_mask);
-//            TransitionManager.beginDelayedTransition(mask);
-//            mask.setVisibility(View.GONE);
-//            filterItem.setIcon(R.drawable.ic_filter_list);
-//            searchView.setVisibility(View.VISIBLE);
-//            toogleFilterView=false;
-//        }
-
-    }
-
-    @Override
-    public void setPriceBarMinMaxValues(double min, double max) {
-        //rangeSeekBar.setRangeValues(min, max);
-    }
-
-    @Override
-    public void setPriceBarSelectedMinMaxValues(double min, double max) {
-        //rangeSeekBar.setSelectedMinValue(min);
-        //rangeSeekBar.setSelectedMaxValue(max);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         /* Setup Search View */
         inflater.inflate(R.menu.menu_options, menu);

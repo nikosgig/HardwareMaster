@@ -18,24 +18,11 @@ import hardwaremaster.com.data.Gpu;
 public interface GpuRankingContract {
     interface View extends BaseView<Presenter> {
         void notifyGpuListChanged(List<Gpu> gpuList);
-        void notifyCpuListChanged(List<Cpu> cpuList);
-        void showHideFiltersView();
-        void setPriceBarMinMaxValues(double min, double max);
-        void setPriceBarSelectedMinMaxValues(double min, double max);
     }
 
     interface Presenter extends BasePresenter<View> {
         void getGpuFromDatabase();
-        void getCpuFromDatabase();
-        //void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
-        CpuFilterValues getGpuFilterValuesToShow();
-        //void onGetCpuFromDatabase(List<Gpu> cpuList);
         Filter getSearchBarFilter();
-        void setSorting(GpuRankingSortBy orderType);
-        void setMinPrice(double minPrice);
-        void setMaxPrice(double maxPrice);
-        void addVRamCapacity(double vRamCapacity);
-        void showHideFilters();
         void updatePrice(String key, double price);
 
     }

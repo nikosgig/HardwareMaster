@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,10 +28,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
 
@@ -47,7 +44,6 @@ import hardwaremaster.com.Ranking.CpuRanking.CpuRankingAdapter;
 import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
-import hardwaremaster.com.widgets.RangeSeekBar;
 
 import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
@@ -57,14 +53,12 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     @Inject
     GpuRankingContract.Presenter mPresenter;
     private GpuRankingAdapter mListAdapter;
-    private CpuRankingAdapter mCpuListAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
-    ImageView closeButton;
+    private ImageView closeButton;
     private View root;
-    MenuItem menuItem;
-    SearchView searchView;
-    OnBottomDialogFilterFragmentListener mListener;
+    private MenuItem menuItem;
+    private SearchView searchView;
 
     Trace myTrace = FirebasePerformance.getInstance().newTrace("GpuRankingFragment: OnCreate -> OnCreateView");
 
@@ -75,20 +69,8 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new GpuRankingAdapter(new ArrayList<Gpu>(0));
-        mCpuListAdapter = new CpuRankingAdapter(new ArrayList<>(0));
+        mListAdapter = new GpuRankingAdapter(new ArrayList<>(0));
         myTrace.start();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof GpuRankingFragment.OnBottomDialogFilterFragmentListener) {
-            mListener = (GpuRankingFragment.OnBottomDialogFilterFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnBottomDialogFilterFragmentListener");
-        }
     }
 
     @Override
@@ -123,7 +105,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
         setHasOptionsMenu(true);
 
-        SearchView customSearchView = (SearchView) root.findViewById(R.id.customSearchView);
+        SearchView customSearchView = root.findViewById(R.id.customSearchView);
 
         customSearchView.onActionViewExpanded(); //new Added line
         customSearchView.setIconifiedByDefault(false);
@@ -172,8 +154,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     /* CpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
-        mRecyclerView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
 
         if(gpuList != null) {
             mListAdapter.setList(gpuList);
@@ -187,21 +167,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //        result.dispatchUpdatesTo(mListAdapter);
         mRecyclerView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void notifyCpuListChanged(List<Cpu> cpuList) {
-        mRecyclerView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        if(cpuList != null) {
-            mCpuListAdapter.setList(cpuList);
-            mCpuListAdapter.notifyDataSetChanged();
-            mRecyclerView.setAdapter(mCpuListAdapter);
-        }
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
-
     }
 
     public class MyDiffCallback extends DiffUtil.Callback{
@@ -240,18 +205,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             //you can return particular field for changed item.
             return super.getChangePayload(oldItemPosition, newItemPosition);
         }
-    }
-
-    @Override
-    public void showHideFiltersView() {
-    }
-
-    @Override
-    public void setPriceBarMinMaxValues(double min, double max) {
-    }
-
-    @Override
-    public void setPriceBarSelectedMinMaxValues(double min, double max) {
     }
 
     @Override

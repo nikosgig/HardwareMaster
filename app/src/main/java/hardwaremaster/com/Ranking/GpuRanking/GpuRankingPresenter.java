@@ -96,21 +96,6 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
     }
 
     @Override
-    public void getCpuFromDatabase() {
-        mDatabase.getCpus(new DatabaseCalls.LoadCpusCallback() {
-            @Override
-            public void onCpusLoaded(ArrayList<Cpu> cpuList) {
-                mRankingsView.notifyCpuListChanged(cpuList);
-            }
-        });
-    }
-
-/*    @Override
-    public void onGetCpuFromDatabase(List<Gpu> gpuRankingList) {
-        mRankingsView.notifyGpuListChanged(gpuRankingList);
-    }*/
-
-    @Override
     public Filter getSearchBarFilter() {
         Filter listFilter = new Filter() {
             @Override
@@ -128,41 +113,9 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
         return listFilter;
     }
 
-
-    @Override
-    public void setSorting(GpuRankingSortBy orderType) {
-        mCurrentSortBy = orderType;
-    }
-
-    @Override
-    public void setMinPrice(double minPrice) {
-        gpuFilterValues.setMinPrice(minPrice);
-
-    }
-
-    @Override
-    public void setMaxPrice(double maxPrice) {
-        gpuFilterValues.setMaxPrice(maxPrice);
-    }
-
-    @Override
-    public void addVRamCapacity(double vRamCapacity) {
-        gpuFilterValues.setvRamCapacity(vRamCapacity);
-    }
-
-    @Override
-    public void showHideFilters() {
-        mRankingsView.showHideFiltersView();
-    }
-
     @Override
     public void updatePrice(String key, double price) {
         mDatabase.addUserPrice(key, price);
-    }
-
-    @Override
-    public CpuFilterValues getGpuFilterValuesToShow() {
-        return mDatabase.getFilterMinMaxValues();
     }
 
     @Override
