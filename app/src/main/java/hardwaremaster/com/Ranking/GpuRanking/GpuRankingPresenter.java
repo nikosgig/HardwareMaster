@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
+import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.data.Database;
 import hardwaremaster.com.data.DatabaseCalls;
@@ -90,6 +91,16 @@ public class GpuRankingPresenter implements GpuRankingContract.Presenter {
 
                 }
                 mRankingsView.notifyGpuListChanged(gpuList);
+            }
+        });
+    }
+
+    @Override
+    public void getCpuFromDatabase() {
+        mDatabase.getCpus(new DatabaseCalls.LoadCpusCallback() {
+            @Override
+            public void onCpusLoaded(ArrayList<Cpu> cpuList) {
+                mRankingsView.notifyCpuListChanged(cpuList);
             }
         });
     }

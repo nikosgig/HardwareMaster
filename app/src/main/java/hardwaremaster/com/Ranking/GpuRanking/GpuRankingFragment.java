@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import hardwaremaster.com.R;
+import hardwaremaster.com.Ranking.CpuRanking.CpuRankingAdapter;
+import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
 import hardwaremaster.com.widgets.RangeSeekBar;
@@ -54,7 +57,9 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     @Inject
     GpuRankingContract.Presenter mPresenter;
     private GpuRankingAdapter mListAdapter;
+    private CpuRankingAdapter mCpuListAdapter;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
     ImageView closeButton;
     private View root;
     MenuItem menuItem;
@@ -71,6 +76,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new GpuRankingAdapter(new ArrayList<Gpu>(0));
+        mCpuListAdapter = new CpuRankingAdapter(new ArrayList<>(0));
         myTrace.start();
     }
 
@@ -106,6 +112,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
         //Set up gpu rankings view
+        mProgressBar = root.findViewById(R.id.progress_bar);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -165,16 +172,36 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     /* CpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
+        mRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
 
-//        if(gpuList != null) {
-//            mListAdapter.setList(gpuList);
-//            mListAdapter.notifyDataSetChanged();
-//        }
+        if(gpuList != null) {
+            mListAdapter.setList(gpuList);
+            mListAdapter.notifyDataSetChanged();
+            mRecyclerView.setAdapter(mListAdapter);
+        }
 
-        List<Gpu> oldNews = mListAdapter.getList();
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyDiffCallback(oldNews, gpuList));
-        mListAdapter.setList(gpuList);
-        result.dispatchUpdatesTo(mListAdapter);
+//        List<Gpu> oldNews = mListAdapter.getList();
+//        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyDiffCallback(oldNews, gpuList));
+//        mListAdapter.setList(gpuList);
+//        result.dispatchUpdatesTo(mListAdapter);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void notifyCpuListChanged(List<Cpu> cpuList) {
+        mRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        if(cpuList != null) {
+            mCpuListAdapter.setList(cpuList);
+            mCpuListAdapter.notifyDataSetChanged();
+            mRecyclerView.setAdapter(mCpuListAdapter);
+        }
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+
     }
 
     public class MyDiffCallback extends DiffUtil.Callback{
@@ -409,8 +436,8 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             public TextView vRamType;
             public TextView date;
 
-            public MaterialTextView scoreVFM;
-            public MaterialTextView price;
+            public TextView scoreVFM;
+            public TextView price;
 
             public TextView fps1080;
             public TextView fps2k;

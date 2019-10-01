@@ -55,6 +55,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.GpuRankingActivity;
+import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
 import hardwaremaster.com.widgets.RangeSeekBar;
@@ -210,6 +211,11 @@ public class GpuRankingFragmentFirebase extends Fragment implements GpuRankingCo
     /* CpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
+    }
+
+    @Override
+    public void notifyCpuListChanged(List<Cpu> cpuList) {
+
     }
 
     @Override

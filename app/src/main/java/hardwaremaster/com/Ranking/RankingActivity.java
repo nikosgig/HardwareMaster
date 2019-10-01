@@ -63,12 +63,14 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
 
             switch (item.getItemId()) {
                 case R.id.menu_cpu:
-                    cpuRankingFragment = cpuRankingFragmentProvider.get();
-                    ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
+//                    cpuRankingFragment = cpuRankingFragmentProvider.get();
+//                    ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
+                    mGpuRankingPresenter.getCpuFromDatabase();
                     return true;
                 case R.id.menu_gpu:
-                    gpuRankingFragment = gpuRankingFragmentProvider.get();
-                    ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), gpuRankingFragment, R.id.contentFrame);
+                    mGpuRankingPresenter.getGpuFromDatabase();
+//                    gpuRankingFragment = gpuRankingFragmentProvider.get();
+//                    ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), gpuRankingFragment, R.id.contentFrame);
 //                    Intent intent = new Intent(RankingActivity.this, GpuRankingActivity.class);
 //                    startActivity(intent);
                     return true;
@@ -102,8 +104,8 @@ public class RankingActivity extends BaseActivity implements GpuRankingFragment.
         bottomAppBar.setOnMenuItemClickListener(mOnNavigationItemSelectedListener);
         floatingActionButton.setOnClickListener(mOnFloatingActionButtonListener);
 
-        cpuRankingFragment = cpuRankingFragmentProvider.get();
-        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), cpuRankingFragment, R.id.contentFrame);
+        gpuRankingFragment = gpuRankingFragmentProvider.get();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), gpuRankingFragment, R.id.contentFrame);
 
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 import hardwaremaster.com.Base.BasePresenter;
 import hardwaremaster.com.Base.BaseView;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingSortBy;
+import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.CpuFilterValues;
 import hardwaremaster.com.data.FilterValues;
 import hardwaremaster.com.data.Gpu;
@@ -17,6 +18,7 @@ import hardwaremaster.com.data.Gpu;
 public interface GpuRankingContract {
     interface View extends BaseView<Presenter> {
         void notifyGpuListChanged(List<Gpu> gpuList);
+        void notifyCpuListChanged(List<Cpu> cpuList);
         void showHideFiltersView();
         void setPriceBarMinMaxValues(double min, double max);
         void setPriceBarSelectedMinMaxValues(double min, double max);
@@ -24,6 +26,7 @@ public interface GpuRankingContract {
 
     interface Presenter extends BasePresenter<View> {
         void getGpuFromDatabase();
+        void getCpuFromDatabase();
         //void applyFiltersForGpuList(GpuFilterValues gpuFilterValues);
         CpuFilterValues getGpuFilterValuesToShow();
         //void onGetCpuFromDatabase(List<Gpu> cpuList);

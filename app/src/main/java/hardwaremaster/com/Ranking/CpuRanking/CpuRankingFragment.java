@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class CpuRankingFragment extends DaggerFragment implements CpuRankingCont
     CpuRankingContract.Presenter mPresenter;
     private CpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
     private ImageView closeButton;
 
     @Inject
@@ -70,6 +72,7 @@ public class CpuRankingFragment extends DaggerFragment implements CpuRankingCont
         View root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
         //Set up cpu rankings view
+        mProgressBar = root.findViewById(R.id.progress_bar);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -87,6 +90,8 @@ public class CpuRankingFragment extends DaggerFragment implements CpuRankingCont
         if(cpus != null) {
             mListAdapter.setList(cpus);
             mListAdapter.notifyDataSetChanged();
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
