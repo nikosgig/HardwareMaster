@@ -1,5 +1,6 @@
 package hardwaremaster.com.Ranking.Settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
 
+import hardwaremaster.com.Login.LoginActivity;
 import hardwaremaster.com.R;
+import hardwaremaster.com.Ranking.RankingActivity;
 import hardwaremaster.com.di.ActivityScoped;
 
 @ActivityScoped
@@ -42,8 +45,6 @@ public class SettingsFragment extends Fragment {
 
             @Override
             public void onClick(View arg0) {
-/*                mFilter.setSingleScoreLow(seekBarSingleScore.getSelectedMinValue());
-                mFilter.setSingleScoreHigh(seekBarSingleScore.getSelectedMaxValue());*/
                 FirebaseAuth.getInstance().signOut();
             }
         });

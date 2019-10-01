@@ -23,8 +23,6 @@ public interface DatabaseCalls {
 
     void getGpus(@NonNull final LoadGpusCallback callback);
 
-    CpuFilterValues getFilterMinMaxValues();
-
     List<Cpu> searchFilterCpuList(CharSequence constraint);
 
     List<Gpu> searchFilterGpuList(CharSequence constraint);

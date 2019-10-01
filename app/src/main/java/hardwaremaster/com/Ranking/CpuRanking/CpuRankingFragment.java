@@ -74,8 +74,10 @@ public class CpuRankingFragment extends DaggerFragment implements CpuRankingCont
         //Set up cpu rankings view
         mProgressBar = root.findViewById(R.id.progress_bar);
         mRecyclerView = root.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
+        layoutManager.setItemPrefetchEnabled(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mListAdapter);
 
@@ -94,50 +96,4 @@ public class CpuRankingFragment extends DaggerFragment implements CpuRankingCont
             mProgressBar.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        /* Setup Search View */
-        inflater.inflate(R.menu.menu_options, menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-
-        final SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.onActionViewExpanded();
-        searchView.clearFocus();
-
-        // Catch event on [x] button inside search view
-        closeButton = searchView.findViewById(R.id.search_close_btn);
-        // Set on click listener
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Manage this event.
-                searchView.setQuery("", false);
-                searchView.clearFocus();
-            }
-        });
-
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //mListAdapter.getFilter().filter(newText);
-                mPresenter.getSearchBarFilter().filter(newText);
-                if (TextUtils.isEmpty(newText)) {
-                    //Text is cleared, do your thing
-                    searchView.clearFocus();
-                }
-                return true;
-            }
-        });
-
-    }
-
 }

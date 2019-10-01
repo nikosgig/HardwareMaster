@@ -111,69 +111,6 @@ public class Database implements DatabaseCalls {
     }
 
     @Override
-    public CpuFilterValues getFilterMinMaxValues() {
-        Cpu maxCpu = Collections.max(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
-            }
-        });
-
-        Cpu minCpu = Collections.min(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getSingleScore()), Double.parseDouble(o2.getSingleScore()));
-            }
-        });
-
-        CpuFilterValues cpuFilterValues = new CpuFilterValues();
-
-        cpuFilterValues.setSingleScoreMax(Double.parseDouble(maxCpu.getSingleScore()));
-        cpuFilterValues.setSingleScoreMin(Double.parseDouble(minCpu.getSingleScore()));
-
-        Cpu maxCpuMulti = Collections.max(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getMultiScore()), Double.parseDouble(o2.getMultiScore()));
-            }
-        });
-
-        Cpu minCpuMulti = Collections.min(mCpuList,new Comparator<Cpu>() {
-
-            public int compare(Cpu o1, Cpu o2) {
-                return Double.compare(Double.parseDouble(o1.getMultiScore()), Double.parseDouble(o2.getMultiScore()));
-            }
-        });
-
-        cpuFilterValues.setMultiCoreMax(Double.parseDouble(maxCpuMulti.getMultiScore()));
-        cpuFilterValues.setMultiCoreMin(Double.parseDouble(minCpuMulti.getMultiScore()));
-
-/*        CpuFilterValues cpuFilterValues = new CpuFilterValues();
-
-        Query query = mDatabase.orderByChild("SingleScore").limitToLast(1);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // dataSnapshot is the "issue" node with all children with id 0
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        // do something with the individual "issues"
-                        Log.d("query", issue.getValue().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-
-        return cpuFilterValues;
-    }
-
-    @Override
     public List<Cpu> searchFilterCpuList(CharSequence constraint) {
         List<Cpu> filteredList = new ArrayList<>();
         String filterPattern = constraint.toString().toLowerCase().trim();

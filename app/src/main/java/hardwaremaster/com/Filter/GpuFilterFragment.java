@@ -274,7 +274,5 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
 
     public interface OnBottomDialogFilterFragmentListener {
         void OnBottomDialogFilterFragmentInteraction();
-
-        ArrayList<RangeSeekBar> OnRangeSeekBarInit();
     }
 }

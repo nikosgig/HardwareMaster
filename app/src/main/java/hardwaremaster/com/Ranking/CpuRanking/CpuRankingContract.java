@@ -16,15 +16,10 @@ import hardwaremaster.com.data.CpuFilterValues;
 public interface CpuRankingContract {
     interface View extends BaseView<Presenter> {
         void notifyCpuListChanged(List<Cpu> cpuList);
-        //void showOrderByMenu();
     }
 
     interface Presenter extends BasePresenter<View> {
         void getCpuFromDatabase();
-        void applyFiltersForCpuList(CpuFilterValues cpuFilterValues);
-        CpuFilterValues getCpuFilterValuesToShow();
-        void onGetCpuFromDatabase(List<Cpu> cpuList);
-        void setOrder(CpuRankingSortBy orderType);
         Filter getSearchBarFilter();
 
     }

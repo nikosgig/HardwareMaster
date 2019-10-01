@@ -52,34 +52,6 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
     }
 
     @Override
-    public void onGetCpuFromDatabase(List<Cpu> cpuRankingList) {
-        switch (mCurrentOrderBy) {
-            case ALL:
-                break;
-            case BY_MODEL:
-                Collections.sort(cpuRankingList, new Comparator<Cpu>() {
-                    public int compare(Cpu v1, Cpu v2) {
-                        return v1.getModel().compareTo(v2.getModel());
-                    }
-                });
-                break;
-        }
-
-        mRankingsView.notifyCpuListChanged(cpuRankingList);
-
-    }
-
-    @Override
-    public void applyFiltersForCpuList(CpuFilterValues filterValues) {
-        mRankingsView.notifyCpuListChanged(mDatabase.filterCpuList(filterValues));
-    }
-
-    @Override
-    public void setOrder(CpuRankingSortBy orderType) {
-        mCurrentOrderBy = orderType;
-    }
-
-    @Override
     public Filter getSearchBarFilter() {
         Filter listFilter = new Filter() {
             @Override
@@ -95,11 +67,6 @@ public class CpuRankingPresenter implements CpuRankingContract.Presenter {
             }
         };
         return listFilter;
-    }
-
-    @Override
-    public CpuFilterValues getCpuFilterValuesToShow() {
-        return mDatabase.getFilterMinMaxValues();
     }
 
     @Override

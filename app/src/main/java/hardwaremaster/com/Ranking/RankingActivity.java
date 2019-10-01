@@ -1,6 +1,5 @@
 package hardwaremaster.com.Ranking;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,8 +7,6 @@ import android.view.WindowManager;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -17,26 +14,23 @@ import javax.inject.Inject;
 
 import dagger.Lazy;
 import hardwaremaster.com.Base.BaseActivity;
+import hardwaremaster.com.Filter.GpuFilterFragment;
 import hardwaremaster.com.R;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingFragment;
 import hardwaremaster.com.Ranking.CpuRanking.CpuRankingPresenter;
 import hardwaremaster.com.Ranking.GpuRanking.Filter.GpuFilterValues;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragment;
-import hardwaremaster.com.Ranking.GpuRanking.GpuRankingFragmentFirebase;
 import hardwaremaster.com.Ranking.GpuRanking.GpuRankingPresenter;
 import hardwaremaster.com.Ranking.Settings.SettingsFragment;
 import hardwaremaster.com.data.CpuFilterValues;
-import hardwaremaster.com.Filter.GpuFilterFragment;
 import hardwaremaster.com.util.ActivityUtils;
 import hardwaremaster.com.widgets.RangeSeekBar;
 
 
 public class RankingActivity extends BaseActivity implements GpuFilterFragment.OnBottomDialogFilterFragmentListener {
 
-    private RangeSeekBar cpuBarSingleScore, cpuBarMultiScore;
     private CpuFilterValues cpuFilterValues = new CpuFilterValues();
     private GpuFilterValues gpuFilterValues = new GpuFilterValues();
-    private int CPU_CURRENT_TAB=0, GPU_CURRENT_TAB=1;
 
     @Inject
     CpuRankingPresenter mCpuRankingPresenter;
@@ -77,6 +71,7 @@ public class RankingActivity extends BaseActivity implements GpuFilterFragment.O
                     ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), settingsFragment, R.id.contentFrame);
                     return true;
             }
+
             return false;
         }
     };
@@ -86,11 +81,7 @@ public class RankingActivity extends BaseActivity implements GpuFilterFragment.O
         @Override
         public void onClick(View v) {
             gpuFilterFragment = filterFragmentProvider.get();
-//            bottomAppBar.performHide();
-//            bottomAppBar.setVisibility(View.INVISIBLE);
-            //floatingActionButton.hide();
             gpuFilterFragment.show(getSupportFragmentManager(), "tag");
-            //ActivityUtils.replaceAddToBackStackFragmentToActivity(getSupportFragmentManager(), gpuFilterFragment, R.id.contentFrame);
         }
     };
 
@@ -108,43 +99,8 @@ public class RankingActivity extends BaseActivity implements GpuFilterFragment.O
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_order:
-//                mGpuRankingPresenter.showHideFilters();
-//                break;
-//        }
-        return true;
-    }
-
-    public CpuFilterValues getCpuFilters() {
-        cpuFilterValues.setSingleScoreMin((Double) cpuBarSingleScore.getSelectedMinValue());
-        cpuFilterValues.setSingleScoreMax((Double) cpuBarSingleScore.getSelectedMaxValue());
-        cpuFilterValues.setMultiCoreMin((Double) cpuBarMultiScore.getSelectedMinValue());
-        cpuFilterValues.setMultiCoreMax((Double) cpuBarMultiScore.getSelectedMaxValue());
-
-        cpuBarSingleScore.setSelectedMinValue(cpuBarSingleScore.getSelectedMinValue());
-        cpuBarSingleScore.setSelectedMaxValue(cpuBarSingleScore.getSelectedMaxValue());
-
-        cpuBarMultiScore.setSelectedMinValue(cpuBarMultiScore.getSelectedMinValue());
-        cpuBarMultiScore.setSelectedMaxValue(cpuBarMultiScore.getSelectedMaxValue());
-
-        return cpuFilterValues;
-    }
-
-    @Override
     public void OnBottomDialogFilterFragmentInteraction() {
-//        //mGpuRankingPresenter.getGpuFromDatabase();
-//        bottomAppBar.performShow();
-//        bottomAppBar.setVisibility(View.VISIBLE);
-        //floatingActionButton.show();
-        //getSupportFragmentManager().popBackStack();
         gpuFilterFragment.dismiss();
 
-    }
-
-    @Override
-    public ArrayList<RangeSeekBar> OnRangeSeekBarInit() {
-        return null;
     }
 }

@@ -30,8 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.perf.FirebasePerformance;
-import com.google.firebase.perf.metrics.Trace;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -40,8 +38,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import hardwaremaster.com.R;
-import hardwaremaster.com.Ranking.CpuRanking.CpuRankingAdapter;
-import hardwaremaster.com.data.Cpu;
 import hardwaremaster.com.data.Gpu;
 import hardwaremaster.com.di.ActivityScoped;
 
@@ -60,8 +56,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     private MenuItem menuItem;
     private SearchView searchView;
 
-    Trace myTrace = FirebasePerformance.getInstance().newTrace("GpuRankingFragment: OnCreate -> OnCreateView");
-
     @Inject
     public GpuRankingFragment() {
     }
@@ -70,7 +64,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new GpuRankingAdapter(new ArrayList<>(0));
-        myTrace.start();
     }
 
     @Override
@@ -146,121 +139,28 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             }
         });
 
-        myTrace.stop();
-
         return root;
     }
 
     /* CpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
-
         if(gpuList != null) {
             mListAdapter.setList(gpuList);
             mListAdapter.notifyDataSetChanged();
-            mRecyclerView.setAdapter(mListAdapter);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
-
+//        <------ FUTURE OPTIMIZATION ------>
 //        List<Gpu> oldNews = mListAdapter.getList();
 //        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new MyDiffCallback(oldNews, gpuList));
 //        mListAdapter.setList(gpuList);
 //        result.dispatchUpdatesTo(mListAdapter);
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
-    }
-
-    public class MyDiffCallback extends DiffUtil.Callback{
-
-        List<Gpu> oldPersons;
-        List<Gpu> newPersons;
-
-        public MyDiffCallback(List<Gpu> newPersons, List<Gpu> oldPersons) {
-            this.newPersons = newPersons;
-            this.oldPersons = oldPersons;
-        }
-
-        @Override
-        public int getOldListSize() {
-            return oldPersons.size();
-        }
-
-        @Override
-        public int getNewListSize() {
-            return newPersons.size();
-        }
-
-        @Override
-        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            return oldPersons.get(oldItemPosition).getModel() == newPersons.get(newItemPosition).getModel();
-        }
-
-        @Override
-        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            return oldPersons.get(oldItemPosition).equals(newPersons.get(newItemPosition));
-        }
-
-        @Nullable
-        @Override
-        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-            //you can return particular field for changed item.
-            return super.getChangePayload(oldItemPosition, newItemPosition);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        /* Setup Search View */
-        inflater.inflate(R.menu.menu_options, menu);
-        menuItem = menu.findItem(R.id.search);
-        //filterItem = menu.findItem(R.id.menu_order);
-
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.onActionViewExpanded();
-        searchView.clearFocus();
-//        searchView.setBackground(getResources().getDrawable(R.drawable.bg_white_rounded));
-//        LinearLayout searchEditFrame = (LinearLayout) searchView.findViewById(R.id.search_bar); // Get the Linear Layout
-// Get the associated LayoutParams and set leftMargin
-        //((LinearLayout.LayoutParams) searchEditFrame.getLayoutParams()).leftMargin = 0;
-        //searchView.setBackground(R.id.);
-
-        // Catch event on [x] button inside search view
-        closeButton = searchView.findViewById(R.id.search_close_btn);
-        // Set on click listener
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Manage this event.
-                searchView.setQuery("", false);
-                searchView.clearFocus();
-            }
-        });
-
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mPresenter.getSearchBarFilter().filter(newText);
-                if (TextUtils.isEmpty(newText)) {
-                    //Text is cleared, do your thing
-                    searchView.clearFocus();
-                }
-                return true;
-            }
-        });
-
     }
 
 
-    public interface OnBottomDialogFilterFragmentListener {
-        void OnApplyGpuFilterClicked();
-    }
+
+
 
     public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.ViewHolder> {
         private List<Gpu> mGpuList;
