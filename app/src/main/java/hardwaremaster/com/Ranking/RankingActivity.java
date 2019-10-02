@@ -100,6 +100,7 @@ public class RankingActivity extends BaseActivity implements GpuFilterFragment.O
 
     @Override
     public void OnBottomDialogFilterFragmentInteraction() {
+        mGpuRankingPresenter.getGpuFromDatabase();
         gpuFilterFragment.dismiss();
 
     }
