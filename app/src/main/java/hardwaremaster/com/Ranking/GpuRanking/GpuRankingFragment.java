@@ -1,14 +1,12 @@
 package hardwaremaster.com.Ranking.GpuRanking;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,12 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -48,13 +47,11 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
     @Inject
     GpuRankingContract.Presenter mPresenter;
+
     private GpuRankingAdapter mListAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
-    private ImageView closeButton;
     private View root;
-    private MenuItem menuItem;
-    private SearchView searchView;
 
     @Inject
     public GpuRankingFragment() {
@@ -83,10 +80,7 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         root = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-
-        //Set up gpu rankings view
         mProgressBar = root.findViewById(R.id.progress_bar);
         mRecyclerView = root.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -97,29 +91,27 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         mRecyclerView.setAdapter(mListAdapter);
 
         setHasOptionsMenu(true);
+        setupSearchView();
 
+        return root;
+    }
+
+    /* Helpers */
+    private void setupSearchView() {
         SearchView customSearchView = root.findViewById(R.id.customSearchView);
-
         customSearchView.onActionViewExpanded(); //new Added line
         customSearchView.setIconifiedByDefault(false);
-
         if(!customSearchView.isFocused()) {
             customSearchView.clearFocus();
         }
-
         // Catch event on [x] button inside search view
-        closeButton = customSearchView.findViewById(R.id.search_close_btn);
+        ImageView closeButton = customSearchView.findViewById(R.id.search_close_btn);
         // Set on click listener
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Manage this event.
-                customSearchView.setQuery("", false);
-                customSearchView.clearFocus();
-            }
+        closeButton.setOnClickListener(v -> {
+            // Manage this event.
+            customSearchView.setQuery("", false);
+            customSearchView.clearFocus();
         });
-
-
         customSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         customSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -138,11 +130,9 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
                 return true;
             }
         });
-
-        return root;
     }
 
-    /* CpuRankingContract.View callbacks*/
+    /* GpuRankingContract.View callbacks*/
     @Override
     public void notifyGpuListChanged(List<Gpu> gpuList) {
         if(gpuList != null) {
@@ -157,10 +147,6 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 //        mListAdapter.setList(gpuList);
 //        result.dispatchUpdatesTo(mListAdapter);
     }
-
-
-
-
 
     public class GpuRankingAdapter extends RecyclerView.Adapter<GpuRankingAdapter.ViewHolder> {
         private List<Gpu> mGpuList;
@@ -180,12 +166,12 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
         }
 
         // Create new views (invoked by the layout manager)
+        @NonNull
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_gpu,
                     parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+            return new ViewHolder(view);
         }
 
         // Replace the contents of a view (invoked by the layout manager)
@@ -197,15 +183,13 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
 
             if(mGpuList.get(position).getModel().contains("Radeon")) {
                 holder.companyImage.setImageResource(R.drawable.ic_amd);
-                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.amd_standard)));
+                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.amd_standard)));
             } else {
                 holder.companyImage.setImageResource(R.drawable.ic_nvidia);
-                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.nvidia_standard)));
+                ImageViewCompat.setImageTintList(holder.companyImage, ColorStateList.valueOf(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.nvidia_standard)));
             }
 
-            //holder.imageVFM.setImageResource(R.drawable.ic_flash);
-
-            holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + " GB");
+            holder.vRamSize.setText(NumberFormat.getInstance().format(mGpuList.get(position).getGraphicsRamSize().intValue()) + getString(R.string.append_GB));
             holder.vRamType.setText(mGpuList.get(position).getGraphicsRamType());
             holder.date.setText(mGpuList.get(position).getReleaseDate().substring(mGpuList.get(position).getReleaseDate().lastIndexOf(" ")+1));
             holder.scoreVFM.setText(NumberFormat.getPercentInstance().format((mGpuList.get(position).getScore())));
@@ -216,57 +200,42 @@ public class GpuRankingFragment extends Fragment implements GpuRankingContract.V
             holder.scoreFirestrike.setText(String.valueOf((int) mGpuList.get(position).getFirestrike()));
             holder.scorePassmark.setText(String.valueOf(((int) mGpuList.get(position).getPassmark())));
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = getContext();
-                    CharSequence text = "Hello toast!";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
+            holder.itemView.setOnClickListener(v -> {
+                //todo add gpu details
+                Context context = getContext();
+                CharSequence text = "Item clicked";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             });
 
-            holder.price.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext(), R.style.dialogTheme);
-                    builder.setTitle(getString(R.string.dialog_price_title));
+            holder.price.setOnClickListener(v -> {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext(), R.style.dialogTheme);
+                builder.setTitle(getString(R.string.dialog_price_title));
 
-// Set up the input
-                    //final EditText input = new EditText(getContext());
-                    //input.setInputType(InputType.TYPE_CLASS_NUMBER);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                    View dialogView = getLayoutInflater().inflate(R.layout.dialog_input_price, null);
-                    builder.setView(dialogView);
-                    final TextInputEditText input = dialogView.findViewById(R.id.editText);
-                    input.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                @SuppressLint("InflateParams") View dialogView = getLayoutInflater().inflate(R.layout.dialog_input_price, null); //pass null cause it's a Dialog
+                builder.setView(dialogView);
+                final TextInputEditText input = dialogView.findViewById(R.id.editText);
+                input.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-// Set up the buttons
-                    builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String price = input.getText().toString();
-                            mGpuList.get(position).setPrice(Double.valueOf(price));
-                            mGpuList.get(position).setScore((mGpuList.get(position).getAvgFps1080p() + mGpuList.get(position).getAvgFps2k() + mGpuList.get(position).getAvgFps4k()) /mGpuList.get(position).getPrice());
-                            notifyGpuListChanged(mGpuList);
-                            mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
-                        }
-                    });
-                    builder.setNegativeButton(getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getActivity().getWindow().setSoftInputMode(
-                                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                            dialog.cancel();
-                        }
-                    });
+                builder.setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
+                    if(input.getText().toString().trim().length() > 0) {
+                        String price = input.getText().toString();
+                        mGpuList.get(position).setPrice(Double.valueOf(price));
+                        mGpuList.get(position).setScore((mGpuList.get(position).getAvgFps1080p() + mGpuList.get(position).getAvgFps2k() + mGpuList.get(position).getAvgFps4k()) /mGpuList.get(position).getPrice());
+                        notifyGpuListChanged(mGpuList);
+                        mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.dismiss), (dialog, which) -> {
+                    Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    dialog.cancel();
+                });
 
-                    builder.show();
-                }
+                builder.show();
             });
 
         }
