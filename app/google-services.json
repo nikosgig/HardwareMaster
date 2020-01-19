@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "444120415614-hi887lpptka52ndqk16hopina106rhng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hardwaremaster.com",
+            "certificate_hash": "c589b4cd7143da40cc051fa21ae7c659c61f3185"
+          }
+        },
+        {
+          "client_id": "444120415614-ih8i6p9dhc9vijhh1rjr7ueajedv75qc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hardwaremaster.com",
+            "certificate_hash": "47cf9cd06973239fbd4e6024d212abdf64d131e7"
+          }
+        },
+        {
           "client_id": "444120415614-78madqt91n3d65b0snl3610mk65tvlqq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
