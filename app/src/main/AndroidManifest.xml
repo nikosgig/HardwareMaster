@@ -5,14 +5,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name="hardwaremaster.com.HardwareMasterApplication"
+        android:name="hardwaremaster.com.old.HardwareMasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/DarkTheme">
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".old.Login.LoginActivity"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -21,11 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Ranking.RankingActivity"
+            android:name=".old.Ranking.RankingActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Ranking.GpuRankingActivity"
+            android:name=".old.Ranking.GpuRankingActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:fabAlignmentMode="end"
         android:layout_gravity="bottom"
-        app:hideOnScroll="true"/>
+        app:hideOnScroll="false"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

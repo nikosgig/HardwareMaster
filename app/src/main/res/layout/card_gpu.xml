@@ -119,7 +119,7 @@
             tools:valueTxt="11111" />
 
 
-        <hardwaremaster.com.widgets.ExpandableCardView
+        <hardwaremaster.com.old.widgets.ExpandableCardView
             android:id="@+id/expandable_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
