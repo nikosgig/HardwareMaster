@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_cpu"
+        android:id="@+id/rankingCpuListFragment"
         android:icon="@drawable/ic_cpu_2"
         app:showAsAction="ifRoom"
         android:title="@string/menu_cpu" />
 
     <item
-        android:id="@+id/menu_gpu"
+        android:id="@+id/rankingGpuListFragment"
         android:icon="@drawable/ic_gpu"
         app:showAsAction="ifRoom"
         android:title="@string/menu_gpu" />
 
     <item
-        android:id="@+id/menu_settings"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_cog"
         app:showAsAction="ifRoom"
         android:title="@string/menu_settings" />

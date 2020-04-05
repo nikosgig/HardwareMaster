@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/rankingCpuListFragment">
+
+
+    <fragment
+        android:id="@+id/rankingCpuListFragment"
+        android:name="hardwaremaster.com.ui.ranking.cpu.list.RankingCpuListFragment"
+        android:label="ranking_cpu_list_fragment"
+        tools:layout="@layout/ranking_cpu_list_fragment" />
+    <fragment
+        android:id="@+id/rankingGpuListFragment"
+        android:name="hardwaremaster.com.ui.ranking.gpu.list.RankingGpuListFragment"
+        android:label="ranking_gpu_list_fragment"
+        tools:layout="@layout/ranking_gpu_list_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="hardwaremaster.com.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>

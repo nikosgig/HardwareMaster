@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <hardwaremaster.com.old.widgets.CaptionValueView
+    <hardwaremaster.com.a_old.widgets.CaptionValueView
         android:id="@+id/tag_1080"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:valueText="31111" />
 
-    <hardwaremaster.com.old.widgets.CaptionValueView
+    <hardwaremaster.com.a_old.widgets.CaptionValueView
         android:id="@+id/tag_2k"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tag_1080"
         tools:valueText="31111" />
 
-    <hardwaremaster.com.old.widgets.CaptionValueView
+    <hardwaremaster.com.a_old.widgets.CaptionValueView
         android:id="@+id/tag_4k"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tag_2k"
         tools:valueText="31111" />
 
-    <hardwaremaster.com.old.widgets.CaptionValueView
+    <hardwaremaster.com.a_old.widgets.CaptionValueView
         android:id="@+id/tag_firestrike"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:valueText="31111" />
 
-    <hardwaremaster.com.old.widgets.CaptionValueView
+    <hardwaremaster.com.a_old.widgets.CaptionValueView
         android:id="@+id/tag_passmark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

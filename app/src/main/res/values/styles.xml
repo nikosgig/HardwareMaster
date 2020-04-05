@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/firewatch_burgundy</item> <!-- color of android status bar -->
         <item name="colorPrimary">@color/firewatch_burgundy</item> <!-- color of search bar background -->
@@ -20,6 +20,13 @@
         <item name="actionMenuTextColor">@color/firewatch_light</item>
         <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
         <item name="colorControlActivated">@color/firewatch_cinn</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">#EEEEEE</item>
     </style>
 
 <!--    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->

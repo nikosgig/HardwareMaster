@@ -206,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@+id/brandHolder" />
 
 
-        <hardwaremaster.com.old.widgets.ExpandableCardView
+        <hardwaremaster.com.a_old.widgets.ExpandableCardView
             android:id="@+id/expandableViewFilters"
             style="@style/TextAppearance.MaterialComponents.Overline"
             android:layout_width="0dp"
