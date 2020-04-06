@@ -8,6 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import hardwaremaster.com.R
+import hardwaremaster.com.data.repository.FirestoreRepository
+import kotlinx.android.synthetic.main.ranking_gpu_list_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class RankingGpuListFragment : Fragment() {
 
@@ -26,6 +31,11 @@ class RankingGpuListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RankingGpuListViewModel::class.java)
         // TODO: Use the ViewModel
+//        val repo = FirestoreRepository()
+//        GlobalScope.launch(Dispatchers.Main) {
+//            val gpu = repo.getGpus()
+//            textView.text = gpu.toString()
+//        }
     }
 
 }
