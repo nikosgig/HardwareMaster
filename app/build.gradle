@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "hardwaremaster.com"
         minSdkVersion 21
@@ -69,6 +69,11 @@ dependencies {
     implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
+
+
+    // Kodein
+    implementation "org.kodein.di:kodein-di-generic-jvm:5.2.0"
+    implementation "org.kodein.di:kodein-di-framework-android-x:5.2.0"
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
