@@ -1,5 +1,7 @@
 package hardwaremaster.com.data
 
+import com.ptrbrynt.firestorelivedata.FirestoreModel
+
 data class Gpu(
         val avgFps1080p: Long? = null,
         val avgFps2k: Long? = null,
@@ -12,5 +14,6 @@ data class Gpu(
         val memoryClock: Long? = null,
         val model: String? = null,
         val passmark: Long? = null,
+        var price: Long? = null,
         val releaseDate: String? = null
-)
+): FirestoreModel()

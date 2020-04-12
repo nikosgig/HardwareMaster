@@ -44,6 +44,7 @@
     <string name="filter_4gb">4GB</string>
     <string name="filter_8gb">8GB</string>
     <string name="append_GB"> GB</string>
+    <string name="item_price"> €</string>
 
     <string name="brand">Brand</string>
     <string name="brand_amd">AMD</string>

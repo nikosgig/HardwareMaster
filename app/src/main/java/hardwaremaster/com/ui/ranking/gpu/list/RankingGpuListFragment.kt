@@ -8,11 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 
 import hardwaremaster.com.R
-import hardwaremaster.com.a_old.data.Gpu
+import hardwaremaster.com.data.Gpu
+import hardwaremaster.com.data.Price
 import hardwaremaster.com.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.ranking_gpu_list_fragment.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
@@ -37,20 +42,49 @@ class RankingGpuListFragment : ScopedFragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(RankingGpuListViewModel::class.java)
         bindUI()
-//        val repo = FirestoreRepository()
-//        GlobalScope.launch(Dispatchers.Main) {
-//            val gpu = repo.getGpus()
-//            textView.text = gpu.toString()
-//        }
     }
 
-    private fun bindUI() = launch {
+    private fun bindUI() = launch(Dispatchers.Main) {
         val gpuList = viewModel.gpus.await()
-        gpuList.observe(viewLifecycleOwner, Observer {
-            if (it == null) return@Observer
+        val prices = viewModel.prices.await()
 
-            textView.text = it.toString()
+
+        gpuList.observe(viewLifecycleOwner, Observer {
+            if (it?.data == null) return@Observer
+
+            group_loading.visibility = View.GONE
+            initRecyclerView((it.data as List<Gpu>).toRankingGpuItems())
+
+            //textView.text = it.toString()
+        })
+
+        prices.observe(viewLifecycleOwner, Observer {
+            if (it?.data == null) return@Observer
+
+            val data = it.data as List<Price>
+            //textView.text = it.toString()
         })
     }
 
+    private fun updateTitleBar() {
+
+    }
+
+    //convert our list to groupie item
+    private fun List<Gpu>.toRankingGpuItems(): List<RankingGpuItem> {
+        return this.map {
+            RankingGpuItem(it)
+        }
+    }
+
+    private fun initRecyclerView(items: List<RankingGpuItem>) {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(items)
+        }
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@RankingGpuListFragment.context)
+            adapter = groupAdapter
+        }
+    }
 }
