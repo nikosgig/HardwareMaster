@@ -6,6 +6,9 @@ import hardwaremaster.com.data.Gpu
 import hardwaremaster.com.data.Price
 
 interface FirestoreRepository {
-    suspend fun getGpus(): LiveData<FirestoreResource<List<Gpu>>>
-    suspend fun getPrices(): LiveData<FirestoreResource<List<Price>>>
+    suspend fun getGpus(): LiveData<out List<Gpu?>>
+
+
+    //suspend fun getGpus(): LiveData<FirestoreResource<List<Gpu>>>
+    //suspend fun getPrices(): LiveData<FirestoreResource<List<Price>>>
 }

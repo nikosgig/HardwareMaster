@@ -2,11 +2,9 @@ package hardwaremaster.com.ui.ranking.gpu.list
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
@@ -14,11 +12,9 @@ import com.xwray.groupie.ViewHolder
 
 import hardwaremaster.com.R
 import hardwaremaster.com.data.Gpu
-import hardwaremaster.com.data.Price
 import hardwaremaster.com.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.ranking_gpu_list_fragment.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -46,28 +42,25 @@ class RankingGpuListFragment : ScopedFragment(), KodeinAware {
 
     private fun bindUI() = launch(Dispatchers.Main) {
         val gpuList = viewModel.gpus.await()
-        val prices = viewModel.prices.await()
 
+        gpuList.observe(viewLifecycleOwner, Observer {gpuItems ->
+            if (gpuItems == null) return@Observer
 
-        gpuList.observe(viewLifecycleOwner, Observer {
-            if (it?.data == null) return@Observer
-
+            val gpuItemsList = sortGpuList(gpuItems as List<Gpu>)
             group_loading.visibility = View.GONE
-            initRecyclerView((it.data as List<Gpu>).toRankingGpuItems())
 
-            //textView.text = it.toString()
-        })
-
-        prices.observe(viewLifecycleOwner, Observer {
-            if (it?.data == null) return@Observer
-
-            val data = it.data as List<Price>
-            //textView.text = it.toString()
+            initRecyclerView(gpuItemsList.toRankingGpuItems())
         })
     }
 
+
+
     private fun updateTitleBar() {
 
+    }
+
+    private fun sortGpuList(list: List<Gpu>): List<Gpu> {
+        return list.sortedByDescending { item -> item.price }
     }
 
     //convert our list to groupie item
@@ -85,6 +78,12 @@ class RankingGpuListFragment : ScopedFragment(), KodeinAware {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@RankingGpuListFragment.context)
             adapter = groupAdapter
+        }
+
+        groupAdapter.setOnItemClickListener { item, view ->
+            (item as? RankingGpuItem)?.let {
+                //showWeatherDetail(it.weatherEntry.isDay, view)
+            }
         }
     }
 }

@@ -13,11 +13,4 @@ class RankingGpuListViewModel(
         firestoreRepository.getGpus()
     }
 
-    val prices by lazyDeferred{
-        firestoreRepository.getPrices()
-    }
-
-    fun <T> MutableLiveData<T>.notifyObserver() {
-        this.value = this.value
-    }
 }

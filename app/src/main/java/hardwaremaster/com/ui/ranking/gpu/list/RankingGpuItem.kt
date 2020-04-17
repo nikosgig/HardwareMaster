@@ -28,9 +28,16 @@ class RankingGpuItem(
     override fun getLayout() = R.layout.card_gpu
 
     private fun ViewHolder.updateConditionImage() {
-        GlideApp.with(this.containerView)
-                .load(R.drawable.ic_amd)
-                .into(containerView.image)
+        if(gpuEntry.model!!.contains("Radeon")) {
+            GlideApp.with(this.containerView)
+                    .load(R.drawable.ic_amd)
+                    .into(containerView.image)
+        } else {
+            GlideApp.with(this.containerView)
+                    .load(R.drawable.ic_nvidia)
+                    .into(containerView.image)
+        }
+
     }
 
     //todo fix concat
