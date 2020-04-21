@@ -121,7 +121,7 @@ public class GpuFilterFragment extends BottomSheetDialogFragment implements GpuF
 
         //price bar
         RelativeLayout rangeSeekBarLayoutPrice = view.findViewById(R.id.rangeSeekBarPrice);
-        CrystalRangeSeekbar rangeSeekbarPrice = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayoutPrice, R.string.sort_price, DEFAULT_MIN_VALUE, PRICE_MAX_VALUE);
+        CrystalRangeSeekbar rangeSeekbarPrice = FragmentUtils.generateRangeSeekBarView(rangeSeekBarLayoutPrice, R.string.price, DEFAULT_MIN_VALUE, PRICE_MAX_VALUE);
         rangeSeekbarPrice.setMinStartValue((float) mPresenter.getGpuFilterValues().getMinPrice());
         rangeSeekbarPrice.setMaxStartValue((float) mPresenter.getGpuFilterValues().getMaxPrice());
         rangeSeekbarPrice.apply();

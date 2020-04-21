@@ -25,7 +25,7 @@
     <string name="order_brand">By Brand</string>
     <string name="order_single">By Single Score</string>
     <string name="order_multi">By Multi Score</string>
-    <string name="sort_price">Price</string>
+    <string name="price">Price</string>
     <string name="sort_price_low_to_high">Price low to high</string>
     <string name="sort_price_high_to_low">Price high to low</string>
     <string name="sort_vfm_low_to_high">Value for money low to high</string>
@@ -33,10 +33,20 @@
     <string name="sort_1080p">1080p (FPS)</string>
     <string name="sort_2k">2K (FPS)</string>
     <string name="sort_4k">4K (FPS)</string>
-    <string name="score_firestrike">Firestrike</string>
-    <string name="score_passmark">Passmark</string>
     <string name="sort_by">Sort By</string>
     <string name="sort_vfm">Value for Money</string>
+
+    <string name="score_1080p">1080p Performance (avg)</string>
+    <string name="score_1440p">1440p Performance (avg)</string>
+    <string name="score_4k">4K Performance (avg)</string>
+    <string name="score_firestrike">Firestrike</string>
+    <string name="score_passmark">Passmark</string>
+    <string name="type_vram">Video RAM Type</string>
+    <string name="release_date">Release Date</string>
+    <string name="gpu_clock">Gpu clock</string>
+    <string name="memory_bus">Memory Bus</string>
+    <string name="memory_clock">Memory Clock</string>
+
 
     <string name="filter_vram">Video RAM Capacity</string>
     <string name="filter_1gb">1GB</string>

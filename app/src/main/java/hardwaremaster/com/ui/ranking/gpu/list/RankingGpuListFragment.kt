@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
@@ -83,7 +84,13 @@ class RankingGpuListFragment : ScopedFragment(), KodeinAware {
         groupAdapter.setOnItemClickListener { item, view ->
             (item as? RankingGpuItem)?.let {
                 //showWeatherDetail(it.weatherEntry.isDay, view)
+                showGpuDetail(it.gpuEntry, view)
             }
         }
+    }
+
+    private fun showGpuDetail(gpuEntry: Gpu, view: View) {
+        val actionDetail = RankingGpuListFragmentDirections.actionDetail(gpuEntry)
+        Navigation.findNavController(view).navigate(actionDetail)
     }
 }

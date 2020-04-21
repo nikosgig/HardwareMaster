@@ -36,12 +36,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            tools:text="GeForce RTX 2080 Ti"
-
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="GeForce RTX 2080 Ti" />
 
         <TextView
             android:id="@+id/vRamSize"
@@ -50,11 +49,11 @@
             android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            tools:text="8GB"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintStart_toStartOf="@+id/model"
-            app:layout_constraintTop_toBottomOf="@+id/model" />
+            app:layout_constraintTop_toBottomOf="@+id/model"
+            tools:text="8GB" />
 
         <TextView
             android:id="@+id/vRamType"
@@ -64,11 +63,11 @@
             android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            tools:text="GDDR5"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintStart_toEndOf="@+id/vRamSize"
-            app:layout_constraintTop_toBottomOf="@+id/model" />
+            app:layout_constraintTop_toBottomOf="@+id/model"
+            tools:text="GDDR5" />
 
         <TextView
             android:id="@+id/date"
@@ -78,10 +77,10 @@
             android:background="@drawable/oval_score"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            tools:text="2019"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintStart_toEndOf="@+id/vRamType"
-            app:layout_constraintTop_toBottomOf="@+id/model" />
+            app:layout_constraintTop_toBottomOf="@+id/model"
+            tools:text="2019" />
 
 
         <TextView
@@ -91,9 +90,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/oval_score"
             android:drawableStart="@drawable/ic_flash"
-
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/price"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image"
@@ -106,39 +106,41 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/oval_score"
             android:drawableStart="@drawable/ic_money"
             android:drawablePadding="8dp"
             android:padding="8dp"
-            tools:text="1111"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/scoreVFM"
             app:layout_constraintTop_toBottomOf="@+id/image"
+            tools:text="1111"
             tools:valueTxt="11111" />
 
 
-        <hardwaremaster.com.a_old.widgets.ExpandableCardView
-            android:id="@+id/expandable_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:animationDuration="300"
-            app:cardViewBackgroundDrawable="@drawable/card_expandable_gradient"
-            app:cardViewCornerRadius="6dp"
-            app:expandIconColor="?colorSecondary"
-            app:expandOnClick="true"
-            app:inner_view="@layout/gpu_performance_details_inner_view"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scoreVFM"
-            app:startExpanded="false"
-            app:title="Performance Details"
-            app:titleTextColor="?android:textColorPrimary" />
+        <!--        <hardwaremaster.com.a_old.widgets.ExpandableCardView-->
+        <!--            android:id="@+id/expandable_view"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:layout_marginBottom="8dp"-->
+        <!--            app:animationDuration="300"-->
+        <!--            app:cardViewBackgroundDrawable="@drawable/card_expandable_gradient"-->
+        <!--            app:cardViewCornerRadius="6dp"-->
+        <!--            app:expandIconColor="?colorSecondary"-->
+        <!--            app:expandOnClick="true"-->
+        <!--            app:inner_view="@layout/gpu_performance_details_inner_view"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/scoreVFM"-->
+        <!--            app:startExpanded="false"-->
+        <!--            app:title="Performance Details"-->
+        <!--            app:titleTextColor="?android:textColorPrimary" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

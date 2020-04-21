@@ -15,7 +15,20 @@
         android:id="@+id/rankingGpuListFragment"
         android:name="hardwaremaster.com.ui.ranking.gpu.list.RankingGpuListFragment"
         android:label="ranking_gpu_list_fragment"
-        tools:layout="@layout/ranking_gpu_list_fragment" />
+        tools:layout="@layout/ranking_gpu_list_fragment" >
+        <action
+            android:id="@+id/action_detail"
+            app:destination="@id/gpuDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gpuDetailFragment"
+        android:name="hardwaremaster.com.ui.ranking.gpu.detail.GpuDetailFragment"
+        android:label="gpu_detail_fragment"
+        tools:layout="@layout/gpu_detail_fragment" >
+        <argument
+            android:name="gpuItem"
+            app:argType="hardwaremaster.com.data.Gpu" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="hardwaremaster.com.ui.settings.SettingsFragment"

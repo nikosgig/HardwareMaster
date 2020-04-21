@@ -1,15 +1,14 @@
 package hardwaremaster.com
 
 import android.app.Application
+import hardwaremaster.com.data.Gpu
 import hardwaremaster.com.data.repository.FirestoreRepositoryImpl
+import hardwaremaster.com.ui.ranking.gpu.detail.GpuDetailViewModelFactory
 import hardwaremaster.com.ui.ranking.gpu.list.RankingGpuListViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.*
 
 class HardwareRankingApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
@@ -18,6 +17,7 @@ class HardwareRankingApplication : Application(), KodeinAware {
 
         bind() from singleton { FirestoreRepositoryImpl() }
         bind() from provider { RankingGpuListViewModelFactory(instance()) }
+        bind() from factory {gpu: Gpu -> GpuDetailViewModelFactory(gpu, instance())}
     }
 
 }

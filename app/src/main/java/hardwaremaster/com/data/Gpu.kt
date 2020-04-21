@@ -1,7 +1,10 @@
 package hardwaremaster.com.data
 
+import android.os.Parcelable
 import com.ptrbrynt.firestorelivedata.FirestoreModel
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Gpu(
         val avgFps1080p: Long? = null,
         val avgFps2k: Long? = null,
@@ -16,4 +19,4 @@ data class Gpu(
         val passmark: Long? = null,
         var price: Long? = null,
         val releaseDate: String? = null
-): FirestoreModel()
+): FirestoreModel(), Parcelable

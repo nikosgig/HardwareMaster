@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:layout_alignParentTop="true"
-        android:text="@string/sort_price" />
+        android:text="@string/price" />
 
     <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
         android:id="@+id/rangeSeekBar"
