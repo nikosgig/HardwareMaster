@@ -21,6 +21,7 @@ class RankingGpuItem(
             updateVRamSize()
             updatePrice()
             updateConditionImage()
+            updateScore()
 
         }
     }
@@ -53,5 +54,19 @@ class RankingGpuItem(
     private fun ViewHolder.updateDate() {
         val releaseDateString = gpuEntry.releaseDate.toString()
         date.text = releaseDateString.substring(releaseDateString.lastIndexOf(" ")+1)
+    }
+
+    //todo fix !! - value may be null
+    private fun ViewHolder.updateScore() {
+        val fpsSum = listOf(gpuEntry.avgFps1080p!!, gpuEntry.avgFps2k!!, gpuEntry.avgFps4k!!)
+        val sum = fpsSum.sum()
+
+        if (gpuEntry.price!! > 0) {
+            scoreVFM.text = (100 * sum / (gpuEntry.price!!)).toString()
+
+        } else {
+            scoreVFM.text = "0"
+        }
+
     }
 }

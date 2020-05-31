@@ -1,8 +1,11 @@
 package hardwaremaster.com.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import hardwaremaster.com.data.Gpu
 import hardwaremaster.com.data.Price
 import hardwaremaster.com.internal.await
@@ -20,7 +23,7 @@ class FirestoreRepositoryImpl : FirestoreRepository {
     val uID = auth.uid
     private val firestore = FirebaseFirestore.getInstance()
 
-    private val refGetUserGpuPrice = firestore.collection(uID.toString()).get()
+    private val refGetUserGpuPrice = firestore.collection(uID.toString())
     private val refGetGpuItems = firestore.collection(COLLECTION_PATH_GPU)
 
 
@@ -31,40 +34,104 @@ class FirestoreRepositoryImpl : FirestoreRepository {
 //        return auth.createUserWithEmailAndPassword(email, password).await()
 //    }
 
-    override suspend fun getGpus(): LiveData<out List<Gpu?>> {
-        return withContext(Dispatchers.IO) {
-            //get user specific gpu prices
-            val snapshotGetUserGpuPrice = try {
-                refGetUserGpuPrice.await()
-            } catch (e: Exception) {
-                null
-            }
-            //save user specific gpu prices to list
-            val userGpuPriceList = snapshotGetUserGpuPrice?.map {
-                val userGpuPriceItem = it.toObject(Price::class.java)
-                userGpuPriceItem.id = it.id
-                return@map userGpuPriceItem
-            }
+//    override suspend fun getGpus(): LiveData<out List<Gpu?>> {
+//        return withContext(Dispatchers.IO) {
+//            //get user specific gpu prices
+//            val snapshotGetUserGpuPrice = try {
+//                refGetUserGpuPrice.await()
+//            } catch (e: Exception) {
+//                null
+//            }
+//            //save user specific gpu prices to list
+//            val userGpuPriceList = snapshotGetUserGpuPrice?.map {
+//                Log.i("firebase", it.toString())
+//                val userGpuPriceItem = it.toObject(Price::class.java)
+//                userGpuPriceItem.id = it.id
+//                Log.i("firebase", userGpuPriceItem.id + " " + userGpuPriceItem.price + " " + userGpuPriceItem.toString())
+//                return@map userGpuPriceItem
+//            }
+//
+//            //get all Gpus as live data
+//            val gpuList = refGetGpuItems.toLiveData {
+//                documents.map { d ->
+//                    val gpuID = d.id
+//                    val gpuItem = d.toObject(Gpu::class.java)
+//                    gpuItem?.id = gpuID
+//                    //replace gpu prices with user specific prices
+//                    userGpuPriceList?.forEach {
+//                        if(gpuID == it.id) {
+//                            gpuItem?.price = it.price
+//                        }
+//                    }
+//                    return@map gpuItem
+//                }
+//            }
+//            //return all Gpus with user specific prices
+//            return@withContext gpuList
+//        }
+//    }
+    
+    override suspend fun getGpus(): LiveData<List<Gpu?>> {
 
-            //get all Gpus as live data
-            val gpuList = refGetGpuItems.toLiveData {
-                documents.map { d ->
-                    val gpuID = d.id
-                    val gpuItem = d.toObject(Gpu::class.java)
-                    //replace gpu prices with user specific prices
-                    userGpuPriceList?.forEach {
-                        if(gpuID == it.id) {
-                            gpuItem?.price = it.price
-                        }
+
+            val dataFromServer = MutableLiveData<List<Gpu?>>()
+            refGetUserGpuPrice.addSnapshotListener { value, e ->
+
+                val prices = ArrayList<Price>()
+                for (doc in value!!) {
+                    doc.getLong("price")?.let {
+                        val curPrice = Price(it)
+                        curPrice.id = doc.id
+                        prices.add(curPrice)
                     }
-                    return@map gpuItem
+                }
+
+                refGetGpuItems.addSnapshotListener { snapshot, e ->
+//                                    documents.map { d ->
+//                    val gpuID = d.id
+//                    val gpuItem = d.toObject(Gpu::class.java)
+//                    gpuItem?.id = gpuID
+//                    //replace gpu prices with user specific prices
+//                    userGpuPriceList?.forEach {
+//                        if(gpuID == it.id) {
+//                            gpuItem?.price = it.price
+//                        }
+//                    }
+//                    return@map gpuItem
+
+                    val items = arrayListOf<Gpu>()
+
+                    for (doc in snapshot!!) {
+                        val gpuID = doc.id
+                        val gpuItem = doc.toObject(Gpu::class.java)
+
+                        gpuItem.id = gpuID
+                        //replace gpu prices with user specific prices
+                        prices.forEach {
+                            if (gpuID == it.id) {
+                                gpuItem.price = it.price
+                            }
+                        }
+                        items.add(gpuItem)
+                    }
+                    dataFromServer.postValue(items)
                 }
             }
-            //return all Gpus with user specific prices
-            return@withContext gpuList
-        }
+        return dataFromServer
     }
 
+    override suspend fun updatePrice(price: Price, id: String) : Boolean {
+        return try{
+            val data = firestore
+                    .collection(uID.toString())
+                    .document(id)
+                    .set(price)
+                    .await()
+            true
+        }catch (e : Exception){
+            false
+        }
+    }
 
 
     /*
