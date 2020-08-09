@@ -26,8 +26,8 @@
         android:label="gpu_detail_fragment"
         tools:layout="@layout/gpu_detail_fragment" >
         <argument
-            android:name="gpuItem"
-            app:argType="hardwaremaster.com.data.Gpu" />
+            android:name="gpuItemID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

@@ -84,13 +84,13 @@ class RankingGpuListFragment : ScopedFragment(), KodeinAware {
         groupAdapter.setOnItemClickListener { item, view ->
             (item as? RankingGpuItem)?.let {
                 //showWeatherDetail(it.weatherEntry.isDay, view)
-                showGpuDetail(it.gpuEntry, view)
+                showGpuDetail(it.gpuEntry.id!!, view)
             }
         }
     }
 
-    private fun showGpuDetail(gpuEntry: Gpu, view: View) {
-        val actionDetail = RankingGpuListFragmentDirections.actionDetail(gpuEntry)
+    private fun showGpuDetail(gpuItemID: String, view: View) {
+        val actionDetail = RankingGpuListFragmentDirections.actionDetail(gpuItemID)
         Navigation.findNavController(view).navigate(actionDetail)
     }
 }

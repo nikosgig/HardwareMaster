@@ -17,7 +17,7 @@ class HardwareRankingApplication : Application(), KodeinAware {
 
         bind() from singleton { FirestoreRepositoryImpl() }
         bind() from provider { RankingGpuListViewModelFactory(instance()) }
-        bind() from factory {gpu: Gpu -> GpuDetailViewModelFactory(gpu, instance())}
+        bind() from factory {detailGpu: String -> GpuDetailViewModelFactory(detailGpu, instance())}
     }
 
 }

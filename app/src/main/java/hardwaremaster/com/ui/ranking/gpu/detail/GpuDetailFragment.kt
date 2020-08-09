@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,16 +22,21 @@ import hardwaremaster.com.internal.ArgNotFoundException
 import hardwaremaster.com.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.dialog_input_price.view.*
 import kotlinx.android.synthetic.main.gpu_detail_fragment.*
+import kotlinx.android.synthetic.main.ranking_gpu_list_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.factory
+import org.kodein.di.generic.instance
 
 class GpuDetailFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
-    private val viewModelFactory: ((Gpu) -> GpuDetailViewModelFactory) by factory()
+
+    private val viewModelFactoryInstanceFactory
+            : ((String) -> GpuDetailViewModelFactory) by factory()
+
     private lateinit var gpuDetails: Gpu
 
 
@@ -46,18 +52,21 @@ class GpuDetailFragment : ScopedFragment(), KodeinAware {
         super.onActivityCreated(savedInstanceState)
 
         val safeArgs = arguments?.let { GpuDetailFragmentArgs.fromBundle(it) }
-        val gpuItem = safeArgs?.gpuItem ?: throw ArgNotFoundException()
+        val gpuItemId = safeArgs?.gpuItemID ?: throw ArgNotFoundException()
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory(gpuItem)).get(GpuDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactoryInstanceFactory(gpuItemId)).get(GpuDetailViewModel::class.java)
 
         bindUI()
     }
 
     private fun bindUI() = launch(Dispatchers.Main) {
-        gpuDetails = viewModel.getGpuDetails.await()
-        textView_model.text = gpuDetails.model
+        val gpuDetails = viewModel.gpuDetails.await()
 
-        initRecyclerView(toRankingGpuSpec(gpuDetails))
+        gpuDetails.observe(viewLifecycleOwner, Observer {gpuDetails ->
+            if (gpuDetails == null) return@Observer
+            textView_model.text = gpuDetails.model
+            initRecyclerView(toRankingGpuSpec(gpuDetails))
+        })
     }
 
     //convert our list to groupie item
@@ -115,8 +124,6 @@ class GpuDetailFragment : ScopedFragment(), KodeinAware {
                 val price = input.text.toString().toLongOrNull()
                 price?.let {
                     viewModel.updatePrice(it)
-                    gpuDetails.price = price
-                    bindUI()
                 }
                 //mPresenter.updatePrice(mGpuList.get(position).getKey(), Double.valueOf(price));
 

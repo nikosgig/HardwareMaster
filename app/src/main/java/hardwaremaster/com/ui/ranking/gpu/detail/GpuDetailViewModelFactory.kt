@@ -7,14 +7,14 @@ import hardwaremaster.com.data.repository.FirestoreRepository
 import hardwaremaster.com.internal.lazyDeferred
 
 class GpuDetailViewModelFactory(
-        private val detailGpu: Gpu,
+        private val detailGpuId: String,
         private val firestoreRepository: FirestoreRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return GpuDetailViewModel(
-                detailGpu,
+                detailGpuId,
                 firestoreRepository
         ) as T
     }

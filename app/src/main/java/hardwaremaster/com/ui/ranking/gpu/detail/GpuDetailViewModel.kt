@@ -9,22 +9,18 @@ import hardwaremaster.com.internal.lazyDeferred
 import kotlinx.coroutines.launch
 
 class GpuDetailViewModel(
-        private val detailGpu: Gpu,
+        private val detailGpuId: String,
         private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
 
+    val gpuDetails by lazyDeferred{
+        firestoreRepository.getGpuDetails(detailGpuId)
+    }
+
     fun updatePrice(price: Long) {
         viewModelScope.launch {
-            detailGpu.id?.let {
-
-                firestoreRepository.updatePrice(Price(price), it)
-                detailGpu.price = price
+                firestoreRepository.updatePrice(Price(price), detailGpuId)
             }
         }
-    }
-
-    val getGpuDetails by lazyDeferred {
-        detailGpu
-    }
 
 }

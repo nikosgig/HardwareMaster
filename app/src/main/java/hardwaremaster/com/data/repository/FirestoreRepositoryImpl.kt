@@ -1,17 +1,14 @@
 package hardwaremaster.com.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import hardwaremaster.com.a_old.widgets.ExpandableCardView
 import hardwaremaster.com.data.Gpu
 import hardwaremaster.com.data.Price
 import hardwaremaster.com.internal.await
-import hardwaremaster.com.internal.toLiveData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 const val COLLECTION_PATH_GPU = "gpu"
 const val COLLECTION_PATH_USER_PRICE = "user_price"
@@ -70,24 +67,24 @@ class FirestoreRepositoryImpl : FirestoreRepository {
 //            return@withContext gpuList
 //        }
 //    }
-    
+
     override suspend fun getGpus(): LiveData<List<Gpu?>> {
 
 
-            val dataFromServer = MutableLiveData<List<Gpu?>>()
-            refGetUserGpuPrice.addSnapshotListener { value, e ->
+        val dataFromServer = MutableLiveData<List<Gpu?>>()
+        refGetUserGpuPrice.addSnapshotListener { value, e ->
 
-                val prices = ArrayList<Price>()
-                for (doc in value!!) {
-                    doc.getLong("price")?.let {
-                        val curPrice = Price(it)
-                        curPrice.id = doc.id
-                        prices.add(curPrice)
-                    }
+            val prices = ArrayList<Price>()
+            for (doc in value!!) {
+                doc.getLong("price")?.let {
+                    val curPrice = Price(it)
+                    curPrice.id = doc.id
+                    prices.add(curPrice)
                 }
+            }
 
-                refGetGpuItems.addSnapshotListener { snapshot, e ->
-//                                    documents.map { d ->
+            refGetGpuItems.addSnapshotListener { snapshot, e ->
+                //                                    documents.map { d ->
 //                    val gpuID = d.id
 //                    val gpuItem = d.toObject(Gpu::class.java)
 //                    gpuItem?.id = gpuID
@@ -99,36 +96,67 @@ class FirestoreRepositoryImpl : FirestoreRepository {
 //                    }
 //                    return@map gpuItem
 
-                    val items = arrayListOf<Gpu>()
+                val items = arrayListOf<Gpu>()
 
-                    for (doc in snapshot!!) {
-                        val gpuID = doc.id
-                        val gpuItem = doc.toObject(Gpu::class.java)
+                for (doc in snapshot!!) {
+                    val gpuID = doc.id
+                    val gpuItem = doc.toObject(Gpu::class.java)
 
-                        gpuItem.id = gpuID
-                        //replace gpu prices with user specific prices
-                        prices.forEach {
-                            if (gpuID == it.id) {
-                                gpuItem.price = it.price
-                            }
+                    gpuItem.id = gpuID
+                    //replace gpu prices with user specific prices
+                    prices.forEach {
+                        if (gpuID == it.id) {
+                            gpuItem.price = it.price
                         }
-                        items.add(gpuItem)
                     }
-                    dataFromServer.postValue(items)
+                    items.add(gpuItem)
                 }
+                dataFromServer.postValue(items)
             }
+        }
         return dataFromServer
     }
 
-    override suspend fun updatePrice(price: Price, id: String) : Boolean {
-        return try{
+    override suspend fun getGpuDetails(detailGpuId: String): LiveData<Gpu?> {
+        val refGetUserGpuDetails = refGetGpuItems.document(detailGpuId)
+        val refGetUserGpuDetailsPrice = refGetUserGpuPrice.document(detailGpuId)
+
+
+        val dataFromServer = MutableLiveData<Gpu?>()
+        refGetUserGpuDetailsPrice.addSnapshotListener { value, e ->
+
+            var curPrice = Price()
+
+            value?.getLong("price")?.let {
+                curPrice = Price(it)
+                curPrice.id = value.id
+            }
+
+            refGetUserGpuDetails.addSnapshotListener { snapshot, e ->
+
+                val gpuID = snapshot?.id
+                val gpuItem = snapshot?.toObject(Gpu::class.java)
+
+                gpuItem?.id = gpuID
+                //replace gpu prices with user specific prices
+                if (gpuID == curPrice.id) {
+                    gpuItem?.price = curPrice.price
+                }
+                dataFromServer.postValue(gpuItem)
+            }
+        }
+        return dataFromServer
+    }
+
+    override suspend fun updatePrice(price: Price, id: String): Boolean {
+        return try {
             val data = firestore
                     .collection(uID.toString())
                     .document(id)
                     .set(price)
                     .await()
             true
-        }catch (e : Exception){
+        } catch (e: Exception) {
             false
         }
     }
